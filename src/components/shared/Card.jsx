@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types'
-import { useState } from 'react'
 
 function Card({ children, reverse }) {
     return (
