@@ -10,18 +10,18 @@ function FeedbackForm({ handleAdd }) {
     const [btnDisabled, setBtnDisabeld] = useState(true)
     const [message, setMessage] = useState('')
     const handleTextChange = (e) => {
-        const txtContent = e.target.value.trim()
+        const txtContent = e.target.value
         setText(txtContent)
 
-        if (txtContent.length === 0) {
+        if (txtContent.trim().length === 0) {
             setBtnDisabeld(true)
             setMessage(null)
         }
-        if (txtContent.length >= 10) {
+        if (txtContent.trim().length >= 10) {
             setBtnDisabeld(false)
             setMessage(null)
         }
-        if (txtContent.length > 0 && txtContent.length < 10) {
+        if (txtContent.trim().length > 0 && txtContent.trim().length < 10) {
             setBtnDisabeld(true)
             setMessage('Text must be at least 10 characters')
         }
@@ -31,8 +31,8 @@ function FeedbackForm({ handleAdd }) {
         if (text.length < 10) return
 
         const newFeedback = {
-            rating: rating,
-            text: text,
+            rating,
+            text,
         }
 
         handleAdd(newFeedback)
@@ -45,7 +45,7 @@ function FeedbackForm({ handleAdd }) {
                 <h2>How would you rate your service with us?</h2>
                 <RatingSelect select={(rating) => setRating(rating)}></RatingSelect>
                 <div className='input-group'>
-                    <input type="text" placeholder='Write a review' onChange={handleTextChange} />
+                    <input type="text" placeholder='Write a review' onChange={handleTextChange} value={text} />
                     <Button type='submit' isDisabled={btnDisabled}>Send</Button>
                 </div>
 
