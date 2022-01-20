@@ -1,6 +1,6 @@
 // For testing react-router-dom
 import React from 'react'
-import { BrowserRouter as Router, Link, useLocation } from 'react-router-dom'
+import { BrowserRouter as Link, useLocation } from 'react-router-dom'
 
 // React Router does not have any opinions about
 // how you should parse URL query strings.
