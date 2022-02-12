@@ -1,0 +1,24 @@
+{
+  "feedback": [
+    {
+      "id": 1,
+      "rating": 10,
+      "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus soluta possimus quisquam? Eligendi similique deserunt omnis, dignissimos totam assumenda mollitia? Architecto eos laboriosam, iusto aliquam officiis ipsa modi suscipit corrupti."
+    },
+    {
+      "rating": 8,
+      "text": "This is new Item, id 4",
+      "id": 4
+    },
+    {
+      "rating": 8,
+      "text": "New Items 5",
+      "id": 5
+    },
+    {
+      "rating": 8,
+      "text": "I wannt see the average rating",
+      "id": 6
+    }
+  ]
+}
