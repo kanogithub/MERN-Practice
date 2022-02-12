@@ -12,7 +12,6 @@ import Post from './components/Post'
 import QueryParamsExample from './components/QMemo'
 
 function App() {
-	console.log('somthing changed')
 	return (
 		<FeedbackProvider>
 			<Router>
