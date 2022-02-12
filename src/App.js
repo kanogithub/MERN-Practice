@@ -14,6 +14,7 @@ import QueryParamsExample from './components/QMemo'
 function App() {
 	console.log('Debug Conole Setting')
 
+	console.log('Nes fix debugs..d.fdf')
 	return (
 		<FeedbackProvider>
 			<Router>
