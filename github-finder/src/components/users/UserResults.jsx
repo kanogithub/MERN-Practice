@@ -18,6 +18,7 @@ function UserResults() {
 		})
 
 		const data = await respone.json()
+		console.log(process.env.REACT_APP_GITHUB_URL)
 
 		setUsers(data)
 		setLoading(false)
