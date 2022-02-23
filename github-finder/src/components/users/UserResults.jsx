@@ -11,14 +11,14 @@ function UserResults() {
 	}, [])
 
 	const fetchUsers = async () => {
-		const respone = await fetch(`${process.env.REACT_APP_GITHUB_URL}/users`, {
+		let respone = await fetch(`${process.env.REACT_APP_GITHUB_URL}/users`, {
 			headers: {
 				Authorization: `token ${process.env.REACT_APP_GITHUB_TOKEN}`,
 			},
 		})
 
+		respone = respone.ok ? respone : await fetch(`${process.env.REACT_APP_GITHUB_URL}/users`)
 		const data = await respone.json()
-		console.log(process.env.REACT_APP_GITHUB_URL)
 
 		setUsers(data)
 		setLoading(false)
