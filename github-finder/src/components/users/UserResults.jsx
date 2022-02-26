@@ -4,12 +4,7 @@ import UserItem from './UserItem'
 import GithubContext from '../../context/github/GithubContext'
 
 function UserResults() {
-	const { loading, users, fetchUsers } = useContext(GithubContext)
-
-	useEffect(() => {
-		fetchUsers()
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	const { loading, users } = useContext(GithubContext)
 
 	if (loading) return <Spinner />
 	else if (!Array.isArray(users)) return <h3>No results!</h3>
