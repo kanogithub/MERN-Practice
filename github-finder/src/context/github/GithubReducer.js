@@ -1,4 +1,5 @@
-const githubReducer = (state, { type, items, total_count }) => {
+// In convention this function must handles state, action as arguments
+const githubReducer = (state, { type, payload: { items, total_count } = {} }) => {
 	switch (type) {
 		case 'GET_USERS':
 			return {

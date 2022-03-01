@@ -22,7 +22,7 @@ export const GithubProvider = ({ children }) => {
 		const params = new URLSearchParams({
 			q: query,
 		})
-
+		// console.log(params['q'])
 		let respone = await fetch(`${GITHUB_URL}/search/users?${params}`, {
 			headers: {
 				Authorization: `token ${GUTHUB_TOKEN}`,
