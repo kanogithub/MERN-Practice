@@ -1,5 +1,6 @@
-import RepoItem from './RepoItem'
 import { useContext, useEffect } from 'react'
+import RepoItem from './RepoItem'
+import RepoSkeleton from './RepoSkeleton'
 import GithubReposContext from '../../context/github/GithubReposContext'
 
 function RepoList({ login, reposCount }) {
@@ -10,14 +11,14 @@ function RepoList({ login, reposCount }) {
 		getRepos(login, reposCount, true)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
-	console.log('first')
+
 	return (
 		<div className='rounded-lg shadow-lg card bg-base-100'>
 			<div className='card-body'>
 				<h2 className='text-3xl my-4 font-bold card-title'>Latest Updated Respositories</h2>
 
-				{repos.map((repo) => {
-					if (loading) return <h3 key={repo.id}>test</h3>
+				{repos.map((repo, index) => {
+					if (loading) return <RepoSkeleton />
 					else return <RepoItem key={repo.id} repo={repo} />
 				})}
 			</div>

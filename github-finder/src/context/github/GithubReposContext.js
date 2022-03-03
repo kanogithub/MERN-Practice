@@ -1,4 +1,4 @@
-import { createContext, useReducer } from 'react'
+import { createContext, useReducer, useEffect } from 'react'
 import githubReposReducer from './GithubReposReducer'
 
 const GithubReposContext = createContext()
@@ -11,7 +11,7 @@ export const GithubReposProvider = ({ children }) => {
 		repos: [],
 		login: '',
 		count: 0,
-		pageSize: 3,
+		pageSize: 5,
 		page: 1,
 		hasNext: false,
 		loading: false,
@@ -85,7 +85,7 @@ export const GithubReposProvider = ({ children }) => {
 	}
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// useEffect(() => getRepos(), [state.page])
+	useEffect(() => getRepos(), [state.page])
 
 	return (
 		<GithubReposContext.Provider

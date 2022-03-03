@@ -1,0 +1,10 @@
+.indicator .indicator-item {
+    opacity: 0;
+    transform: translate(200%, -55%);
+    transition: all ease-out 0.6s;
+}
+
+.indicator .indicator-item.show {
+    opacity: 0.8;
+    transform: translate(105%, -30%);
+}
