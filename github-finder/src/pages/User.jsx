@@ -2,14 +2,17 @@ import { useEffect, useContext } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { FaCodepen, FaStore, FaUserFriends, FaUsers } from 'react-icons/fa'
 import Spinner from '../components/layout/Spinner'
+import RepoList from '../components/repos/RepoList'
 import GithubContext from '../context/github/GithubContext'
 
 function User() {
 	const { getUser, user, loading } = useContext(GithubContext)
 	const { id } = useParams()
 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	useEffect(() => getUser(id), [])
+	useEffect(() => {
+		getUser(id)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	const {
 		login,
@@ -127,15 +130,7 @@ function User() {
 							<FaCodepen className='text-3xl md:text-5xl' />
 						</div>
 						<div className='stat-title pr-5'>Public Repos</div>
-						<div className='stat-value pr-5 text-3xl md:text-4xl'>
-							<a
-								href={`${html_url}?tab=repositories`}
-								target='_blank'
-								rel='noreferrer'
-								className='link link-hover'>
-								{public_repos}
-							</a>
-						</div>
+						<div className='stat-value pr-5 text-3xl md:text-4xl'>{public_repos}</div>
 					</div>
 					<div className='stat bg-base-100'>
 						<div className='stat-figure text-secondary'>
@@ -145,6 +140,8 @@ function User() {
 						<div className='stat-value pr-5 text-3xl md:text-4xl'>{public_gists}</div>
 					</div>
 				</div>
+
+				<RepoList login={id} reposCount={public_repos} />
 			</div>
 		</>
 	)

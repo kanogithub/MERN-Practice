@@ -1,13 +1,11 @@
 // In convention this function must handles state, action as arguments
-const githubReducer = (state, { type, payload = {} }) => {
-	const { items, total_count } = payload
-
+const githubReducer = (state, { type, payload }) => {
 	switch (type) {
 		case 'GET_USERS':
 			return {
 				...state,
-				users: items,
-				count: total_count,
+				users: payload.items,
+				count: payload.total_count,
 				loading: false,
 			}
 		case 'GET_USER':
