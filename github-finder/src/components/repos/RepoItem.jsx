@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types'
 import { FaEye, FaInfo, FaLink, FaStar, FaUtensils } from 'react-icons/fa'
 import { useInView } from 'react-intersection-observer'
+import { useState } from 'react'
 
 import './repoitem.css'
 
 function RepoItem({ repo }) {
+	const [show, setShow] = useState('')
 	const { name, description, html_url, forks, open_issues, watchers_count, stargazers_count } =
 		repo
 
@@ -13,9 +15,7 @@ function RepoItem({ repo }) {
 		threshold: 1,
 	})
 
-	const showMe = (inview) => {
-		return inview ? ' show' : ''
-	}
+	if (inView && show === '') setShow(' show')
 
 	return (
 		<div className='mb-2 rounded-md card bg-gray-800 hover:bg-gray-900' ref={ref}>
@@ -25,9 +25,7 @@ function RepoItem({ repo }) {
 						<FaLink className='inline mr-1' />
 						<span className='indicator'>
 							<span
-								className={`indicator-item badge badge-ghost badge-outline${showMe(
-									inView
-								)}`}>
+								className={`indicator-item badge badge-ghost badge-outline${show}`}>
 								Link
 							</span>
 							{name}

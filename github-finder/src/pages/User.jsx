@@ -71,7 +71,7 @@ function User() {
 								<div className='ml-2 mr-1 badge badge-success'>{type}</div>
 								{hireable && <div className='mx-1 badge badge-info'>Hireable</div>}
 							</h1>
-							<div class='divider'>Bio</div>
+							<div className='divider'>Bio</div>
 							{bio}
 						</div>
 

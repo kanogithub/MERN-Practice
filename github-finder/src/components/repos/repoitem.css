@@ -1,3 +1,4 @@
+/* indicator link effect & animation */
 .indicator .indicator-item {
     opacity: 0;
     transform: translate(200%, -55%);
@@ -9,6 +10,7 @@
     transform: translate(105%, -30%);
 }
 
+/* skeleton effect & animation */
 .skeleton {
     position: relative;
     filter:blur(1px);
@@ -23,7 +25,7 @@
         , hsla(0, 0%, 99%, 0.15) 75%, hsla(200, 7%, 10%, 0.15) 99%, transparent
     );
     background-size: 200%;
-    animation: skeleton-bg-animation 3.5s infinite;
+    animation: skeleton-bg-animation 2.75s infinite;
 }
 
 @keyframes skeleton-bg-animation {
