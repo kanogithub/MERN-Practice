@@ -2,10 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+#root {
+    min-width: 420px;
+}
+
 .custom-card-image .card.image-full::before {
     border-radius: 0.5rem;
     opacity: 0.45;
 }
+.custom-card-image .card.image-full:hover::before {
+    opacity: 0.75;
+}
+
+.custom-card-image .card-actions {
+    z-index: 99;
+    margin: 0;
+}
+
+@media (min-width: 1024px) {
+    .custom-card-image .card.image-full .card-actions a {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    .custom-card-image .card.image-full .card-actions:hover a {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+}
+
 
 .bg-base-100 {
     background-color: hsla(217 10.6% 27.8% / var(--tw-bg-opacity));

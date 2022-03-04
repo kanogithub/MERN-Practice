@@ -9,8 +9,8 @@ function RepoItem({ repo }) {
 		repo
 
 	const [ref, inView] = useInView({
-		rootMargin: '0px',
-		threshold: 0.5,
+		rootMargin: '20px',
+		threshold: 1,
 	})
 
 	const showMe = (inview) => {

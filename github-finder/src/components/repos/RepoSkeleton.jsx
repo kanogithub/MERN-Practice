@@ -4,7 +4,7 @@ import spinner from '../assets/spinner2.gif'
 function RepoSkeleton() {
 	return (
 		<div className='mb-2 rounded-md card bg-gray-800 skeleton'>
-			<div className='card-body p-5 skeleton-body'>
+			<div className='card-body p-5 skeleton-body animate-pulse'>
 				<div className='skeleton-overlay flex justify-center items-center'>
 					<img src={spinner} alt='spinner' className='h-3/4' />
 				</div>
