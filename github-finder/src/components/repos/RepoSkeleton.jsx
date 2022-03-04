@@ -5,10 +5,9 @@ function RepoSkeleton() {
 	return (
 		<div className='mb-2 rounded-md card bg-gray-800 skeleton'>
 			<div className='card-body p-5 skeleton-body'>
-				<div
-					className='skeleton-overlay bg-center bg-no-repeat bg-contain'
-					style={{ 'background-image': `url(${spinner})` }}
-				/>
+				<div className='skeleton-overlay flex justify-center items-center'>
+					<img src={spinner} alt='spinner' className='h-3/4' />
+				</div>
 				<h3 className='my-2.5 text-xl font-semibold w-1/2 flex'>
 					<FaLink className='inline mr-1' />
 					<div className='badge badge-ghost flex-auto' />
