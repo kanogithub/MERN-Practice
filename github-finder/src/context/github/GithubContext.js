@@ -8,6 +8,8 @@ const GUTHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN
 
 export const GithubProvider = ({ children }) => {
 	const initialState = {
+		responeUsers: [],
+		responeHistory: new Set(),
 		users: [],
 		user: {},
 		count: -1,
@@ -15,6 +17,14 @@ export const GithubProvider = ({ children }) => {
 	}
 
 	const [state, dispatch] = useReducer(githubReducer, initialState)
+
+	// response search
+	const responseSearch = async (query, number) => {
+		dispatch({
+			type: 'GET_RESUSERS',
+			payload: { query, number },
+		})
+	}
 
 	// get searhced users
 	const searchUsers = async (query) => {
@@ -73,10 +83,12 @@ export const GithubProvider = ({ children }) => {
 	return (
 		<GithubContext.Provider
 			value={{
+				responeUsers: state.responeUsers,
 				users: state.users,
 				user: state.user,
 				loading: state.loading,
 				count: state.count,
+				responseSearch,
 				searchUsers,
 				getUser,
 				clearUsers,

@@ -13,7 +13,6 @@
 /* skeleton effect & animation */
 .skeleton {
     position: relative;
-    filter:blur(1px);
 }
 .skeleton-body .skeleton-overlay{
     position: absolute;

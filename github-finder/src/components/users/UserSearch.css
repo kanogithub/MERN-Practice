@@ -1,0 +1,39 @@
+.custom-input-group{
+    font-size: 1.125rem;
+}
+.custom-input-group label {
+    display: flex;
+}
+.custom-input-group:focus-within .custom-rb-none {
+    border-bottom-left-radius: 0rem;
+    border-bottom-right-radius: 0rem;
+}
+.custom-input-group label:first-of-type input {
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+    outline: none;
+}
+.custom-input-group label:only-child input {
+    border-bottom-left-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+}
+.float-input:not(:focus-within) input {
+    border-bottom-left-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+}
+.custom-input-group .float-layer {
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+    z-index: 10;
+}
+.float-input:not(:focus-within) .float-layer{
+    height: 0px;
+}
+.float-input .float-layer:hover {
+    height:fit-content;
+}
+.custom-input-group label:last-of-type span {
+    border-bottom-left-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+}
