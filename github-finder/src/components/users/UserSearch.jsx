@@ -14,7 +14,7 @@ function UserSearch() {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const debounceResSearch = useCallback(
 		debounce((text) => {
-			if (text.trim()) responseSearch(text, 9)
+			if (text.trim()) responseSearch(text, 7)
 		}, 150),
 		[]
 	)

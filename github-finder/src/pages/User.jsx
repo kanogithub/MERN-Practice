@@ -65,7 +65,7 @@ function User() {
 					</div>
 
 					<div className='col-span-2 grid content-between'>
-						<div className='mb-6 p-6 rounded-lg shadow-md'>
+						<div className='mb-6 p-6 rounded-lg shadow-md bg-base-100'>
 							<h1 className='text-3xl card-title'>
 								{name}
 								<div className='ml-2 mr-1 badge badge-success'>{type}</div>

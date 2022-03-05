@@ -3,7 +3,7 @@ import { FaUserAlt } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 
-function UserSearchFloat({ users = [], handleClick }) {
+function UserSearchFloat({ users = [] }) {
 	return (
 		<div className='float-layer'>
 			{users.map((user) => (
