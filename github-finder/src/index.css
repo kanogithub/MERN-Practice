@@ -34,3 +34,12 @@
 .bg-base-100 {
     background-color: hsla(216 10% 28.8% / var(--tw-bg-opacity));
 }
+
+.sticky {
+    position: fixed;
+    z-index: 20;
+}
+  
+.sticky + main {
+    padding-top: 112px;
+}

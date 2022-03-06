@@ -1,5 +1,6 @@
 import { useState, useContext, useCallback, useEffect } from 'react'
 import GithubContext from '../../context/github/GithubContext'
+import { searchUsers } from '../../context/github/GithubActions'
 import AlertContext from '../../context/alert/AlertContext'
 import UserSearchFloat from './UserSearchFloat'
 import debounce from '../../js/Debounce'
@@ -8,37 +9,49 @@ import './UserSearch.css'
 function UserSearch() {
 	const [text, setText] = useState('')
 	const { setAlert } = useContext(AlertContext)
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const { users, responeUsers, responseSearch, searchUsers, clearUsers } =
-		useContext(GithubContext)
+	const { users, responeUsers, dispatch } = useContext(GithubContext)
+
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const debounceResSearch = useCallback(
-		debounce((text) => {
-			if (text.trim()) responseSearch(text, 7)
+		debounce((text, number) => {
+			// response search
+			if (text.trim()) {
+				dispatch({
+					type: 'GET_RESUSERS',
+					payload: { query: text.trim(), number },
+				})
+			}
 		}, 150),
 		[]
 	)
 
 	const handleChange = (e) => {
 		setText(e.target.value)
-		debounceResSearch(e.target.value)
+		debounceResSearch(e.target.value, 7)
 	}
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault()
 		setText(text.trim())
 
 		if (text === '') {
 			setAlert('Please Enter Something', 'error')
 		} else {
-			searchUsers(text)
+			dispatch({ type: 'SET_LOADING' })
+
+			const data = await searchUsers(text)
+
+			dispatch({
+				type: 'GET_USERS',
+				payload: data,
+			})
 		}
 	}
 
 	const handleClear = (e) => {
 		e.preventDefault()
 		setText('')
-		clearUsers()
+		dispatch({ type: 'CLEAR_USERS' })
 	}
 
 	useEffect(() => {

@@ -17,6 +17,7 @@ const githubReducer = (state, { type, payload }) => {
 			}
 		case 'GET_USERS':
 			const history = new Set(state.responeHistory)
+
 			payload.items.forEach((item) => history.add(item.login))
 
 			return {
@@ -44,6 +45,11 @@ const githubReducer = (state, { type, payload }) => {
 				responeUsers: [],
 				users: [],
 				count: -1,
+			}
+		case 'CLEAR_USER':
+			return {
+				...state,
+				user: {},
 			}
 		default:
 			return state

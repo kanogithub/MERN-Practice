@@ -5,15 +5,28 @@ import CountUp from 'react-countup'
 import Spinner from '../components/layout/Spinner'
 import RepoList from '../components/repos/RepoList'
 import GithubContext from '../context/github/GithubContext'
+import { getUser } from '../context/github/GithubActions'
 
 function User() {
-	const { getUser, user, loading } = useContext(GithubContext)
+	const { user, loading, dispatch } = useContext(GithubContext)
 	const { id } = useParams()
 
 	useEffect(() => {
-		getUser(id)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+		const getUsersData = async () => {
+			dispatch({ type: 'SET_LOADING' })
+
+			const data = await getUser(id)
+
+			dispatch({
+				type: 'GET_USER',
+				payload: data,
+			})
+		}
+
+		getUsersData()
+
+		return () => dispatch({ type: 'CLEAR_USER' })
+	}, [dispatch, id])
 
 	const {
 		login,
