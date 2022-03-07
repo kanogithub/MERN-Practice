@@ -3,9 +3,15 @@ import RepoItem from './RepoItem'
 import RepoSkeleton from './RepoSkeleton'
 import GithubReposContext from '../../context/github/GithubReposContext'
 
+const moveToTop = () => {
+	window.scrollTo({
+		top: 0,
+		behavior: 'smooth',
+	})
+}
+
 function RepoList({ login, reposCount }) {
-	const { repos, page, hasNext, loading, getRepos, getNextRepos, getPreviousRepos } =
-		useContext(GithubReposContext)
+	const { repos, page, hasNext, loading, getRepos, getNextRepos } = useContext(GithubReposContext)
 
 	useEffect(() => {
 		getRepos(login, reposCount, true)
@@ -24,10 +30,8 @@ function RepoList({ login, reposCount }) {
 			</div>
 			<div>
 				{page > 1 && (
-					<button
-						className='btn btn-ghost text-xl mb-7 mx-8 mt-0'
-						onClick={getPreviousRepos}>
-						Previous
+					<button className='btn btn-ghost text-xl mb-7 mx-8 mt-0' onClick={moveToTop}>
+						Move to Top
 					</button>
 				)}
 				{hasNext && (

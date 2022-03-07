@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react'
+import { useEffect, useContext, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { FaCodepen, FaStore, FaUserFriends, FaUsers } from 'react-icons/fa'
 import CountUp from 'react-countup'
@@ -8,13 +8,12 @@ import GithubContext from '../context/github/GithubContext'
 import { getUser } from '../context/github/GithubActions'
 
 function User() {
-	const { user, loading, dispatch } = useContext(GithubContext)
+	const { user, dispatch } = useContext(GithubContext)
+	const [loading, setLoading] = useState(true)
 	const { id } = useParams()
 
 	useEffect(() => {
 		const getUsersData = async () => {
-			dispatch({ type: 'SET_LOADING' })
-
 			const data = await getUser(id)
 
 			dispatch({
@@ -23,7 +22,7 @@ function User() {
 			})
 		}
 
-		getUsersData()
+		getUsersData().then(() => setLoading(false))
 
 		return () => dispatch({ type: 'CLEAR_USER' })
 	}, [dispatch, id])
@@ -188,7 +187,7 @@ function User() {
 					</div>
 				</div>
 
-				<RepoList login={id} reposCount={public_repos} />
+				{<RepoList login={id} reposCount={public_repos} />}
 			</div>
 		</>
 	)

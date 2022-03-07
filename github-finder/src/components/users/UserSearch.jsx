@@ -17,7 +17,7 @@ function UserSearch() {
 			// response search
 			if (text.trim()) {
 				dispatch({
-					type: 'GET_RESUSERS',
+					type: 'GET_SEARCHUSERS',
 					payload: { query: text.trim(), number },
 				})
 			}
@@ -55,9 +55,9 @@ function UserSearch() {
 	}
 
 	useEffect(() => {
-		const floatLayer = document.querySelector('.float-input')
-		floatLayer.addEventListener('mouseleave', () => {
-			floatLayer.children[0].children[0].blur()
+		const floatLayer = document.querySelector('.custom-input-group')
+		floatLayer.addEventListener('mouseleave', (e) => {
+			e.target.querySelector('input').blur()
 		})
 	}, [])
 

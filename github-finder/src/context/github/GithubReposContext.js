@@ -77,13 +77,6 @@ export const GithubReposProvider = ({ children }) => {
 		})
 	}
 
-	const getPreviousRepos = () => {
-		dispatch({
-			type: 'SET_PREV',
-			payload: state.page - 1,
-		})
-	}
-
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	useEffect(() => getRepos(), [state.page])
 
@@ -96,7 +89,6 @@ export const GithubReposProvider = ({ children }) => {
 				hasNext: state.hasNext,
 				getRepos,
 				getNextRepos,
-				getPreviousRepos,
 			}}>
 			{children}
 		</GithubReposContext.Provider>

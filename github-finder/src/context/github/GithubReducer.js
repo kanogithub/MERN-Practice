@@ -1,7 +1,7 @@
 // In convention this function must handles state, action as arguments
 const githubReducer = (state, { type, payload }) => {
 	switch (type) {
-		case 'GET_RESUSERS':
+		case 'GET_SEARCHUSERS':
 			let users = []
 			const totalUser = Array.from(state.responeHistory)
 			let index = 0

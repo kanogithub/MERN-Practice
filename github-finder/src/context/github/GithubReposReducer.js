@@ -4,23 +4,19 @@ const githubReposReducer = (state, { type, payload }) => {
 		case 'GET_REPOS':
 			return {
 				...state,
-				repos: payload.repos,
+				repos: [...state.repos, ...payload.repos],
 				hasNext: payload.hasNext,
 				loading: false,
 			}
 		case 'SET_INIT':
 			return {
 				...state,
+				repos: [],
 				login: payload.login,
 				count: payload.count,
-				page: payload.page,
+				page: 1,
 			}
 		case 'SET_NEXT':
-			return {
-				...state,
-				page: payload,
-			}
-		case 'SET_PREV':
 			return {
 				...state,
 				page: payload,
