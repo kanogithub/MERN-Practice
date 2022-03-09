@@ -2,6 +2,7 @@ import { useContext, useEffect } from 'react'
 import RepoItem from './RepoItem'
 import RepoSkeleton from './RepoSkeleton'
 import GithubReposContext from '../../context/github/GithubReposContext'
+import { getRepos } from '../../context/github/GithubReposActions'
 
 const moveToTop = () => {
 	window.scrollTo({
@@ -11,12 +12,47 @@ const moveToTop = () => {
 }
 
 function RepoList({ login, reposCount }) {
-	const { repos, page, hasNext, loading, getRepos, getNextRepos } = useContext(GithubReposContext)
+	const { repos, pageSize, page, hasNext, loading, dispatch } = useContext(GithubReposContext)
 
+	// initiate
 	useEffect(() => {
-		getRepos(login, reposCount, true)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+		console.log('initiate')
+		dispatch({
+			type: 'SET_INIT',
+			payload: {
+				login,
+				count: reposCount,
+				page: 1,
+			},
+		})
+	}, [login, reposCount, dispatch])
+
+	// trigger when page changes
+	useEffect(() => {
+		const getReposData = async () => {
+			dispatch({
+				type: 'SET_LOADING',
+			})
+			const data = await getRepos(login, pageSize, page)
+
+			dispatch({
+				type: 'GET_REPOS',
+				payload: {
+					repos: data,
+					hasNext: reposCount > page * pageSize,
+				},
+			})
+		}
+
+		getReposData()
+	}, [login, reposCount, pageSize, page, dispatch])
+
+	const getNextRepos = () => {
+		dispatch({
+			type: 'SET_NEXT',
+			payload: page + 1,
+		})
+	}
 
 	return (
 		<div className='rounded-lg shadow-lg card bg-base-100'>
