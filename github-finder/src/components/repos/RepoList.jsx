@@ -16,7 +16,6 @@ function RepoList({ login, reposCount }) {
 
 	// initiate
 	useEffect(() => {
-		console.log('initiate')
 		dispatch({
 			type: 'SET_INIT',
 			payload: {
