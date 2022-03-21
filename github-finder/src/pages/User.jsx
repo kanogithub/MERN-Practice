@@ -84,14 +84,14 @@ function User() {
 							</h1>
 							<div className='divider'>Stats</div>
 							<div className='git-stats flex flex-col lg:flex-row'>
-								<figure className='p-2'>
+								<figure>
 									<img
 										src={`https://github-readme-stats.vercel.app/api?username=${id}&theme=nord&border_color=a3a4a9a0&title_color=6FC0FF`}
 										alt='git-stats'
 										className='w-full'
 									/>
 								</figure>
-								<figure className='p-2'>
+								<figure>
 									<img
 										src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${id}&theme=nord&border_color=a3a4a9a0&title_color=6FC0FF`}
 										alt='git-langs'
