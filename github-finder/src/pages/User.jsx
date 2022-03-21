@@ -33,7 +33,6 @@ function User() {
 		location,
 		name,
 		type,
-		bio,
 		blog,
 		twitter_username,
 		html_url,
@@ -56,7 +55,7 @@ function User() {
 
 				<div className='grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 mb-8 md:gap-8'>
 					<div className='custom-card-image mb-6 md:mb-0'>
-						<div className='rounded-lg shadow-xl card image-full'>
+						<div className='rounded-lg shadow-xl card image-full h-full'>
 							<div className='mt-4 p-6 card-actions lg:justify-center lg:items-center justify-end items-end'>
 								<a
 									href={html_url}
@@ -83,8 +82,23 @@ function User() {
 								<div className='ml-2 mr-1 badge badge-success'>{type}</div>
 								{hireable && <div className='mx-1 badge badge-info'>Hireable</div>}
 							</h1>
-							<div className='divider'>Bio</div>
-							{bio}
+							<div className='divider'>Stats</div>
+							<div className='git-stats flex flex-col lg:flex-row'>
+								<figure className='p-2'>
+									<img
+										src={`https://github-readme-stats.vercel.app/api?username=${id}&theme=nord&border_color=a3a4a9a0`}
+										alt='git-stats'
+										className='w-full'
+									/>
+								</figure>
+								<figure className='p-2'>
+									<img
+										src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${id}&theme=nord&border_color=a3a4a9a0`}
+										alt='git-langs'
+										className='w-full'
+									/>
+								</figure>
+							</div>
 						</div>
 
 						<div className='w-full rounded-lg shadow-md bg-base-100 stats stats-vertical lg:stats-horizontal'>

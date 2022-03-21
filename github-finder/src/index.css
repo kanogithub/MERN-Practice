@@ -43,3 +43,7 @@
 .sticky + main {
     padding-top: 112px;
 }
+
+.git-stats {
+    justify-content: space-around;
+}
