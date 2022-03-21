@@ -21,7 +21,7 @@ function RepoItem({ repo }) {
 		<div className='mb-2 rounded-md card bg-gray-800 hover:bg-gray-900' ref={ref}>
 			<div className='card-body p-5'>
 				<h3 className='mb-2 text-xl font-semibold'>
-					<a href={html_url}>
+					<a href={html_url} target='blank'>
 						<FaLink className='inline mr-1' />
 						<span className='indicator'>
 							<span
