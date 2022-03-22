@@ -11,8 +11,15 @@ function User() {
 	const { user, dispatch } = useContext(GithubContext)
 	const [loading, setLoading] = useState(true)
 	const { id } = useParams()
-
+	console.log('user rendered')
 	useEffect(() => {
+		// moving scroll to top
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth',
+		})
+
+		// fetch User Data
 		const getUsersData = async () => {
 			const data = await getUser(id)
 
@@ -68,7 +75,7 @@ function User() {
 							<figure>
 								<img src={avatar_url} alt='avatarPhoto' className='w-full' />
 							</figure>
-							<div className='card-body justify-end'>
+							<div className='card-body justify-start p-4 lg:justify-end lg:p-8'>
 								<h2 className='card-title mb-0'>{name}</h2>
 								<h4>{login}</h4>
 							</div>
@@ -84,14 +91,14 @@ function User() {
 							</h1>
 							<div className='divider'>Stats</div>
 							<div className='git-stats flex flex-col lg:flex-row'>
-								<figure>
+								<figure className='my-1'>
 									<img
 										src={`https://github-readme-stats.vercel.app/api?username=${id}&theme=nord&border_color=a3a4a9a0&title_color=6FC0FF`}
 										alt='git-stats'
 										className='w-full'
 									/>
 								</figure>
-								<figure>
+								<figure className='mt-1'>
 									<img
 										src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${id}&theme=nord&border_color=a3a4a9a0&title_color=6FC0FF`}
 										alt='git-langs'
@@ -113,7 +120,10 @@ function User() {
 									<div className='stat-title text-md'>Website</div>
 									<div className='text-lg stat-value'>
 										<a
-											href={`https://${blog}`}
+											href={`http://${blog.replace(
+												/https:\/\/|http:\/\//i,
+												''
+											)}`}
 											target='_blank'
 											rel='noreferrer'>
 											{blog}
