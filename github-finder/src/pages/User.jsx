@@ -7,6 +7,13 @@ import RepoList from '../components/repos/RepoList'
 import GithubContext from '../context/github/GithubContext'
 import { getUser } from '../context/github/GithubActions'
 
+const STATS_VERCEL_APP = process.env.REACT_APP_STATS_VERCEL
+const vercelAppParams = new URLSearchParams({
+	theme: 'nord',
+	border_color: 'a3a4a9a0',
+	title_color: '6FC0FF',
+})
+
 function User() {
 	const { user, dispatch } = useContext(GithubContext)
 	const [loading, setLoading] = useState(true)
@@ -93,14 +100,14 @@ function User() {
 							<div className='git-stats flex flex-col lg:flex-row'>
 								<figure className='my-1'>
 									<img
-										src={`https://github-readme-stats.vercel.app/api?username=${id}&theme=nord&border_color=a3a4a9a0&title_color=6FC0FF`}
+										src={`${STATS_VERCEL_APP}/api?username=${id}&${vercelAppParams}`}
 										alt='git-stats'
 										className='w-full'
 									/>
 								</figure>
 								<figure className='mt-1'>
 									<img
-										src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${id}&theme=nord&border_color=a3a4a9a0&title_color=6FC0FF`}
+										src={`${STATS_VERCEL_APP}/api/top-langs/?username=${id}&${vercelAppParams}`}
 										alt='git-langs'
 										className='w-full'
 									/>
