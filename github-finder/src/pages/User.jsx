@@ -11,7 +11,7 @@ function User() {
 	const { user, dispatch } = useContext(GithubContext)
 	const [loading, setLoading] = useState(true)
 	const { id } = useParams()
-	console.log(id)
+
 	useEffect(() => {
 		// moving scroll to top
 		window.scrollTo({
