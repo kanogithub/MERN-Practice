@@ -3,11 +3,12 @@ import { useParams, Link } from 'react-router-dom'
 import { FaCodepen, FaStore, FaUserFriends, FaUsers } from 'react-icons/fa'
 import CountUp from 'react-countup'
 import Spinner from '../components/layout/Spinner'
+import LazyFig from '../components/shared/LazyFig'
 import RepoList from '../components/repos/RepoList'
 import GithubContext from '../context/github/GithubContext'
 import { getUser } from '../context/github/GithubActions'
 
-const STATS_VERCEL_APP = process.env.REACT_APP_STATS_VERCEL
+// const STATS_VERCEL_APP = process.env.REACT_APP_STATS_VERCEL
 const vercelAppParams = new URLSearchParams({
 	theme: 'nord',
 	border_color: 'a3a4a9a0',
@@ -98,19 +99,16 @@ function User() {
 							</h1>
 							<div className='divider'>Stats</div>
 							<div className='git-stats flex flex-col lg:flex-row'>
-								<figure className='my-1'>
-									<img
-										src={`${STATS_VERCEL_APP}/api?username=${id}&${vercelAppParams}`}
-										alt='git-stats'
-										className='w-full'
-									/>
-								</figure>
+								<LazyFig
+									_className={'my-1'}
+									_src={`/api?username=${id}&${vercelAppParams}`}
+								/>
 								<figure className='mt-1'>
-									<img
+									{/* <img
 										src={`${STATS_VERCEL_APP}/api/top-langs/?username=${id}&${vercelAppParams}`}
 										alt='git-langs'
 										className='w-full'
-									/>
+									/> */}
 								</figure>
 							</div>
 						</div>
