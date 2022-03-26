@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import axios from 'axios'
-import spinner from '../assets/spinner.gif'
+// import spinner from '../assets/spinner.gif'
 
 const STATS_VERCEL_APP = process.env.REACT_APP_STATS_VERCEL
 
