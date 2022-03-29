@@ -1,7 +1,7 @@
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import RepoItem from './RepoItem'
 import RepoSkeleton from './RepoSkeleton'
-import GithubReposContext from '../../context/github/GithubReposContext'
+import { useGithubReposContext } from '../../context/github/GithubReposContext'
 import { getRepos } from '../../context/github/GithubReposActions'
 
 const moveToTop = () => {
@@ -12,7 +12,7 @@ const moveToTop = () => {
 }
 
 function RepoList({ login, reposCount }) {
-	const { repos, pageSize, page, hasNext, loading, dispatch } = useContext(GithubReposContext)
+	const { repos, pageSize, page, hasNext, loading, dispatch } = useGithubReposContext()
 
 	// initiate
 	useEffect(() => {

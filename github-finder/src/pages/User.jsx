@@ -1,10 +1,10 @@
-import { useEffect, useContext, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { FaCodepen, FaStore, FaUserFriends, FaUsers } from 'react-icons/fa'
 import CountUp from 'react-countup'
 import Spinner from '../components/layout/Spinner'
 import RepoList from '../components/repos/RepoList'
-import GithubContext from '../context/github/GithubContext'
+import { useGithubContext } from '../context/github/GithubContext'
 import { getUser } from '../context/github/GithubActions'
 
 const STATS_VERCEL_APP = process.env.REACT_APP_STATS_VERCEL
@@ -15,7 +15,7 @@ const vercelAppParams = new URLSearchParams({
 })
 
 function User() {
-	const { user, dispatch } = useContext(GithubContext)
+	const { user, dispatch } = useGithubContext()
 	const [loading, setLoading] = useState(true)
 	const { id } = useParams()
 
