@@ -1,6 +1,6 @@
 function About() {
 	return (
-		<div>
+		<div className='fade'>
 			<h1 className='text-6xl mb-8 text-gray-50'>Github finder</h1>
 			<h3 className='text-xl mb-2 text-gray-200'>RESTful API: Github API Practice</h3>
 			<h3 className='text-xl mb-2 text-gray-200'>Custom API: Github Readme Stats</h3>

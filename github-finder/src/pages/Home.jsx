@@ -9,10 +9,10 @@ function Home() {
 	if (querySearch) return <Navigate to={`/user/${querySearch}`} />
 
 	return (
-		<>
+		<div className='fade'>
 			<UserSearch />
 			<UserResults />
-		</>
+		</div>
 	)
 }
 

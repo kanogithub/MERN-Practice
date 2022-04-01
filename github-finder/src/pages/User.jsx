@@ -59,7 +59,7 @@ function User() {
 
 	if (loading) return <Spinner />
 	return (
-		<>
+		<div className='fade'>
 			<div className='w-full mx-auto lg:w-w-10/12'>
 				<div className='mb-4'>
 					<Link to='/' className='btn btn-ghost'>
@@ -220,7 +220,7 @@ function User() {
 
 				{<RepoList login={id} reposCount={public_repos} />}
 			</div>
-		</>
+		</div>
 	)
 }
 

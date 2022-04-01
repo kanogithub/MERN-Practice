@@ -3,47 +3,59 @@
 @tailwind utilities;
 
 #root {
-    min-width: 410px;
+	min-width: 410px;
 }
 
 .custom-card-image .card.image-full::before {
-    border-radius: 0.5rem;
-    opacity: 0.45;
+	border-radius: 0.5rem;
+	opacity: 0.45;
 }
 .custom-card-image .card.image-full:hover::before {
-    opacity: 0.75;
+	opacity: 0.75;
 }
 
 .custom-card-image .card-actions {
-    z-index: 99;
-    margin: 0;
+	z-index: 99;
+	margin: 0;
 }
 
 @media (min-width: 1024px) {
-    .custom-card-image .card.image-full .card-actions a {
-        opacity: 0;
-        transform: translateY(100%);
-    }
-    .custom-card-image .card.image-full .card-actions:hover a {
-        opacity: 1;
-        transform: translateY(0%);
-    }
+	.custom-card-image .card.image-full .card-actions a {
+		opacity: 0;
+		transform: translateY(100%);
+	}
+	.custom-card-image .card.image-full .card-actions:hover a {
+		opacity: 1;
+		transform: translateY(0%);
+	}
 }
 
-
 .bg-base-100 {
-    background-color: hsla(216 10% 28.8% / var(--tw-bg-opacity));
+	background-color: hsla(216 10% 28.8% / var(--tw-bg-opacity));
 }
 
 .sticky {
-    position: fixed;
-    z-index: 999;
+	position: fixed;
+	z-index: 999;
 }
-  
+
 .sticky + main {
-    padding-top: 112px;
+	padding-top: 112px;
 }
 
 .git-stats {
-    justify-content: space-around;
+	justify-content: space-around;
+}
+
+.fade.fade-enter {
+	opacity: 0.01;
+	transition: all 300ms ease-in-out;
+}
+
+.fade.fade-enter-active {
+	opacity: 1;
+}
+
+.fade.fade-exit {
+	visibility: hidden;
 }

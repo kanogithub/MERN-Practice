@@ -1,11 +1,12 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
+import Alert from './components/layout/Alert'
 import Home from './pages/Home'
 import About from './pages/About'
 import NotFound from './pages/NotFound'
-import Alert from './components/layout/Alert'
 import User from './pages/User'
+import TransitionRoutes from './components/layout/TransitionRoutes'
 import { GithubProvider } from './context/github/GithubContext'
 import { AlertProvider } from './context/alert/AlertContext'
 import { GithubReposProvider } from './context/github/GithubReposContext'
@@ -20,13 +21,13 @@ function App() {
 							<Navbar />
 							<main className='container mx-auto pb-12 px-6 flex-auto'>
 								<Alert />
-								<Routes>
+								<TransitionRoutes>
 									<Route path='/' element={<Home />}></Route>
 									<Route path='/about' element={<About />}></Route>
 									<Route path='/notfound' element={<NotFound />}></Route>
 									<Route path='/*' element={<NotFound />}></Route>
 									<Route path='user/:id' element={<User />}></Route>
-								</Routes>
+								</TransitionRoutes>
 							</main>
 							<Footer />
 						</div>
