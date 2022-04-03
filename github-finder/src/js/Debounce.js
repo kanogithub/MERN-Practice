@@ -1,3 +1,4 @@
+//@ts-check
 /**
  * @param func {Function}
  * @param delay {Number}

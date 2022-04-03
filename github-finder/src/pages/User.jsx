@@ -36,7 +36,7 @@ function User() {
 			})
 		}
 
-		getUsersData().then(() => setLoading(false))
+		getUsersData().then(() => setLoading(true))
 
 		return () => dispatch({ type: 'CLEAR_USER' })
 	}, [dispatch, id])
@@ -57,7 +57,12 @@ function User() {
 		hireable,
 	} = user
 
-	if (loading) return <Spinner />
+	if (loading)
+		return (
+			<div className='fixed inset-0 flex justify-center items-center h-3/4 w-screen'>
+				<Spinner />
+			</div>
+		)
 	return (
 		<div className='fade'>
 			<div className='w-full mx-auto lg:w-w-10/12'>
