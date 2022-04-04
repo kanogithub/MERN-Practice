@@ -77,3 +77,8 @@
 .show {
 	display: block;
 }
+
+.card-profile:hover .profile-cta {
+	opacity: 1;
+	color: hsl(var(--pc) / var(--tw-text-opacity));
+}
