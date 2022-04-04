@@ -3,7 +3,6 @@ import { FaLongArrowAltUp } from 'react-icons/fa'
 
 function MoveToTop() {
 	const moveButton = useRef()
-	const elem = moveButton.current
 
 	const moveToTop = () => {
 		window.scrollTo({
@@ -22,7 +21,7 @@ function MoveToTop() {
 		}
 	}
 
-	const closeMoveTopTimeout = debounce(() => elem.classList.remove('show'), 2500)
+	const closeMoveTopTimeout = debounce(() => moveButton.current.classList.remove('show'), 2500)
 
 	const handleScroll = () => {
 		const pageY = window.innerHeight
