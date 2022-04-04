@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import NotFound from './pages/NotFound'
 import User from './pages/User'
+import FavorList from './pages/FavorList'
 import TransitionRoutes from './components/layout/TransitionRoutes'
 import { GithubProvider } from './context/github/GithubContext'
 import { AlertProvider } from './context/alert/AlertContext'
@@ -27,6 +28,7 @@ function App() {
 									<Route path='/notfound' element={<NotFound />}></Route>
 									<Route path='/*' element={<NotFound />}></Route>
 									<Route path='user/:id' element={<User />}></Route>
+									<Route path='/favoriteList' element={<FavorList />}></Route>
 								</TransitionRoutes>
 							</main>
 							<Footer />
