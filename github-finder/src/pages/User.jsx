@@ -5,6 +5,7 @@ import CountUp from 'react-countup'
 import Spinner from '../components/layout/Spinner'
 import RepoList from '../components/repos/RepoList'
 import MoveToTop from '../components/shared/MoveToTop'
+import UserFavorite from '../components/users/UserFavorite'
 import { useGithubContext } from '../context/github/GithubContext'
 import { getUser } from '../context/github/GithubActions'
 
@@ -97,11 +98,17 @@ function User() {
 
 					<div className='col-span-2 grid content-between'>
 						<div className='mb-6 p-6 rounded-lg shadow-md bg-base-100'>
-							<h1 className='text-3xl card-title'>
-								{name}
-								<div className='ml-2 mr-1 badge badge-success'>{type}</div>
-								{hireable && <div className='mx-1 badge badge-info'>Hireable</div>}
-							</h1>
+							<div className='flex flex-row justify-between'>
+								<h1 className='text-3xl card-title'>
+									{name}
+									<div className='ml-2 mr-1 badge badge-success'>{type}</div>
+									{hireable && (
+										<div className='mx-1 badge badge-info'>Hireable</div>
+									)}
+								</h1>
+								<UserFavorite login={login} avatar_url={avatar_url} />
+							</div>
+
 							<div className='divider'>Stats</div>
 							<div className='git-stats flex flex-col lg:flex-row'>
 								<figure className='my-1'>
