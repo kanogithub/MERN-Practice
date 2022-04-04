@@ -27,7 +27,7 @@ function MoveToTop() {
 	const handleScroll = () => {
 		const pageY = window.innerHeight
 		const scrollY = window.scrollY
-
+		const elem = moveButton.current
 		scrollY > (pageY * 2) / 3 ? elem.classList.add('show') : elem.classList.remove('show')
 		closeMoveTopTimeout()
 	}
