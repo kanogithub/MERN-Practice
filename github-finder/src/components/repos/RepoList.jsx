@@ -4,13 +4,6 @@ import RepoSkeleton from './RepoSkeleton'
 import { useGithubReposContext } from '../../context/github/GithubReposContext'
 import { getRepos } from '../../context/github/GithubReposActions'
 
-const moveToTop = () => {
-	window.scrollTo({
-		top: 0,
-		behavior: 'smooth',
-	})
-}
-
 function RepoList({ login, reposCount }) {
 	const { repos, pageSize, page, hasNext, loading, dispatch } = useGithubReposContext()
 
@@ -64,11 +57,6 @@ function RepoList({ login, reposCount }) {
 				})}
 			</div>
 			<div>
-				{page > 1 && (
-					<button className='btn btn-ghost text-xl mb-7 mx-8 mt-0' onClick={moveToTop}>
-						Move to Top
-					</button>
-				)}
 				{hasNext && (
 					<button className='btn btn-ghost text-xl mb-7 mx-8 mt-0' onClick={getNextRepos}>
 						More...

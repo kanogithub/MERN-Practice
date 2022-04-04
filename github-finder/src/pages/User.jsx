@@ -4,6 +4,7 @@ import { FaCodepen, FaStore, FaUserFriends, FaUsers } from 'react-icons/fa'
 import CountUp from 'react-countup'
 import Spinner from '../components/layout/Spinner'
 import RepoList from '../components/repos/RepoList'
+import MoveToTop from '../components/shared/MoveToTop'
 import { useGithubContext } from '../context/github/GithubContext'
 import { getUser } from '../context/github/GithubActions'
 
@@ -225,6 +226,8 @@ function User() {
 
 				{<RepoList login={id} reposCount={public_repos} />}
 			</div>
+
+			<MoveToTop />
 		</div>
 	)
 }

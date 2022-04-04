@@ -59,3 +59,21 @@
 .fade.fade-exit {
 	visibility: hidden;
 }
+
+.moveButton {
+	position: fixed;
+	width: 6rem;
+	height: 5.5rem;
+	left: 3rem;
+	bottom: 11rem;
+	display: none;
+}
+
+.moveButton span {
+	display: block;
+	font-size: smaller;
+}
+
+.show {
+	display: block;
+}
