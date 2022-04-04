@@ -36,7 +36,7 @@ function User() {
 			})
 		}
 
-		getUsersData().then(() => setLoading(true))
+		getUsersData().then(() => setLoading(false))
 
 		return () => dispatch({ type: 'CLEAR_USER' })
 	}, [dispatch, id])
