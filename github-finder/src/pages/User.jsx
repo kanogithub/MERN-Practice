@@ -6,6 +6,7 @@ import Spinner from '../components/layout/Spinner'
 import RepoList from '../components/repos/RepoList'
 import MoveToTop from '../components/shared/MoveToTop'
 import UserFavorite from '../components/users/UserFavorite'
+import FloatAlert from '../components/shared/FloatAlert'
 import { useGithubContext } from '../context/github/GithubContext'
 import { getUser } from '../context/github/GithubActions'
 
@@ -67,6 +68,7 @@ function User() {
 		)
 	return (
 		<div className='fade'>
+			<FloatAlert />
 			<div className='w-full mx-auto lg:w-w-10/12'>
 				<div className='mb-4'>
 					<Link to='/' className='btn btn-ghost'>

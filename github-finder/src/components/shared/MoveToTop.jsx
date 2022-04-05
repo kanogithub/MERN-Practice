@@ -21,13 +21,18 @@ function MoveToTop() {
 		}
 	}
 
-	const closeMoveTopTimeout = debounce(() => moveButton.current.classList.remove('show'), 2500)
+	const closeMoveTopTimeout = debounce(
+		() => moveButton.current && moveButton.current.classList.remove('show'),
+		2500
+	)
 
 	const handleScroll = () => {
 		const pageY = window.innerHeight
 		const scrollY = window.scrollY
 		const elem = moveButton.current
-		scrollY > (pageY * 2) / 3 ? elem.classList.add('show') : elem.classList.remove('show')
+		scrollY > (pageY * 2) / 3 && moveButton.current
+			? elem.classList.add('show')
+			: elem.classList.remove('show')
 		closeMoveTopTimeout()
 	}
 
