@@ -1,13 +1,13 @@
-function About() {
+function About({ nodeRef }) {
 	return (
-		<div className='fade'>
+		<div className='fade' ref={nodeRef}>
 			<h1 className='text-6xl mb-8 text-gray-50'>Github finder</h1>
 			<h3 className='text-xl mb-2 text-gray-200'>RESTful API: Github API Practice</h3>
 			<h3 className='text-xl mb-2 text-gray-200'>Custom API: Github Readme Stats</h3>
 			<h3 className='text-xl mb-2 text-gray-200'>
 				Stack: React.js, TailwindCSS, Daisyui Theme.
 			</h3>
-			<h3 className='text-xl mt-8 mb-2 text-gray-200'>Version: 1.5.3</h3>
+			<h3 className='text-xl mt-8 mb-2 text-gray-200'>Version: 1.5.4</h3>
 			<p className='text-gray-300'>This is for individual practicing.</p>
 			<p className='text-gray-300'>
 				Mainly focus on fundamental hooks with some popular modern approach.
@@ -27,6 +27,7 @@ function About() {
 			<p className='text-gray-300'>Profile Hover Layout with RWD Button, </p>
 			<p className='text-gray-300'>More Compatible RWD design, Sticky navbar.</p>
 			<p className='text-gray-300'>Combined with anuraghazra/github-readme-stats.</p>
+			<p className='text-gray-300'>Lazy loading about to improve performance.</p>
 		</div>
 	)
 }

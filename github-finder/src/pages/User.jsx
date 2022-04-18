@@ -17,7 +17,7 @@ const vercelAppParams = new URLSearchParams({
 	title_color: '6FC0FF',
 })
 
-function User() {
+function User({ nodeRef }) {
 	const { user, dispatch } = useGithubContext()
 	const [loading, setLoading] = useState(true)
 	const { id } = useParams()
@@ -62,12 +62,14 @@ function User() {
 
 	if (loading)
 		return (
-			<div className='fixed inset-0 flex justify-center items-center h-3/4 w-screen'>
+			<div
+				className='fixed inset-0 flex justify-center items-center h-3/4 w-screen'
+				ref={nodeRef}>
 				<Spinner />
 			</div>
 		)
 	return (
-		<div className='fade'>
+		<div className='fade' ref={nodeRef}>
 			<FloatAlert />
 			<div className='w-full mx-auto lg:w-w-10/12'>
 				<div className='mb-4'>
