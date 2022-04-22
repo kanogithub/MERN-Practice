@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 #root {
-	min-width: 410px;
+	width: 100vw;
 }
 
 .custom-card-image .card.image-full::before {

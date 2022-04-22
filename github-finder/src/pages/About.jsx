@@ -7,7 +7,7 @@ function About({ nodeRef }) {
 			<h3 className='text-xl mb-2 text-gray-200'>
 				Stack: React.js, TailwindCSS, Daisyui Theme.
 			</h3>
-			<h3 className='text-xl mt-8 mb-2 text-gray-200'>Version: 1.5.4</h3>
+			<h3 className='text-xl mt-8 mb-2 text-gray-200'>Version: 1.5.5</h3>
 			<p className='text-gray-300'>This is for individual practicing.</p>
 			<p className='text-gray-300'>
 				Mainly focus on fundamental hooks with some popular modern approach.

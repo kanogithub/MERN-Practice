@@ -24,7 +24,7 @@ function App() {
 					<Router>
 						<div className='flex flex-col justify-between h-screen'>
 							<Navbar />
-							<main className='container mx-auto pb-12 px-48 3xl:px-6 flex-auto'>
+							<main className='container mx-auto pb-12 px-6 xl:px-48 3xl:px-6 flex-auto'>
 								<Alert />
 								<Suspense fallback={<p>Loading...</p>}>
 									<TransitionRoutes>
