@@ -109,6 +109,9 @@
 .alert {
 	transform: scale(0);
 	transform-origin: top;
+}
+
+.alert.animate {
 	animation-name: slideShow;
 	animation-duration: 3s;
 	animation-timing-function: ease-in-out;

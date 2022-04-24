@@ -6,7 +6,7 @@ function Alert() {
 
 	return (
 		alert && (
-			<div className='alert alert-error shadow-md mb-4 space-x-2 w-1/3'>
+			<div className='alert animate alert-error shadow-md mb-4 space-x-2 w-1/3'>
 				<div>
 					{alert.type === 'error' && (
 						<svg className='w-6 h-6 flex-none mt-0.5' fill='none' viewBox='0 0 24 24'>

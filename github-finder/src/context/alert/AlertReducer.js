@@ -7,6 +7,8 @@ const alertReducer = (state, { type: actionType, payload }) => {
 			}
 
 		case 'SET_FLOATALERT':
+			clearTimeout(payload.timeoutID)
+
 			return {
 				...state,
 				floatAlert: payload,

@@ -1,4 +1,4 @@
-import { createContext, useReducer } from 'react'
+import { createContext, useReducer, useRef } from 'react'
 import alertReducer from './AlertReducer'
 
 const AlertContext = createContext()
@@ -6,6 +6,7 @@ const AlertContext = createContext()
 export const AlertProvider = ({ children }) => {
 	const initialState = { alert: null, floatAlert: null }
 	const [state, dispatch] = useReducer(alertReducer, initialState)
+	const timeoutID = useRef(null)
 
 	const setAlert = (msg, type) => {
 		dispatch({
@@ -19,10 +20,10 @@ export const AlertProvider = ({ children }) => {
 	const setFloatAlert = (msg, type) => {
 		dispatch({
 			type: 'SET_FLOATALERT',
-			payload: { msg, type },
+			payload: { msg, type, timeoutID: timeoutID.current },
 		})
 
-		setTimeout(() => dispatch({ type: 'REMOVE_FLOATALERT' }), 3000)
+		timeoutID.current = setTimeout(() => dispatch({ type: 'REMOVE_FLOATALERT' }), 3000)
 	}
 
 	return (
