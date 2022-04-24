@@ -39,6 +39,7 @@ function Profile() {
 				toast.success('Profile has been updated')
 			}
 		} catch (error) {
+			console.log(error)
 			toast.error('Could not update profile details')
 		}
 
