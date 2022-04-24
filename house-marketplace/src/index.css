@@ -270,6 +270,10 @@ button {
 	align-items: center;
 }
 
+.socialIconDivGroup {
+	display: flex;
+}
+
 .socialIconDiv {
 	cursor: pointer;
 	display: flex;
