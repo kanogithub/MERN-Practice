@@ -22,8 +22,6 @@ function Profile() {
 		navigate('/')
 	}
 
-	console.log(auth.currentUser)
-
 	const onSubmit = async () => {
 		try {
 			if (auth.currentUser.displayName !== name) {
