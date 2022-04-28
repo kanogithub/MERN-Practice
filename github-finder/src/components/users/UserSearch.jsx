@@ -26,7 +26,7 @@ function UserSearch() {
 	)
 
 	const inputRef = useCallback((inputElem) => {
-		inputElem.focus()
+		inputElem && inputElem.focus()
 	}, [])
 
 	const handleChange = (e) => {
