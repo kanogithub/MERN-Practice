@@ -1,7 +1,4 @@
-import { useState, useRef } from 'react'
-
-function ListingForm({ formData, onChange, onSubmit, onMutate }) {
-	const [geolocationEnabled, setGeolocationEnabled] = useState(true)
+function ListingForm({ geolocationEnabled, formData, onChange, onSubmit, onMutate }) {
 	const {
 		type,
 		name,
@@ -13,7 +10,6 @@ function ListingForm({ formData, onChange, onSubmit, onMutate }) {
 		offer,
 		regularPrice,
 		discountedPrice,
-		images,
 		latitude,
 		longitude,
 	} = formData
@@ -73,7 +69,7 @@ function ListingForm({ formData, onChange, onSubmit, onMutate }) {
 					</div>
 					<div>
 						<label htmlFor='bathrooms' className='formLabel'>
-							Bedrooms
+							Bathrooms
 						</label>
 						<input
 							type='number'
