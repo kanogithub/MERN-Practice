@@ -25,6 +25,10 @@ function UserSearch() {
 		[]
 	)
 
+	const inputRef = useCallback((inputElem) => {
+		inputElem.focus()
+	}, [])
+
 	const handleChange = (e) => {
 		setText(e.target.value)
 		debounceResSearch(e.target.value, 7)
@@ -74,6 +78,7 @@ function UserSearch() {
 										className='w-full pr-40 bg-gray-200 input-lg text-black'
 										placeholder='Search User ID'
 										value={text}
+										ref={inputRef}
 										onChange={handleChange}
 									/>
 								</label>
