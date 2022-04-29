@@ -82,6 +82,7 @@ function CreateListing() {
 			location =
 				data.status === 'ZERO_RESULTS' ? undefined : data.results[0].formatted_address
 
+			// just check if has correct address by geolocationAPIs
 			if (location === undefined || location.includes('undefined')) {
 				setLoading(false)
 				toast.error('Please enter a correct address')
@@ -90,7 +91,6 @@ function CreateListing() {
 		} else {
 			geolocation.lat = formData.latitude
 			geolocation.lng = formData.longitude
-			location = formData.address
 		}
 
 		// Store images in firebase
@@ -142,7 +142,7 @@ function CreateListing() {
 			imageUrls,
 			geolocation,
 			timestamp: serverTimestamp(),
-			location,
+			location: formData.address,
 		}
 
 		delete formDataCopy.images
