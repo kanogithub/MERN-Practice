@@ -1,4 +1,4 @@
-function ListingForm({ geolocationEnabled, formData, onChange, onSubmit, onMutate }) {
+function ListingForm({ geolocationEnabled, formData, onSubmit, onMutate }) {
 	const {
 		type,
 		name,

@@ -14,6 +14,9 @@ import CreateListing from './pages/CreateListing'
 import Listing from './pages/Listing'
 import Contact from './pages/Contact'
 
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper'
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y])
+
 function App() {
 	return (
 		<>
