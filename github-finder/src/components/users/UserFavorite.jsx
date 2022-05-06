@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react'
 import { MdFavoriteBorder, MdFavorite } from 'react-icons/md'
 import AlertContext from '../../context/alert/AlertContext'
 
-function UserFavorite({ login, avatar_url }) {
+function UserFavorite({ login, avatar_url, className }) {
 	const [isFavorite, setFavorite] = useState(false)
 	const { setFloatAlert } = useContext(AlertContext)
 
@@ -29,12 +29,9 @@ function UserFavorite({ login, avatar_url }) {
 	}, [login])
 
 	return isFavorite ? (
-		<MdFavorite
-			className='text-2xl md:text-3xl text-error my-auto mr-2'
-			onClick={handleChange}
-		/>
+		<MdFavorite className={className} onClick={handleChange} />
 	) : (
-		<MdFavoriteBorder className='text-2xl md:text-3xl m-auto mr-2' onClick={handleChange} />
+		<MdFavoriteBorder className={className} onClick={handleChange} />
 	)
 }
 

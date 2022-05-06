@@ -16,6 +16,7 @@ const vercelAppParams = new URLSearchParams({
 	border_color: 'a3a4a9a0',
 	title_color: '6FC0FF',
 })
+const onMobile = window.innerWidth < 570
 
 function User({ nodeRef }) {
 	const { user, dispatch } = useGithubContext()
@@ -81,7 +82,14 @@ function User({ nodeRef }) {
 				<div className='grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 mb-8 md:gap-8'>
 					<div className='custom-card-image mb-6 md:mb-0'>
 						<div className='rounded-lg shadow-xl card image-full h-full'>
-							<div className='mt-4 p-6 card-actions lg:justify-center lg:items-center justify-end items-end'>
+							<div className='mt-4 p-6 card-actions lg:justify-center lg:items-center justify-end items-end flex-col'>
+								{onMobile && (
+									<UserFavorite
+										login={login}
+										avatar_url={avatar_url}
+										className={'text-3xl text-error mb-auto'}
+									/>
+								)}
 								<a
 									href={html_url}
 									target='_blank'
@@ -110,7 +118,13 @@ function User({ nodeRef }) {
 										<div className='mx-1 badge badge-info'>Hireable</div>
 									)}
 								</h1>
-								<UserFavorite login={login} avatar_url={avatar_url} />
+								{!onMobile && (
+									<UserFavorite
+										login={login}
+										avatar_url={avatar_url}
+										className={'text-2xl md:text-3xl text-error my-auto mr-2'}
+									/>
+								)}
 							</div>
 
 							<div className='divider'>Stats</div>
