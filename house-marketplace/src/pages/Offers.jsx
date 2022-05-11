@@ -1,13 +1,55 @@
 import { useEffect, useState } from 'react'
-import { collection, getDocs, query, where, orderBy, limit } from 'firebase/firestore'
+import { collection, getDocs, query, where, orderBy, limit, startAfter } from 'firebase/firestore'
 import { db } from '../firebase.config'
 import { toast } from 'react-toastify'
 import ListingItem from '../components/ListingItem'
 import Spinner from '../components/Spinner'
 
 function Offers() {
+	const loadLimitation = 4
 	const [listings, setListings] = useState(null)
 	const [loading, setLoading] = useState(true)
+	const [lastFetchedListing, setLastFetchedListing] = useState(null)
+
+	const onFetchMoreListings = async () => {
+		try {
+			// Get reference
+			const listingsRef = collection(db, 'listings')
+
+			// Create a query with Firebase 9
+			const q = query(
+				listingsRef,
+				where('offer', '==', true),
+				orderBy('timestamp', 'desc'),
+				startAfter(lastFetchedListing),
+				limit(loadLimitation)
+			)
+
+			// Execute query
+			const querySnap = await getDocs(q)
+
+			// Set More listing
+			const lastVisible = querySnap.docs[querySnap.docs.length - 1]
+			setLastFetchedListing(querySnap.docs.length > 0 ? lastVisible : null)
+
+			let listings = []
+
+			querySnap.forEach((doc) => {
+				listings.push({
+					id: doc.id,
+					data: doc.data(),
+				})
+			})
+
+			setListings((prev) => [...prev, ...listings])
+			setLoading(false)
+
+			// No More info
+			querySnap.docs.length === 0 && toast.info('Could not find more listings')
+		} catch (error) {
+			toast.error('Could not find listings')
+		}
+	}
 
 	useEffect(() => {
 		const fetchListings = async () => {
@@ -20,11 +62,13 @@ function Offers() {
 					listingsRef,
 					where('offer', '==', true),
 					orderBy('timestamp', 'desc'),
-					limit(10)
+					limit(loadLimitation)
 				)
 
 				// Execute query
 				const querySnap = await getDocs(q)
+				const lastVisible = querySnap.docs[querySnap.docs.length - 1]
+				setLastFetchedListing(lastVisible)
 
 				let listings = []
 
@@ -69,6 +113,14 @@ function Offers() {
 				</>
 			) : (
 				<p>There are no current offers</p>
+			)}
+
+			<br />
+			<br />
+			{lastFetchedListing && (
+				<p className='loadMore' onClick={onFetchMoreListings}>
+					Load More
+				</p>
 			)}
 		</div>
 	)
