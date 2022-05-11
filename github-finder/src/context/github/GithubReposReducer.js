@@ -4,14 +4,14 @@ const githubReposReducer = (state, { type, payload }) => {
 		case 'GET_REPOS':
 			return {
 				...state,
-				repos: [...state.repos, ...payload.repos],
+				repos: [...state.repos.filter((repo) => repo), ...payload.repos],
 				hasNext: payload.hasNext,
 				loading: false,
 			}
 		case 'SET_INIT':
 			return {
 				...state,
-				repos: [],
+				repos: [...new Array(state.pageSize).fill(null)],
 				login: payload.login,
 				count: payload.count,
 				page: 1,
@@ -19,12 +19,8 @@ const githubReposReducer = (state, { type, payload }) => {
 		case 'SET_NEXT':
 			return {
 				...state,
+				repos: [...state.repos, ...new Array(state.pageSize).fill(null)],
 				page: payload,
-			}
-		case 'SET_LOADING':
-			return {
-				...state,
-				loading: true,
 			}
 		default:
 			return state

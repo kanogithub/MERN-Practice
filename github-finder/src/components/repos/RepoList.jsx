@@ -5,7 +5,7 @@ import { useGithubReposContext } from '../../context/github/GithubReposContext'
 import { getRepos } from '../../context/github/GithubReposActions'
 
 function RepoList({ login, reposCount }) {
-	const { repos, pageSize, page, hasNext, loading, dispatch } = useGithubReposContext()
+	const { repos, pageSize, page, hasNext, dispatch } = useGithubReposContext()
 
 	// initiate
 	useEffect(() => {
@@ -22,9 +22,6 @@ function RepoList({ login, reposCount }) {
 	// trigger when page changes
 	useEffect(() => {
 		const getReposData = async () => {
-			dispatch({
-				type: 'SET_LOADING',
-			})
 			const data = await getRepos(login, pageSize, page)
 
 			dispatch({
@@ -52,7 +49,7 @@ function RepoList({ login, reposCount }) {
 				<h2 className='text-3xl my-4 font-bold card-title'>Latest Updated Respositories</h2>
 
 				{repos.map((repo, index) => {
-					if (loading) return <RepoSkeleton key={repo.id} />
+					if (repo === null) return <RepoSkeleton key={index} />
 					else return <RepoItem key={repo.id} repo={repo} />
 				})}
 			</div>
