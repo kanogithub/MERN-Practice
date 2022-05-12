@@ -1,16 +1,17 @@
 import { useState, useEffect, useRef } from 'react'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { db } from '../firebase.config'
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import { doc, updateDoc, getDoc, serverTimestamp } from 'firebase/firestore'
 import uuid from 'react-uuid'
 import Spinner from '../components/Spinner'
 import ListingForm from '../components/ListingForm'
 
-function CreateListing() {
+function EditListing() {
 	const [loading, setLoading] = useState(false)
+	const [listing, setListing] = useState(false)
 	// eslint-disable-next-line no-unused-vars
 	const [geolocationEnabled, setGeolocationEnabled] = useState(true)
 	const [formData, setFormData] = useState({
@@ -31,7 +32,39 @@ function CreateListing() {
 
 	const auth = getAuth()
 	const navigate = useNavigate()
+	const { id: listingId } = useParams()
 	const isMounted = useRef(true)
+
+	useEffect(() => {
+		if (listing && listing.userRef !== auth.currentUser.uid) {
+			toast.error('Listing owner occurs')
+			navigate('/')
+		}
+	})
+
+	useEffect(() => {
+		if (isMounted) {
+			setLoading(true)
+			const fetchListing = async () => {
+				const docRef = doc(db, 'listings', listingId)
+				const docSnap = await getDoc(docRef)
+				if (docSnap.exists()) {
+					setListing(docSnap.data())
+					setFormData({
+						...docSnap.data(),
+						address: docSnap.data().location,
+					})
+					setLoading(false)
+				} else {
+					navigate('/')
+					toast.error('Listing does not exist')
+				}
+			}
+
+			fetchListing()
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [listingId, navigate])
 
 	useEffect(() => {
 		if (isMounted) {
@@ -66,33 +99,35 @@ function CreateListing() {
 			return
 		}
 
-		let geolocation = {}
-		let location
+		// when address not change use previous as default
+		let geolocation = listing.geolocation
+		let location = listing.location
 
 		// check for gelocation
-		if (geolocationEnabled) {
-			const response = await fetch(
-				`https://maps.googleapis.com/maps/api/geocode/json?address=${formData.address}&
+		if (listing.location !== formData.address)
+			if (geolocationEnabled) {
+				const response = await fetch(
+					`https://maps.googleapis.com/maps/api/geocode/json?address=${formData.address}&
 				key=${process.env.REACT_APP_GEOCODE_API_KEY}`
-			)
+				)
 
-			const data = await response.json()
+				const data = await response.json()
 
-			geolocation.lat = data.results[0]?.geometry.location.lat ?? 0
-			geolocation.lng = data.results[0]?.geometry.location.lng ?? 0
-			location =
-				data.status === 'ZERO_RESULTS' ? undefined : data.results[0].formatted_address
+				geolocation.lat = data.results[0]?.geometry.location.lat ?? 0
+				geolocation.lng = data.results[0]?.geometry.location.lng ?? 0
+				location =
+					data.status === 'ZERO_RESULTS' ? undefined : data.results[0].formatted_address
 
-			// just check if has correct address by geolocationAPIs
-			if (location === undefined || location.includes('undefined')) {
-				setLoading(false)
-				toast.error('Please enter a correct address')
-				return
+				// just check if has correct address by geolocationAPIs
+				if (location === undefined || location.includes('undefined')) {
+					setLoading(false)
+					toast.error('Please enter a correct address')
+					return
+				}
+			} else {
+				geolocation.lat = formData.latitude
+				geolocation.lng = formData.longitude
 			}
-		} else {
-			geolocation.lat = formData.latitude
-			geolocation.lng = formData.longitude
-		}
 
 		// Store images in firebase
 		const storageImage = async (image) => {
@@ -150,7 +185,9 @@ function CreateListing() {
 		delete formDataCopy.address
 		!formDataCopy.offer && delete formDataCopy.discountedPrice
 
-		const docRef = await addDoc(collection(db, 'listings'), formDataCopy)
+		const docRef = doc(db, 'listings', listingId)
+		await updateDoc(docRef, formDataCopy)
+
 		setLoading(false)
 		toast.success('Listing saved')
 		navigate(`/category/${formDataCopy.type}/${docRef.id}`)
@@ -174,7 +211,7 @@ function CreateListing() {
 	return (
 		<div className='profile'>
 			<header>
-				<p className='pageHeader'>Create a Listing</p>
+				<p className='pageHeader'>Edit Listing</p>
 			</header>
 
 			<ListingForm
@@ -187,4 +224,4 @@ function CreateListing() {
 	)
 }
 
-export default CreateListing
+export default EditListing

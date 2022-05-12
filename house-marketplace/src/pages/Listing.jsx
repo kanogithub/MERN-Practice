@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { getDoc, doc } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
 import { db } from '../firebase.config'
@@ -15,8 +15,7 @@ function Listing() {
 	const [loading, setLoading] = useState(true)
 	const [shareLinkCopied, setShareLinkCopied] = useState(null)
 
-	const { categoryName, listingId } = useParams()
-	const navigate = useNavigate()
+	const { listingId } = useParams()
 	const auth = getAuth()
 
 	useEffect(() => {

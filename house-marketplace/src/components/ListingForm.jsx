@@ -12,6 +12,7 @@ function ListingForm({ geolocationEnabled, formData, onSubmit, onMutate }) {
 		discountedPrice,
 		latitude,
 		longitude,
+		timestamp,
 	} = formData
 
 	return (
@@ -237,7 +238,7 @@ function ListingForm({ geolocationEnabled, formData, onSubmit, onMutate }) {
 				/>
 
 				<button className='primaryButton createListingButton' type='submit'>
-					Create Listing
+					{timestamp ? 'Save Listing' : 'Create Listing'}
 				</button>
 			</form>
 		</main>
