@@ -12,6 +12,7 @@ body {
 	background-color: #f2f4f8;
 	margin: 0;
 	box-sizing: border-box;
+	min-height: 100vh;
 }
 
 a {
@@ -322,8 +323,27 @@ button {
 }
 
 .swiper-container {
+	width: 100%;
+	max-width: 100%;
 	min-height: 225px;
+	max-height: 100vh;
+	min-height: 0;
+	min-width: 0;
 	height: 23vw;
+}
+
+.swiper-slide {
+	width: 100% !important;
+	flex-shrink: 0;
+	display: block;
+	height: 100%;
+	max-height: 100%;
+}
+
+.swiper-wrapper {
+	max-height: 100%;
+	height: 100%;
+	display: flex;
 }
 
 .swiper-pagination-bullet-active {
@@ -827,4 +847,108 @@ button {
 	margin-left: 1rem;
 	font-size: 0.8rem;
 	opacity: 0.75;
+}
+
+.menu {
+	padding: 1rem;
+	background-color: #2c2c2c;
+	color: #f2f4f8;
+}
+
+.menu h2 {
+	margin: 0 0 -0.5rem 0.5rem;
+	font-size: 22px;
+}
+
+.menu .logo {
+	display: flex;
+}
+.footer {
+	display: none;
+	position: fixed;
+	width: 100vw;
+	bottom: 0;
+	padding: 2rem;
+	background-color: #2c2c2c;
+	color: #f2f4f8;
+}
+
+.split-container {
+	display: flex;
+	min-height: calc(90vh - 50px);
+}
+.split-left {
+	flex: 1;
+	display: none;
+	padding-top: 2rem;
+	background-color: #a0a0a0;
+}
+.split-right {
+	flex: auto;
+}
+
+@media screen and (min-width: 1024px) {
+	.container {
+		padding-inline: 0.5rem;
+	}
+	.split-container {
+		padding-right: 1.5rem;
+	}
+	.navbar {
+		display: none;
+	}
+	.footer {
+		display: block;
+	}
+	.split-left {
+		display: block;
+	}
+	.swiperSlideDiv {
+		height: 25vw;
+	}
+	.split-right {
+		flex: 4;
+		/* overflow-y: scroll; */
+	}
+	.navbarListItems {
+		margin: 0;
+		padding: 0;
+		display: block;
+		justify-content: space-evenly;
+		align-items: center;
+	}
+	.navbarListItems li {
+		padding: 0 1.5rem;
+		transition: 200ms;
+	}
+	.navbarListItems li:hover {
+		box-shadow: 0px 3px 2px#2c2c2c;
+		transform: translate(0%, -5%);
+	}
+	.navbarListItems li.actived {
+		background-color: #f2f4f8;
+	}
+	.navbarListItem {
+		cursor: pointer;
+		display: flex;
+		flex-direction: row;
+		gap: 1rem;
+		align-items: center;
+		font-size: 1.5rem;
+	}
+	.swiper-pagination {
+		transform: scale(1.5) !important;
+		margin-bottom: 1rem;
+	}
+}
+
+@media screen and (min-width: 1217px) {
+	.container {
+		max-width: 1370px;
+		margin: 0 auto;
+	}
+	.split-container {
+		max-width: 1370px;
+		margin: 0 auto;
+	}
 }
