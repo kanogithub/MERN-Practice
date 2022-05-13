@@ -25,8 +25,8 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y])
 function App() {
 	return (
 		<>
-			<Menu />
 			<Router>
+				<Menu />
 				<Split>
 					<SideBar />
 

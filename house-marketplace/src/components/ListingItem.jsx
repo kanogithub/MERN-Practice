@@ -3,6 +3,8 @@ import { ReactComponent as DeleteIcon } from '../assets/svg/deleteIcon.svg'
 import { ReactComponent as EditIcon } from '../assets/svg/editIcon.svg'
 import bedIcon from '../assets/svg/bedIcon.svg'
 import bathtubIcon from '../assets/svg/bathtubIcon.svg'
+import LazyImg from './LazyImg'
+import ErrorBoundary from '../hooks/ErrorBoundar'
 
 function ListingItem({ listing, id, onDelete, onEdit }) {
 	const toDollarString = (number) => {
@@ -25,11 +27,14 @@ function ListingItem({ listing, id, onDelete, onEdit }) {
 			)}
 			<li className='categoryListing'>
 				<Link to={`/category/${listing.type}/${id}`} className='categoryListingLink'>
-					<img
-						src={listing.imageUrls[0]}
-						alt={listing.name}
-						className='categoryListingImg'
-					/>
+					<ErrorBoundary>
+						<LazyImg
+							src={listing.imageUrls[0]}
+							alt={listing.name}
+							className={'categoryListingImg'}
+						/>
+					</ErrorBoundary>
+
 					<div className='categoryListingDetails'>
 						<p className='categoryListingLocation'>{listing.location}</p>
 						<p className='categoryListingName'>{listing.name}</p>
@@ -37,7 +42,7 @@ function ListingItem({ listing, id, onDelete, onEdit }) {
 							{listing.offer
 								? toDollarString(listing.discountedPrice)
 								: toDollarString(listing.regularPrice)}
-							{listing.type === 'rent' && ' / Month'}
+							{listing.type === 'rent' && ' / Week'}
 						</p>
 						<div className='categoryListingInfoDiv'>
 							<img src={bedIcon} alt='bed' />
