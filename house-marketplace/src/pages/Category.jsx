@@ -7,7 +7,7 @@ import ListingItem from '../components/ListingItem'
 import Spinner from '../components/Spinner'
 
 function Category() {
-	const loadLimitation = 4
+	const loadLimitation = 3
 	const [listings, setListings] = useState(null)
 	const [loading, setLoading] = useState(true)
 	const [lastFetchedListing, setLastFetchedListing] = useState(null)
@@ -25,7 +25,7 @@ function Category() {
 				where('type', '==', params.categoryName),
 				orderBy('timestamp', 'desc'),
 				startAfter(lastFetchedListing),
-				limit(loadLimitation)
+				limit(loadLimitation + 2)
 			)
 
 			// Execute query

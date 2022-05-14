@@ -87,10 +87,12 @@ button {
 .removeIcon {
 	cursor: pointer;
 	margin: 0 0.25rem;
+	z-index: 10;
 }
 .editIcon {
 	cursor: pointer;
 	margin: 0 0.25rem;
+	z-index: 10;
 }
 
 .pageContainer,
@@ -318,6 +320,9 @@ button {
 	.explore {
 		margin-bottom: 10rem;
 	}
+	.registerLink {
+		margin-bottom: 10rem;
+	}
 }
 @media (max-height: 536) {
 	.explore {
@@ -342,6 +347,9 @@ button {
 	}
 }
 
+.swiper {
+	position: relative;
+}
 .swiper-container {
 	width: 100%;
 	max-width: 100%;
@@ -398,7 +406,8 @@ button {
 	}
 }
 
-.swiperSlidePrice {
+.swiperSlidePrice,
+.swiperSlideLocation {
 	color: #000000;
 	position: absolute;
 	top: 143px;
@@ -409,8 +418,14 @@ button {
 	padding: 0.25rem 0.5rem;
 	border-radius: 1rem;
 }
+.swiperSlideLocation {
+	display: none;
+	left: 150px;
+}
 @media (min-width: 1024px) {
-	.swiperSlidePrice {
+	.swiperSlidePrice,
+	.swiperSlideLocation {
+		display: block;
 		font-size: 1.25rem;
 	}
 }
@@ -421,6 +436,12 @@ button {
 }
 .exploreCategories a {
 	width: 48%;
+	border-radius: 25px;
+	transition: 0.2s;
+}
+.exploreCategories a:hover {
+	transform: translateY(-1%);
+	box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.2);
 }
 
 .exploreCategoryImg {
@@ -433,6 +454,7 @@ button {
 }
 
 .exploreCategoryName {
+	position: absolute;
 	font-weight: 500;
 	text-align: left;
 }
@@ -449,12 +471,18 @@ button {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 	margin-bottom: 1rem;
 	position: relative;
 }
 @media (min-width: 1024px) {
 	.categoryListing {
 		margin: 2rem 0;
+		border-radius: 25px;
+	}
+	.categoryListing:hover .categoryListingImg {
+		transform: translateY(-2%);
+		box-shadow: 2px 2px 6px #2c2c2c;
 	}
 }
 
@@ -467,6 +495,7 @@ button {
 	height: 100px;
 	border-radius: 1.5rem;
 	object-fit: cover;
+	transition: 0.2s;
 }
 @media (min-width: 1024px) {
 	.categoryListingImg {
@@ -489,6 +518,7 @@ button {
 }
 
 .categoryListingLocation {
+	cursor: default;
 	font-weight: 600;
 	font-size: 0.7rem;
 	opacity: 0.8;
@@ -568,6 +598,14 @@ button {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+@media (min-width: 1024px) {
+	.shareIconDiv {
+		position: absolute;
+		top: 33px;
+		right: 3rem;
+	}
 }
 
 .listingName {
@@ -702,6 +740,11 @@ button {
 	padding: 0.25rem 0.75rem;
 	border-radius: 1rem;
 }
+@media (min-width: 1024px) {
+	.logOut {
+		margin-right: 4rem;
+	}
+}
 
 .profileDetailsHeader {
 	display: flex;
@@ -723,7 +766,7 @@ button {
 	background-color: #ffffff;
 	border-radius: 1rem;
 	padding: 1rem;
-	box-shadow: rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
 	max-width: 500px;
 }
 
@@ -765,13 +808,22 @@ button {
 	background-color: #ffffff;
 	border-radius: 1rem;
 	padding: 0.25rem 1rem;
-	box-shadow: rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
 	margin-top: 2rem;
 	font-weight: 600;
 	max-width: 500px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	transition: 0.2s;
+}
+
+.createListing:hover {
+	background-color: #8f8f8f;
+	color: #ffffff;
+}
+.createListing:hover :where(.homeIcon, .arrowRight) {
+	fill: #ffffff;
 }
 
 .listingText {
@@ -893,6 +945,11 @@ button {
 	opacity: 0.75;
 }
 
+.menu-wrapper {
+	display: flex;
+	justify-content: space-between;
+}
+
 .menu {
 	padding: 1rem;
 	background-color: #2c2c2c;
@@ -1000,4 +1057,9 @@ button {
 		max-width: 1370px;
 		margin: 0 auto;
 	}
+}
+
+.footer-widgets {
+	display: flex;
+	justify-content: space-between;
 }

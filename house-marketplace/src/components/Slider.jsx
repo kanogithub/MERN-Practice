@@ -56,10 +56,17 @@ function Slider() {
 								}}
 								className='swiperSlideDiv'>
 								<p className='swiperSlideText'>{data.name}</p>
-								<p className='swiperSlidePrice'>
-									${data.discountedPrice ?? data.regularPrice}
-									{data.type === 'rent' && '/ month'}
-								</p>
+								<div>
+									<p className='swiperSlidePrice'>
+										${data.discountedPrice ?? data.regularPrice}
+										{data.type === 'rent' && '/ week'}
+									</p>
+									<p className='swiperSlideLocation'>
+										{`${data.address_components.suburb} `}
+										{`${data.address_components.state} `}
+										{data.address_components.postCode}
+									</p>
+								</div>
 							</div>
 						</SwiperSlide>
 					))}

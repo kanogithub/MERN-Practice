@@ -30,6 +30,7 @@ function SignIn() {
 				navigate('/')
 			}
 		} catch (error) {
+			if (error.code === 'auth/user-not-found') toast.error('Bad User Credential')
 			if (error.code === 'auth/wrong-password') toast.error('Wrong Password')
 			if (error.code === 'auth/invalid-email') toast.error('Bad User Credential')
 		}

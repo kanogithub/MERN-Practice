@@ -18,5 +18,5 @@ export function useAuthStatus() {
 		return () => (_isMounted.current = false)
 	}, [_isMounted])
 
-	return { loggedIn, checkingStatus }
+	return { loggedIn, checkingStatus, setLoggedIn }
 }

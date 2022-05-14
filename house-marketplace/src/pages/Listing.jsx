@@ -38,6 +38,19 @@ function Listing() {
 	return (
 		<main>
 			<Swiper slidesPerView={1} pagination={{ clickable: true }}>
+				<div
+					className='shareIconDiv'
+					onClick={() => {
+						// save to system clipboard
+						navigator.clipboard.writeText(window.location.href)
+						setShareLinkCopied(true)
+
+						setTimeout(() => {
+							setShareLinkCopied(false)
+						}, 2000)
+					}}>
+					<img src={shareIcon} alt='shareIcon' />
+				</div>
 				{listing.imageUrls.map((url, index) => (
 					<SwiperSlide key={index}>
 						<div
@@ -49,20 +62,6 @@ function Listing() {
 					</SwiperSlide>
 				))}
 			</Swiper>
-
-			<div
-				className='shareIconDiv'
-				onClick={() => {
-					// save to system clipboard
-					navigator.clipboard.writeText(window.location.href)
-					setShareLinkCopied(true)
-
-					setTimeout(() => {
-						setShareLinkCopied(false)
-					}, 2000)
-				}}>
-				<img src={shareIcon} alt='shareIcon' />
-			</div>
 
 			{shareLinkCopied && <p className='linkCopied'>Link Copied!</p>}
 

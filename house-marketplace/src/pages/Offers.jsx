@@ -6,7 +6,7 @@ import ListingItem from '../components/ListingItem'
 import Spinner from '../components/Spinner'
 
 function Offers() {
-	const loadLimitation = 4
+	const loadLimitation = 3
 	const [listings, setListings] = useState(null)
 	const [loading, setLoading] = useState(true)
 	const [lastFetchedListing, setLastFetchedListing] = useState(null)
@@ -22,7 +22,7 @@ function Offers() {
 				where('offer', '==', true),
 				orderBy('timestamp', 'desc'),
 				startAfter(lastFetchedListing),
-				limit(loadLimitation)
+				limit(loadLimitation + 2)
 			)
 
 			// Execute query

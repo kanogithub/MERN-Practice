@@ -14,8 +14,8 @@ import { db } from '../firebase.config'
 import { toast } from 'react-toastify'
 import { useNavigate, Link } from 'react-router-dom'
 import ListingItem from '../components/ListingItem'
-import arrowRight from '../assets/svg/keyboardArrowRightIcon.svg'
-import homeIcon from '../assets/svg/homeIcon.svg'
+import { ReactComponent as ArrowRight } from '../assets/svg/keyboardArrowRightIcon.svg'
+import { ReactComponent as HomeIcon } from '../assets/svg/homeIcon.svg'
 
 function Profile() {
 	const auth = getAuth()
@@ -29,11 +29,6 @@ function Profile() {
 	const { name, email } = formData
 
 	const navigate = useNavigate()
-
-	const onLogout = () => {
-		auth.signOut()
-		navigate('/')
-	}
 
 	const onSubmit = async () => {
 		try {
@@ -105,9 +100,6 @@ function Profile() {
 		<div className='profile'>
 			<header className='profileHeader'>
 				<p className='pageHeader'>My Profile</p>
-				<button type='button' className='logOut' onClick={onLogout}>
-					Logout
-				</button>
 			</header>
 
 			<main>
@@ -142,9 +134,9 @@ function Profile() {
 				</div>
 
 				<Link to='/create-listing' className='createListing'>
-					<img src={homeIcon} alt='home' />
+					<HomeIcon className='homeIcon' alt='homeIcon' />
 					<p>Sell or rent your home</p>
-					<img src={arrowRight} alt='arrow right' />
+					<ArrowRight className='arrowRight' alt='arrorRight' />
 				</Link>
 
 				{listings?.length > 0 && (

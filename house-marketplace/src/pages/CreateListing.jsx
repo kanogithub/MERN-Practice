@@ -68,6 +68,7 @@ function CreateListing() {
 
 		let geolocation = {}
 		let location
+		let address_components
 
 		// check for gelocation
 		if (geolocationEnabled) {
@@ -89,12 +90,19 @@ function CreateListing() {
 				toast.error('Please enter a correct address')
 				return
 			}
+
+			// when pass address check fit in address components
+			address_components = {
+				state: data.results[0]?.address_components[4].short_name,
+				suburb: data.results[0]?.address_components[2].short_name,
+				postCode: data.results[0]?.address_components[6].short_name,
+			}
 		} else {
 			geolocation.lat = formData.latitude
 			geolocation.lng = formData.longitude
 		}
 
-		// Store images in firebase
+		// Store images in firebase using REsumable
 		const storageImage = async (image) => {
 			return new Promise((resolve, reject) => {
 				const storage = getStorage()
@@ -144,6 +152,7 @@ function CreateListing() {
 			geolocation,
 			timestamp: serverTimestamp(),
 			location: formData.address,
+			address_components,
 		}
 
 		delete formDataCopy.images
