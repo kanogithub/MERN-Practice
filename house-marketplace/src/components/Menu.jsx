@@ -13,8 +13,8 @@ function Menu() {
 		auth.signOut()
 		setLoggedIn(false)
 
-		if (location.pathname === '/profile') navigate('/')
-		else navigate(location.pathname)
+		if (location.pathname === '/profile') navigate('/sign-in')
+		else navigate('/')
 	}
 
 	const onLogin = () => {
@@ -31,12 +31,17 @@ function Menu() {
 							<h2>Fake Houses</h2>
 						</div>
 					</Link>
-					<button
-						type='button'
-						className='logOut'
-						onClick={loggedIn ? onLogout : onLogin}>
-						{loggedIn ? 'Logout' : 'Sing In'}
-					</button>
+					<div>
+						{loggedIn && (
+							<span className='menu-user'>{auth.currentUser?.displayName}</span>
+						)}
+						<button
+							type='button'
+							className='logOut'
+							onClick={loggedIn ? onLogout : onLogin}>
+							{loggedIn ? 'Logout' : 'Sing In'}
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { getDoc, doc } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
 import { db } from '../firebase.config'
@@ -9,6 +9,7 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import Spinner from '../components/Spinner'
 import shareIcon from '../assets/svg/shareIcon.svg'
+import ContactPoster from '../components/ContactPoster'
 
 function Listing() {
 	const [listing, setListing] = useState(null)
@@ -110,11 +111,7 @@ function Listing() {
 				</div>
 
 				{auth.currentUser?.uid !== listing.userRef && (
-					<Link
-						to={`/contact/${listing.userRef}?listingName=${listing.name}`}
-						className='primaryButton'>
-						Contact Landlord
-					</Link>
+					<ContactPoster {...listing} listingId={listingId} />
 				)}
 			</div>
 		</main>

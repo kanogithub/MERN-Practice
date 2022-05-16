@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { getAuth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth'
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore'
 import { db } from '../firebase.config'
@@ -7,6 +7,9 @@ import googleIcon from '../assets/svg/googleIcon.svg'
 import facebookIcon from '../assets/svg/facebookIcon.svg'
 
 function OAuth() {
+	// eslint-disable-next-line no-unused-vars
+	const [searchParams, setSearchParams] = useSearchParams()
+
 	const navigate = useNavigate()
 	const location = useLocation()
 
@@ -35,7 +38,8 @@ function OAuth() {
 				})
 			}
 
-			navigate('/')
+			const path = searchParams.get('listing') ? searchParams.get('listing') : '/'
+			navigate(path)
 		} catch (error) {
 			console.log(error)
 			toast.error('Could not authorize with Google')

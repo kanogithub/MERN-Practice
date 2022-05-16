@@ -4,7 +4,6 @@ import { ReactComponent as EditIcon } from '../assets/svg/editIcon.svg'
 import bedIcon from '../assets/svg/bedIcon.svg'
 import bathtubIcon from '../assets/svg/bathtubIcon.svg'
 import LazyImg from './LazyImg'
-import ErrorBoundary from '../hooks/ErrorBoundar'
 
 function ListingItem({ listing, id, onDelete, onEdit }) {
 	const toDollarString = (number) => {
@@ -27,13 +26,11 @@ function ListingItem({ listing, id, onDelete, onEdit }) {
 			)}
 			<li className='categoryListing'>
 				<Link to={`/category/${listing.type}/${id}`} className='categoryListingLink'>
-					<ErrorBoundary>
-						<LazyImg
-							src={listing.imageUrls[0]}
-							alt={listing.name}
-							className={'categoryListingImg'}
-						/>
-					</ErrorBoundary>
+					<LazyImg
+						src={listing.imageUrls[0]}
+						alt={listing.name}
+						className={'categoryListingImg spinner'}
+					/>
 
 					<div className='categoryListingDetails'>
 						<p className='categoryListingLocation'>{listing.location}</p>

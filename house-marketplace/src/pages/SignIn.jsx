@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import OAuth from '../components/OAuth'
@@ -8,6 +8,8 @@ import visibilityIcon from '../assets/svg/visibilityIcon.svg'
 
 function SignIn() {
 	const [showPassword, setShowPassword] = useState(false)
+	// eslint-disable-next-line no-unused-vars
+	const [searchParams, setSearchParams] = useSearchParams()
 	const [formData, setFormData] = useState({
 		email: '',
 		password: '',
@@ -27,7 +29,8 @@ function SignIn() {
 			const userCredential = await signInWithEmailAndPassword(auth, email, password)
 
 			if (userCredential.user) {
-				navigate('/')
+				const path = searchParams.get('listing') ? searchParams.get('listing') : '/'
+				navigate(path)
 			}
 		} catch (error) {
 			if (error.code === 'auth/user-not-found') toast.error('Bad User Credential')
@@ -86,7 +89,7 @@ function SignIn() {
 				<OAuth />
 
 				<Link to='/sign-up' className='registerLink'>
-					Sign Up Instead
+					<button className='sign-up-cta'>Sign Up Instead</button>
 				</Link>
 			</div>
 		</>

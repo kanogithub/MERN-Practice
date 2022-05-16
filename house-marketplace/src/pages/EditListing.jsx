@@ -206,7 +206,7 @@ function EditListing() {
 			setFormData((prevState) => ({ ...prevState, images: e.target.files }))
 		}
 	}
-
+	// TODO:layout for desktop
 	if (loading) return <Spinner />
 	return (
 		<div className='profile'>

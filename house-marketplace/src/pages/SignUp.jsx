@@ -106,7 +106,7 @@ function SignUp() {
 				<OAuth />
 
 				<Link to='/sign-in' className='registerLink'>
-					Sign In Instead
+					<button className='sign-in-cta'>Sign In Instead</button>
 				</Link>
 			</div>
 		</>
