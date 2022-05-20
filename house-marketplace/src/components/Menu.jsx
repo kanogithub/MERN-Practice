@@ -20,7 +20,7 @@ function Menu() {
 	const onLogin = () => {
 		navigate('/sign-in')
 	}
-
+	// TODO: NEED Message reminder and message reading page
 	return (
 		<div className='menu'>
 			<div className='container'>
