@@ -47,8 +47,8 @@ function App() {
 					</Routes>
 				</Split>
 				<Navbar />
+				<Footer />
 			</Router>
-			<Footer />
 			<ToastContainer />
 		</>
 	)
