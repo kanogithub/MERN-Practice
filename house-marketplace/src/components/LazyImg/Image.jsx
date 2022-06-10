@@ -1,4 +1,4 @@
-import spinner from '../assets/spinner2.gif'
+import spinner from '../../assets/spinner2.gif'
 
 function Image({ url, alt, className }) {
 	return (

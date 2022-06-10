@@ -201,7 +201,7 @@ function ListingForm({ geolocationEnabled, formData, onSubmit, onMutate }) {
 					</div>
 				</div>
 
-				<div className='form-space2' style={{ display: 'flex', gap: '5rem' }}>
+				<div className='form-space2'>
 					<div>
 						<label htmlFor='regularPrice' className='formLabel'>
 							Regular Price
@@ -219,7 +219,7 @@ function ListingForm({ geolocationEnabled, formData, onSubmit, onMutate }) {
 									required
 								/>
 							</div>
-							<div>{type === 'rent' && <p className='formPriceText'>/ Month</p>}</div>
+							<div>{type === 'rent' && <p className='formPriceText'>/ Week</p>}</div>
 						</div>
 					</div>
 

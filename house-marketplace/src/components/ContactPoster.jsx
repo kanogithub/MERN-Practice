@@ -52,6 +52,7 @@ function ContactPoster(props) {
 				senderName: auth.currentUser.displayName,
 				senderRef: auth.currentUser.uid,
 				message,
+				isRead: false,
 				timestamp: serverTimestamp(),
 			}
 

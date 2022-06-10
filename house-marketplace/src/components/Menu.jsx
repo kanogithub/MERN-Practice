@@ -2,6 +2,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { ReactComponent as HomeIcon } from '../assets/svg/homeIcon.svg'
 import { getAuth } from 'firebase/auth'
 import { useAuthStatus } from '../hooks/useAuthStatus'
+import Messager from './Messager/Messager'
 
 function Menu() {
 	const { loggedIn, setLoggedIn } = useAuthStatus()
@@ -20,7 +21,7 @@ function Menu() {
 	const onLogin = () => {
 		navigate('/sign-in')
 	}
-	// TODO: NEED Message reminder and message reading page
+
 	return (
 		<div className='menu'>
 			<div className='container'>
@@ -32,8 +33,11 @@ function Menu() {
 						</div>
 					</Link>
 					<div>
+						{loggedIn && <Messager userId={auth.currentUser?.uid} />}
 						{loggedIn && (
-							<span className='menu-user'>{auth.currentUser?.displayName}</span>
+							<Link to='/profile' className='menu-user'>
+								<span>{auth.currentUser?.displayName}</span>
+							</Link>
 						)}
 						<button
 							type='button'

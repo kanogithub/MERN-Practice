@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react'
-import Spinner2 from '../layouts/Spinner2'
+import Spinner2 from '../../layouts/Spinner2'
 
 function LazyImg({ src, alt, className }) {
 	const Image = lazy(() => import('./Image'))
