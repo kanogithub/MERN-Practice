@@ -6,9 +6,13 @@ const GithubContext = createContext()
 export const useGithubContext = () => useContext(GithubContext)
 
 export const GithubProvider = ({ children }) => {
+	const getUserHistory = () => {
+		const users = localStorage.getItem('usersHistory')
+		return new Set(JSON.parse(users))
+	}
 	const initialState = {
 		responeUsers: [],
-		responeHistory: new Set(),
+		responeHistory: getUserHistory(),
 		users: [],
 		user: {},
 		count: -1,

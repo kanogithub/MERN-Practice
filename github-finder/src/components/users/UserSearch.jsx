@@ -3,7 +3,7 @@ import GithubContext from '../../context/github/GithubContext'
 import { searchUsers } from '../../context/github/GithubActions'
 import AlertContext from '../../context/alert/AlertContext'
 import UserSearchFloat from './UserSearchFloat'
-import debounce from '../../js/Debounce'
+import useDebounce from '../../hooks/useDebounce'
 import './UserSearch.css'
 
 function UserSearch() {
@@ -11,19 +11,15 @@ function UserSearch() {
 	const { setAlert } = useContext(AlertContext)
 	const { users, responeUsers, dispatch } = useContext(GithubContext)
 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const debounceResSearch = useCallback(
-		debounce((text, number) => {
-			// response search
-			if (text.trim()) {
-				dispatch({
-					type: 'GET_SEARCHUSERS',
-					payload: { query: text.trim(), number },
-				})
-			}
-		}, 150),
-		[]
-	)
+	const debounceResSearch = useDebounce((text, number) => {
+		// response search
+		if (text.trim()) {
+			dispatch({
+				type: 'GET_SEARCHUSERS',
+				payload: { query: text.trim(), number },
+			})
+		}
+	}, 150)
 
 	const inputRef = useCallback((inputElem) => {
 		inputElem && inputElem.focus()

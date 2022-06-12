@@ -7,7 +7,8 @@ const githubReducer = (state, { type, payload }) => {
 			let index = 0
 
 			while (index < totalUser.length && users.length < payload.number) {
-				if (totalUser[index].includes(payload.query)) users.push(totalUser[index])
+				if (totalUser[index].toLowerCase().includes(payload.query.toLowerCase()))
+					users.push(totalUser[index])
 				index++
 			}
 
@@ -19,6 +20,7 @@ const githubReducer = (state, { type, payload }) => {
 			const history = new Set(state.responeHistory)
 
 			payload.items.forEach((item) => history.add(item.login))
+			localStorage.setItem('usersHistory', JSON.stringify(Array.from(state.responeHistory)))
 
 			return {
 				...state,

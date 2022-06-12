@@ -22,7 +22,7 @@ function About({ nodeRef }) {
 				.
 			</p>
 			<h3 className='text-xl mt-8 mb-2 text-gray-50'>Additional features:</h3>
-			<p className='text-gray-300'>New feature in 1.5.0, user favorite list.</p>
+			<p className='text-gray-300'>New feature in 1.5.1, user favorite list.</p>
 			<p className='text-gray-300'>Intersection Observer, Number CountUp, page transition.</p>
 			<p className='text-gray-300'>Profile Hover Layout with RWD Button, </p>
 			<p className='text-gray-300'>More Compatible RWD design, Sticky navbar.</p>
