@@ -44,8 +44,12 @@ function App() {
 						<Route path='/create-listing' element={<CreateListing />} />
 						<Route path='/edit-listing/:id' element={<EditListing />} />
 						<Route path='/category/:categoryName/:listingId' element={<Listing />} />
-						<Route path='/contact/:landlordId' element={<Contact />} />
-						<Route path='/message' element={<Message />} />
+						<Route path='/contact' element={<PrivateRoute />}>
+							<Route path='/contact/:listingId/:senderId' element={<Contact />} />
+						</Route>
+						<Route path='/message' element={<PrivateRoute />}>
+							<Route path='/message' element={<Message />} />
+						</Route>
 					</Routes>
 				</Split>
 				<Navbar />

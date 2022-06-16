@@ -1205,7 +1205,7 @@ button {
 
 .menu-messager-box {
 	position: fixed;
-	background-color: #efefef;
+	background-color: #fafafa;
 	box-shadow: 2px 2px 10px #2c2c2c7c;
 	min-height: 113px;
 	width: 100vw;
@@ -1234,6 +1234,7 @@ button {
 .message-item {
 	padding: 1rem;
 	color: #2c2c2c;
+	background-color: #f2f2f2;
 	font-weight: 500;
 	border: transparent 1px solid;
 	border-left: transparent solid 5px;
@@ -1243,8 +1244,12 @@ button {
 	border-left-color: #00cc66;
 }
 
+.message-read {
+	opacity: 0.5;
+}
+
 .message-item:hover {
-	background-color: #fafafa;
+	background-color: transparent;
 }
 
 .message-item-user {
@@ -1269,9 +1274,9 @@ button {
 	padding: 1rem;
 	font-weight: 700;
 	text-align: center;
-	background-color: #f2f2f2;
+	background-color: #fcfcfc;
 }
 
 .moreMessage-link:hover {
-	background-color: #fafafa;
+	background-color: transparent;
 }

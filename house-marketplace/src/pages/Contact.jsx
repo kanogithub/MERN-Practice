@@ -1,35 +1,61 @@
 import { useState, useEffect } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
-import { getAuth } from 'firebase/auth'
-import { doc, getDoc } from 'firebase/firestore'
+import { useParams } from 'react-router-dom'
+import { doc, getDoc, collection, getDocs, query, where, orderBy } from 'firebase/firestore'
 import { db } from '../firebase.config'
 import { toast } from 'react-toastify'
+import bedIcon from '../assets/svg/bedIcon.svg'
+import bathtubIcon from '../assets/svg/bathtubIcon.svg'
+import LazyImg from '../components/LazyImg'
 
 function Contact() {
 	const [message, setMessage] = useState('')
-	const [landlord, setLandlord] = useState(null)
+	const [listing, setListing] = useState(null)
+	const [messageList, setMessageList] = useState([])
 
-	const auth = getAuth()
-	const { landlordId } = useParams()
-	const [searchParams] = useSearchParams()
+	const { listingId, senderId } = useParams()
+
+	const toDollarString = (number) => {
+		return `$${number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`
+	}
 
 	useEffect(() => {
-		const getLandload = async () => {
-			const docRef = doc(db, 'users', landlordId)
-			const docSnap = await getDoc(docRef)
+		const getListingData = async () => {
+			const docSnap = await getDoc(doc(db, 'listings', listingId))
 
 			if (docSnap.exists()) {
-				setLandlord(docSnap.data())
+				setListing(docSnap.data())
 			} else {
 				toast.error('Could not get landlord data')
 			}
 		}
 
-		getLandload()
-	}, [landlordId])
+		const getMessageList = async () => {
+			const queryRef = query(
+				collection(db, 'messages'),
+				where('listingRef', '==', listingId),
+				where('senderRef', '==', senderId),
+				orderBy('timestamp', 'desc')
+			)
+			const docSnap = await getDocs(queryRef)
+			const messageList = []
+			docSnap.forEach((snap) => messageList.push({ id: snap.id, ...snap.data() }))
+			setMessageList(messageList)
+		}
+
+		try {
+			getListingData()
+			getMessageList()
+		} catch (err) {
+			console.error(err.message)
+		}
+	}, [listingId, senderId])
 
 	const onChange = (e) => {
 		setMessage(e.target.value)
+	}
+
+	const submitHandler = (e) => {
+		e.preventDefault()
 	}
 
 	return (
@@ -38,38 +64,61 @@ function Contact() {
 				<p className='pageHeader'>Contact History</p>
 			</header>
 
-			{landlord !== null && (
-				<main>
-					<div className='contactLandlord'>
-						<p className='landlordName'>Contact {landlord?.name}</p>
+			<main>
+				{listing && (
+					<div className='categoryListing'>
+						<LazyImg
+							src={listing.imageUrls[0]}
+							alt={listing.name}
+							className={'spinner'}
+						/>
+
+						<div className='categoryListingDetails'>
+							<p className='categoryListingLocation'>{listing.location}</p>
+							<p className='categoryListingName'>{listing.name}</p>
+							<p className='categoryListingPrice'>
+								{listing.offer
+									? toDollarString(listing.discountedPrice)
+									: toDollarString(listing.regularPrice)}
+								{listing.type === 'rent' && ' / Week'}
+							</p>
+							<div className='categoryListingInfoDiv'>
+								<img src={bedIcon} alt='bed' />
+								<p className='categoryListingInfoText'>
+									{listing.bedrooms > 1
+										? `${listing.bedrooms} Bedrooms`
+										: '1 Bedroom'}
+								</p>
+								<img src={bathtubIcon} alt='bath' />
+								<p className='categoryListingInfoText'>
+									{listing.bathrooms > 1
+										? `${listing.bathrooms} Bathrooms`
+										: '1 Bathroom'}
+								</p>
+							</div>
+						</div>
+					</div>
+				)}
+
+				<form className='messageForm' onSubmit={submitHandler}>
+					<div className='messageDiv'>
+						<label htmlFor='message' className='messageLabel'>
+							Message
+						</label>
+						<textarea
+							name='message'
+							id='message'
+							cols='30'
+							rows='10'
+							className='textarea'
+							value={message}
+							onChange={onChange}></textarea>
 					</div>
 
-					<form className='messageForm'>
-						<div className='messageDiv'>
-							<label htmlFor='message' className='messageLabel'>
-								Message
-							</label>
-							<textarea
-								name='message'
-								id='message'
-								cols='30'
-								rows='10'
-								className='textarea'
-								value={message}
-								onChange={onChange}></textarea>
-						</div>
-
-						{/* mailto and params */}
-						<a
-							href={`mailto:${landlord.email}?Subject=${searchParams.get(
-								'listingName'
-							)}&body=From ${auth.currentUser.displayName}%0D%0A${message}%0D%0A`}
-							className='primaryButton'>
-							Send Message
-						</a>
-					</form>
-				</main>
-			)}
+					{/* mailto and params */}
+					<button className='primaryButton'>Send Message</button>
+				</form>
+			</main>
 		</div>
 	)
 }

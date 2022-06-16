@@ -4,7 +4,7 @@ import { db } from '../../firebase.config'
 import { getDocs, collection, query, where, orderBy, limit } from 'firebase/firestore'
 import MessageItem from './MessageItem'
 
-function MessageBox({ shoudOpen, onRequestClose, userId }) {
+function MessageBox({ shoudOpen, onRequestClose, onRequestContact, userId }) {
 	const [messages, setMessages] = useState([])
 
 	useEffect(() => {
@@ -37,10 +37,14 @@ function MessageBox({ shoudOpen, onRequestClose, userId }) {
 		shoudOpen && (
 			<>
 				<div className='menu-messager-overlay' onClick={onRequestClose}></div>
-				<div className='menu-messager-box' onClick={onRequestClose}>
+				<div className='menu-messager-box'>
 					{messages.length > 0
 						? messages.map((message) => (
-								<MessageItem key={message.messageId} {...message} />
+								<MessageItem
+									key={message.messageId}
+									{...message}
+									onRequestContact={onRequestContact}
+								/>
 						  ))
 						: 'Not message so far.'}
 					<Link to='message' className='moreMessage-link'>
