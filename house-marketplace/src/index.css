@@ -1207,7 +1207,7 @@ button {
 	position: fixed;
 	background-color: #efefef;
 	box-shadow: 2px 2px 10px #2c2c2c7c;
-	min-height: 150px;
+	min-height: 113px;
 	width: 100vw;
 	top: 60px;
 	right: 0px;
@@ -1229,4 +1229,49 @@ button {
 		width: 500px;
 		top: 45px;
 	}
+}
+
+.message-item {
+	padding: 1rem;
+	color: #2c2c2c;
+	font-weight: 500;
+	border: transparent 1px solid;
+	border-left: transparent solid 5px;
+}
+
+.message-unread {
+	border-left-color: #00cc66;
+}
+
+.message-item:hover {
+	background-color: #fafafa;
+}
+
+.message-item-user {
+	display: flex;
+	justify-content: space-between;
+}
+
+.message-time {
+	color: #2c2c2c8c;
+}
+
+.message-item-title {
+	margin: 0.5rem 0;
+	font-size: large;
+}
+
+.message-item-content {
+	height: 38px;
+}
+
+.moreMessage-link {
+	padding: 1rem;
+	font-weight: 700;
+	text-align: center;
+	background-color: #f2f2f2;
+}
+
+.moreMessage-link:hover {
+	background-color: #fafafa;
 }

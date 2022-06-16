@@ -35,7 +35,7 @@ function Contact() {
 	return (
 		<div className='pageContainer'>
 			<header>
-				<p className='pageHeader'>Contact Landlord</p>
+				<p className='pageHeader'>Contact History</p>
 			</header>
 
 			{landlord !== null && (

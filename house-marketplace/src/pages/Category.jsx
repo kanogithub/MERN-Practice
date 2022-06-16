@@ -25,7 +25,7 @@ function Category() {
 				where('type', '==', params.categoryName),
 				orderBy('timestamp', 'desc'),
 				startAfter(lastFetchedListing),
-				limit(loadLimitation + 2)
+				limit(loadLimitation)
 			)
 
 			// Execute query
@@ -70,7 +70,6 @@ function Category() {
 
 				// Execute query
 				const querySnap = await getDocs(q)
-
 				const lastVisible = querySnap.docs[querySnap.docs.length - 1]
 				setLastFetchedListing(lastVisible)
 

@@ -38,6 +38,7 @@ function Messager({ userId }) {
 		}
 
 		if (userId) fetchUnreadMessages()
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
@@ -50,7 +51,7 @@ function Messager({ userId }) {
 				fill={shoudOpen ? '#3AAA99' : '#f2f4f8'}
 				onClick={onOpen}
 			/>
-			<MessageBox shoudOpen={shoudOpen} onRequestClose={onRequestClose} />
+			<MessageBox shoudOpen={shoudOpen} onRequestClose={onRequestClose} userId={userId} />
 		</div>
 	)
 }
