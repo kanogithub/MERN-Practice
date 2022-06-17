@@ -43,15 +43,28 @@ function Contact() {
 		}
 
 		const getMessageList = async () => {
-			const queryRef = query(
+			const queryRef1 = query(
 				collection(db, 'messages'),
 				where('listingRef', '==', listingId),
-				where('senderRef', 'in', [senderId, auth.currentUser.uid]),
+				where('senderRef', '==', senderId),
+				where('receiverRef', '==', auth.currentUser.uid),
 				orderBy('timestamp', 'asc')
 			)
-			const docSnap = await getDocs(queryRef)
-			const messageList = []
-			docSnap.forEach((snap) => messageList.push({ id: snap.id, ...snap.data() }))
+			const queryRef2 = query(
+				collection(db, 'messages'),
+				where('listingRef', '==', listingId),
+				where('senderRef', '==', auth.currentUser.uid),
+				where('receiverRef', '==', senderId),
+				orderBy('timestamp', 'asc')
+			)
+			const docSnap = await Promise.all([getDocs(queryRef1), getDocs(queryRef2)])
+
+			let messageList = []
+			docSnap.forEach((snap) =>
+				snap.forEach((doc) => messageList.push({ id: doc.id, ...doc.data() }))
+			)
+
+			messageList = messageList.sort((a, b) => a.timestamp.seconds - b.timestamp.seconds)
 			setMessageList(messageList)
 		}
 
@@ -61,7 +74,7 @@ function Contact() {
 		} catch (err) {
 			console.error(err.message)
 		}
-	}, [listingId, senderId])
+	}, [auth.currentUser.uid, listingId, senderId])
 
 	const onChange = (e) => {
 		setMessage(e.target.value)
