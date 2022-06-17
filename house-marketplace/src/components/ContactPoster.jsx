@@ -38,6 +38,11 @@ function ContactPoster(props) {
 	const onSubmit = async (e) => {
 		e.preventDefault()
 
+		if (message.length < 10) {
+			toast.error('Message did not send proprably - length too short.')
+			return
+		}
+
 		setSending(true)
 
 		if (auth.currentUser === null) {

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { db } from '../../firebase.config'
 import { getDocs, collection, query, where, orderBy, limit } from 'firebase/firestore'
 import MessageItem from './MessageItem'
+import { ReactComponent as CompactUp } from '../../assets/svg/compactUp.svg'
 
 function MessageBox({ shoudOpen, onRequestClose, onRequestContact, userId }) {
 	const [messages, setMessages] = useState([])
@@ -50,6 +51,9 @@ function MessageBox({ shoudOpen, onRequestClose, onRequestContact, userId }) {
 					<Link to='message' className='moreMessage-link'>
 						More Messages...
 					</Link>
+					<div className='message-box-close' onClick={onRequestClose}>
+						<CompactUp />
+					</div>
 				</div>
 			</>
 		)

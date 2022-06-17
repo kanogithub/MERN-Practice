@@ -83,6 +83,11 @@ function Contact() {
 	const submitHandler = async (e) => {
 		e.preventDefault()
 
+		if (message.length < 10) {
+			toast.error('Message did not send proprably - length too short.')
+			return
+		}
+
 		const messageRef = {
 			listingName: listing.name,
 			listingRef: listingId,

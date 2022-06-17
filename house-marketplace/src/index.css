@@ -1223,6 +1223,7 @@ button {
 	width: 100vw;
 	top: 60px;
 	right: 0px;
+	border-radius: 0px 0px 10px 10px;
 	z-index: 100;
 }
 
@@ -1240,6 +1241,7 @@ button {
 		position: absolute;
 		width: 500px;
 		top: 45px;
+		border-radius: 0px 0px 0px 0px;
 	}
 }
 
@@ -1376,5 +1378,23 @@ button {
 @media (max-width: 1023px) {
 	.messageForm.contact {
 		margin-bottom: 17.5vh;
+	}
+}
+
+.message-box-close {
+	box-sizing: content-box;
+	height: 20px;
+	text-align: center;
+	padding: 0.5rem;
+}
+
+.message-box-close > svg {
+	width: 20px;
+	height: 20px;
+}
+
+@media (min-width: 1024px) {
+	.message-box-close {
+		display: none;
 	}
 }
