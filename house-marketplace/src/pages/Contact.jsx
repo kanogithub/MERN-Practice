@@ -1,17 +1,30 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { doc, getDoc, collection, getDocs, query, where, orderBy } from 'firebase/firestore'
+import {
+	doc,
+	getDoc,
+	collection,
+	getDocs,
+	query,
+	where,
+	orderBy,
+	addDoc,
+	serverTimestamp,
+} from 'firebase/firestore'
 import { db } from '../firebase.config'
+import { getAuth } from 'firebase/auth'
 import { toast } from 'react-toastify'
 import bedIcon from '../assets/svg/bedIcon.svg'
 import bathtubIcon from '../assets/svg/bathtubIcon.svg'
 import LazyImg from '../components/LazyImg'
+import ContactMessageItem from '../components/ContactMessageItem'
 
 function Contact() {
 	const [message, setMessage] = useState('')
 	const [listing, setListing] = useState(null)
 	const [messageList, setMessageList] = useState([])
 
+	const auth = getAuth()
 	const { listingId, senderId } = useParams()
 
 	const toDollarString = (number) => {
@@ -25,7 +38,7 @@ function Contact() {
 			if (docSnap.exists()) {
 				setListing(docSnap.data())
 			} else {
-				toast.error('Could not get landlord data')
+				toast.error('Could not get listing property data')
 			}
 		}
 
@@ -33,8 +46,8 @@ function Contact() {
 			const queryRef = query(
 				collection(db, 'messages'),
 				where('listingRef', '==', listingId),
-				where('senderRef', '==', senderId),
-				orderBy('timestamp', 'desc')
+				where('senderRef', 'in', [senderId, auth.currentUser.uid]),
+				orderBy('timestamp', 'asc')
 			)
 			const docSnap = await getDocs(queryRef)
 			const messageList = []
@@ -54,8 +67,29 @@ function Contact() {
 		setMessage(e.target.value)
 	}
 
-	const submitHandler = (e) => {
+	const submitHandler = async (e) => {
 		e.preventDefault()
+
+		const messageRef = {
+			listingName: listing.name,
+			listingRef: listingId,
+			receiverName: messageList[0].senderName,
+			receiverRef: senderId,
+			senderName: auth.currentUser.displayName,
+			senderRef: auth.currentUser.uid,
+			message,
+			isRead: false,
+			timestamp: serverTimestamp(),
+		}
+
+		try {
+			await addDoc(collection(db, 'messages'), messageRef)
+			setMessage('')
+			toast.success('Message Sent.')
+		} catch (error) {
+			toast.error('Message did not send proprably')
+			console.log(error)
+		}
 	}
 
 	return (
@@ -64,9 +98,10 @@ function Contact() {
 				<p className='pageHeader'>Contact History</p>
 			</header>
 
-			<main>
+			<main style={{ marginBottom: '15vh' }}>
+				{/* realstate advertisement info */}
 				{listing && (
-					<div className='categoryListing'>
+					<div className='categoryListing contact'>
 						<LazyImg
 							src={listing.imageUrls[0]}
 							alt={listing.name}
@@ -100,7 +135,21 @@ function Contact() {
 					</div>
 				)}
 
-				<form className='messageForm' onSubmit={submitHandler}>
+				{/* contact history */}
+				<h2>Contact Messages</h2>
+				<div className='contact-history'>
+					{messageList &&
+						messageList.map((message) => (
+							<ContactMessageItem
+								key={message.id}
+								{...message}
+								ownerId={auth.currentUser.uid}
+							/>
+						))}
+				</div>
+
+				{/* contact form */}
+				<form className='messageForm contact' onSubmit={submitHandler}>
 					<div className='messageDiv'>
 						<label htmlFor='message' className='messageLabel'>
 							Message
@@ -115,7 +164,6 @@ function Contact() {
 							onChange={onChange}></textarea>
 					</div>
 
-					{/* mailto and params */}
 					<button className='primaryButton'>Send Message</button>
 				</form>
 			</main>

@@ -3,6 +3,11 @@
 	box-sizing: border-box;
 }
 
+:root {
+	--color-primary: #00cc66;
+	--color-secondary: #2c2c2c8c;
+}
+
 html::-webkit-scrollbar {
 	display: none;
 }
@@ -69,7 +74,7 @@ button {
 
 .primaryButton {
 	cursor: pointer;
-	background: #00cc66;
+	background: var(--color-primary);
 	border-radius: 1rem;
 	padding: 0.85rem 2rem;
 	color: #ffffff;
@@ -104,6 +109,10 @@ button {
 	z-index: 10;
 }
 
+.listingsList {
+	padding-inline-start: 0;
+}
+
 .pageContainer,
 .offers,
 .profile,
@@ -112,6 +121,7 @@ button {
 .explore {
 	margin: 1rem;
 }
+
 @media (min-width: 1024px) {
 	.pageContainer,
 	.offers,
@@ -144,7 +154,7 @@ button {
 	width: 64px;
 	height: 64px;
 	border: 8px solid;
-	border-color: #00cc66 transparent #00cc66 transparent;
+	border-color: var(--color-primary) transparent var(--color-primary) transparent;
 	border-radius: 50%;
 	animation: spin 1.2s linear infinite;
 }
@@ -242,7 +252,7 @@ button {
 
 .forgotPasswordLink {
 	cursor: pointer;
-	color: #00cc66;
+	color: var(--color-primary);
 	font-weight: 600;
 	text-align: right;
 }
@@ -283,7 +293,7 @@ button {
 	align-items: center;
 	width: 3rem;
 	height: 3rem;
-	background-color: #00cc66;
+	background-color: var(--color-primary);
 	border-radius: 50%;
 }
 @media (min-width: 1024px) {
@@ -325,7 +335,7 @@ button {
 
 .registerLink {
 	margin-top: 1rem;
-	color: #00cc66;
+	color: var(--color-primary);
 	font-weight: 600;
 	text-align: center;
 	margin-bottom: 8rem;
@@ -395,6 +405,7 @@ button {
 }
 
 .swiperSlideDiv {
+	user-select: none;
 	position: relative;
 	width: 100%;
 	height: 23vh;
@@ -574,7 +585,7 @@ button {
 	margin-top: 0.5rem;
 	font-weight: 600;
 	font-size: 1.1rem;
-	color: #00cc66;
+	color: var(--color-primary);
 	margin-bottom: 0;
 	display: flex;
 	align-items: center;
@@ -660,7 +671,7 @@ button {
 
 .listingType {
 	padding: 0.25rem 0.5rem;
-	background-color: #00cc66;
+	background-color: var(--color-primary);
 	color: #ffffff;
 	border-radius: 2rem;
 	display: inline;
@@ -747,6 +758,7 @@ button {
 
 .messageLabel {
 	margin-bottom: 0.5rem;
+	font-weight: 500;
 }
 
 .profile {
@@ -765,7 +777,7 @@ button {
 	font-size: 1rem;
 	font-weight: 600;
 	color: #ffffff;
-	background-color: #00cc66;
+	background-color: var(--color-primary);
 	padding: 0.25rem 0.75rem;
 	border-radius: 1rem;
 }
@@ -777,7 +789,7 @@ button {
 	font-size: 1rem;
 	font-weight: 600;
 	color: #ffffff;
-	background-color: #00cc66;
+	background-color: var(--color-primary);
 	padding: 0.55rem 1.25rem;
 	border-radius: 1rem;
 }
@@ -801,7 +813,7 @@ button {
 .changePersonalDetails {
 	cursor: pointer;
 	font-weight: 600;
-	color: #00cc66;
+	color: var(--color-primary);
 }
 
 .profileCard {
@@ -905,7 +917,7 @@ button {
 	align-items: center;
 }
 .formButtonActive {
-	background-color: #00cc66;
+	background-color: var(--color-primary);
 	color: #ffffff;
 }
 
@@ -966,7 +978,7 @@ button {
 	width: 100%;
 }
 .formInputFile::-webkit-file-upload-button {
-	background-color: #00cc66;
+	background-color: var(--color-primary);
 	border: none;
 	color: #ffffff;
 	font-weight: 600;
@@ -1241,7 +1253,7 @@ button {
 }
 
 .message-unread {
-	border-left-color: #00cc66;
+	border-left-color: var(--color-primary);
 }
 
 .message-read {
@@ -1258,7 +1270,7 @@ button {
 }
 
 .message-time {
-	color: #2c2c2c8c;
+	color: var(--color-secondary);
 }
 
 .message-item-title {
@@ -1279,4 +1291,90 @@ button {
 
 .moreMessage-link:hover {
 	background-color: transparent;
+}
+
+.categoryListing.contact {
+	background-color: #fafafa;
+	border-radius: 0px;
+	box-shadow: 0px 0px 2px var(--color-secondary);
+	margin-bottom: 3rem;
+}
+
+@media (max-width: 1023px) {
+	.categoryListing.contact {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.categoryListing.contact > img {
+		width: 100%;
+		height: 100%;
+	}
+
+	.categoryListing.contact .categoryListingDetails {
+		width: 100%;
+		padding: 0.5rem;
+	}
+}
+
+.contact-history {
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+	width: 100%;
+	max-height: 35vh;
+	padding: 0.775rem;
+	overflow-y: scroll;
+	/* background-color: #f8f8f8; */
+}
+
+.contact-history::-webkit-scrollbar {
+	width: 5px;
+}
+
+.contact-history::-webkit-scrollbar-thumb {
+	/* Foreground */
+	background: white;
+}
+
+.message-sender .user-name {
+	margin-right: 1rem;
+	font-weight: 600;
+}
+
+.message-sender .message-time {
+	font-size: smaller;
+}
+
+.contactMessage-item {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	padding: 0.75rem;
+	border-radius: 5px;
+	width: 95%;
+	background-color: #f8f8f8;
+	box-shadow: 1px 1px 3px #2c2c2c4c;
+}
+
+.contactMessage-item.sender {
+	border-left: 5px solid var(--color-primary);
+}
+
+.contactMessage-item.owner {
+	align-items: flex-end;
+	border-right: 5px solid var(--color-secondary);
+}
+
+.contactMessage-item .message-content {
+	background-color: white;
+	padding: 0.5rem;
+	border-radius: 8px;
+	max-width: 85%;
+}
+
+@media (max-width: 1023px) {
+	.messageForm.contact {
+		margin-bottom: 17.5vh;
+	}
 }

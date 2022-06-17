@@ -17,7 +17,7 @@ function ListingForm({ geolocationEnabled, formData, onSubmit, onMutate }) {
 
 	return (
 		<main>
-			<form onSubmit={onSubmit} class='form-grid'>
+			<form onSubmit={onSubmit} className='form-grid'>
 				<div>
 					<label className='formLabel'>Sell / Rent</label>
 					<div className='formButtons'>
