@@ -628,7 +628,7 @@ button {
 .shareIconDiv {
 	cursor: pointer;
 	position: fixed;
-	top: 3%;
+	top: 10%;
 	right: 5%;
 	z-index: 2;
 	background-color: #ffffff;
@@ -1075,6 +1075,7 @@ button {
 		display: block;
 	}
 	.footer-quiklink {
+		user-select: none;
 		display: flex;
 		margin: 0;
 		padding: 0;

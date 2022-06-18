@@ -17,6 +17,7 @@ function RenderIntersectionList({
 	const [isInit, setIsInit] = useState(false)
 	const placeholderHeight = useRef(defaultHeight)
 	const intersectionRef = useRef()
+	const isMounted = useRef(true)
 
 	// set initial list if availible
 	useEffect(() => {
@@ -27,8 +28,10 @@ function RenderIntersectionList({
 		}
 
 		setInitialDataList()
+
+		return () => (isMounted.current = false)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [isMounted])
 
 	// Set more list with intersection observer in viewport
 	useEffect(() => {
@@ -39,14 +42,14 @@ function RenderIntersectionList({
 						const data = await onRequestDataIntersection()
 						data.length === 0 && setHasMore(false)
 
-						setShowList((prevState) => [...prevState, ...data])
+						isMounted.current && setShowList((prevState) => [...prevState, ...data])
 					}
 
 					if (entries[0].isIntersecting)
 						if (typeof window !== 'undefined' && window.requestIdleCallback) {
 							window.requestIdleCallback(
 								() => {
-									onRequestDataIntersection && setMoreData()
+									onRequestDataIntersection && isMounted.current && setMoreData()
 									intersectionRef.current &&
 										observer.unobserve(intersectionRef.current)
 								},
@@ -55,7 +58,7 @@ function RenderIntersectionList({
 								}
 							)
 						} else {
-							onRequestDataIntersection && setMoreData()
+							onRequestDataIntersection && isMounted.current && setMoreData()
 							intersectionRef.current && observer.unobserve(intersectionRef.current)
 						}
 				},
@@ -68,7 +71,7 @@ function RenderIntersectionList({
 			observer.observe(intersectionRef.current)
 			placeholderHeight.current = intersectionRef.current.offsetHeight
 		}
-	}, [intersectionRef, isInit, onRequestDataIntersection, root, showList, visibleOffset])
+	}, [intersectionRef, isInit, showList, onRequestDataIntersection, root, visibleOffset])
 
 	return (
 		<>

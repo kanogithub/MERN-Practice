@@ -6,6 +6,7 @@ function RenderIfvisible({ defaultHeight = 300, visibleOffset = 1000, root = nul
 	const [isVisible, setIsVisible] = useState(isServer)
 	const placeholderHeight = useRef(defaultHeight)
 	const intersectionRef = useRef()
+	const isMounted = useRef(true)
 
 	// Set visibility with intersection observer
 	useEffect(() => {
@@ -13,11 +14,14 @@ function RenderIfvisible({ defaultHeight = 300, visibleOffset = 1000, root = nul
 			const observer = new IntersectionObserver(
 				(entries) => {
 					if (typeof window !== 'undefined' && window.requestIdleCallback) {
-						window.requestIdleCallback(() => setIsVisible(entries[0].isIntersecting), {
-							timeout: 600,
-						})
+						window.requestIdleCallback(
+							() => isMounted.current && setIsVisible(entries[0].isIntersecting),
+							{
+								timeout: 600,
+							}
+						)
 					} else {
-						setIsVisible(entries[0].isIntersecting)
+						isMounted.current && setIsVisible(entries[0].isIntersecting)
 					}
 				},
 				{
@@ -31,6 +35,8 @@ function RenderIfvisible({ defaultHeight = 300, visibleOffset = 1000, root = nul
 			return () => {
 				// eslint-disable-next-line react-hooks/exhaustive-deps
 				intersectionRef.current && observer.unobserve(intersectionRef.current)
+
+				isMounted.current = false
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

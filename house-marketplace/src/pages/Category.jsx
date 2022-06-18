@@ -5,11 +5,13 @@ import { db } from '../firebase.config'
 import { toast } from 'react-toastify'
 import ListingItem from '../components/ListingItem'
 import RenderIntersectionList from '../layouts/RenderIntersectionList'
+import Spinner from '../components/Spinner'
 
 function Category() {
 	const loadLimitation = 3
 	const [lastFetchedListing, setLastFetchedListing] = useState(null)
 	const [forceUpdate, setForceUpdate] = useState(0)
+	const [loading, setLoading] = useState(true)
 
 	const params = useParams()
 
@@ -76,6 +78,7 @@ function Category() {
 				})
 			})
 
+			setLoading(false)
 			return listings
 		} catch (error) {
 			toast.error('Could not find listings')
@@ -87,30 +90,33 @@ function Category() {
 	}, [params.categoryName, setForceUpdate])
 
 	return (
-		<div className='category'>
-			<header>
-				<p className='pageHeader'>
-					{params.categoryName === 'rent' ? 'Places for rent' : 'Places for sale'}
-				</p>
-			</header>
+		<>
+			{loading && <Spinner />}
+			<div className='category'>
+				<header>
+					<p className='pageHeader'>
+						{params.categoryName === 'rent' ? 'Places for rent' : 'Places for sale'}
+					</p>
+				</header>
 
-			<main>
-				<ul className='categoryListings' key={forceUpdate}>
-					<RenderIntersectionList
-						getInitialDate={fetchListings}
-						onRequestDataIntersection={onFetchMoreListings}
-						itemComponent={ListingItem}
-						resourceName='listing'
-						visibleOffset={-130}
-					/>
-				</ul>
-			</main>
+				<main>
+					<ul className='categoryListings' key={forceUpdate}>
+						<RenderIntersectionList
+							getInitialDate={fetchListings}
+							onRequestDataIntersection={onFetchMoreListings}
+							itemComponent={ListingItem}
+							resourceName='listing'
+							visibleOffset={-130}
+						/>
+					</ul>
+				</main>
 
-			<br />
-			<br />
+				<br />
+				<br />
 
-			{!lastFetchedListing && <p className='noMore'>No More</p>}
-		</div>
+				{!lastFetchedListing && <p className='noMore'>No More</p>}
+			</div>
+		</>
 	)
 }
 

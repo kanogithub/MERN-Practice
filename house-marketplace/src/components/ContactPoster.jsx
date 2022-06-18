@@ -38,17 +38,16 @@ function ContactPoster(props) {
 	const onSubmit = async (e) => {
 		e.preventDefault()
 
-		if (message.length < 10) {
-			toast.error('Message did not send proprably - length too short.')
-			return
-		}
-
-		setSending(true)
-
 		if (auth.currentUser === null) {
 			const confirm = window.confirm('Please Sign In to continue')
 			confirm && navigate(`/sign-in?listing=${location.pathname}`)
 		} else {
+			if (message.length < 10) {
+				toast.error('Message did not send - Needs 10 more words.')
+				return
+			}
+
+			setSending(true)
 			const messageRef = {
 				listingName,
 				listingRef: listingId,
