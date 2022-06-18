@@ -16,7 +16,7 @@ import { getAuth } from 'firebase/auth'
 import { toast } from 'react-toastify'
 import bedIcon from '../assets/svg/bedIcon.svg'
 import bathtubIcon from '../assets/svg/bathtubIcon.svg'
-import LazyImg from '../components/LazyImg'
+import spinner from '../assets/spinner2.gif'
 import ContactMessageItem from '../components/ContactMessageItem'
 
 function Contact() {
@@ -120,10 +120,12 @@ function Contact() {
 				{/* realstate advertisement info */}
 				{listing && (
 					<div className='categoryListing contact'>
-						<LazyImg
+						<img
 							src={listing.imageUrls[0]}
 							alt={listing.name}
-							className={'spinner'}
+							className='spinner'
+							style={{ backgroundImage: `url(${spinner})` }}
+							loading='lazy'
 						/>
 
 						<div className='categoryListingDetails'>

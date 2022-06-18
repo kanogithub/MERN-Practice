@@ -1,14 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { collection, getDocs, query, where, orderBy, limit, startAfter } from 'firebase/firestore'
 import { db } from '../firebase.config'
 import { toast } from 'react-toastify'
 import ListingItem from '../components/ListingItem'
-import Spinner from '../components/Spinner'
+import RenderIntersectionList from '../layouts/RenderIntersectionList'
 
 function Offers() {
 	const loadLimitation = 3
-	const [listings, setListings] = useState(null)
-	const [loading, setLoading] = useState(true)
 	const [lastFetchedListing, setLastFetchedListing] = useState(null)
 
 	const onFetchMoreListings = async () => {
@@ -41,53 +39,43 @@ function Offers() {
 				})
 			})
 
-			setListings((prev) => [...prev, ...listings])
-			setLoading(false)
-
-			// No More info
-			querySnap.docs.length === 0 && toast.info('Could not find more listings')
+			return listings
 		} catch (error) {
 			toast.error('Could not find listings')
 		}
 	}
 
-	useEffect(() => {
-		const fetchListings = async () => {
-			try {
-				// Get reference
-				const listingsRef = collection(db, 'listings')
+	const fetchListings = async () => {
+		try {
+			// Get reference
+			const listingsRef = collection(db, 'listings')
 
-				// Create a query with Firebase 9
-				const q = query(
-					listingsRef,
-					where('offer', '==', true),
-					orderBy('timestamp', 'desc'),
-					limit(loadLimitation)
-				)
+			// Create a query with Firebase 9
+			const q = query(
+				listingsRef,
+				where('offer', '==', true),
+				orderBy('timestamp', 'desc'),
+				limit(loadLimitation)
+			)
 
-				// Execute query
-				const querySnap = await getDocs(q)
-				const lastVisible = querySnap.docs[querySnap.docs.length - 1]
-				setLastFetchedListing(lastVisible)
+			// Execute query
+			const querySnap = await getDocs(q)
+			const lastVisible = querySnap.docs[querySnap.docs.length - 1]
+			setLastFetchedListing(lastVisible)
+			let listings = []
 
-				let listings = []
-
-				querySnap.forEach((doc) => {
-					listings.push({
-						id: doc.id,
-						data: doc.data(),
-					})
+			querySnap.forEach((doc) => {
+				listings.push({
+					id: doc.id,
+					data: doc.data(),
 				})
+			})
 
-				setListings(listings)
-				setLoading(false)
-			} catch (error) {
-				toast.error('Could not find listings')
-			}
+			return listings
+		} catch (error) {
+			toast.error('Could not find listings')
 		}
-
-		fetchListings()
-	}, [])
+	}
 
 	return (
 		<div className='category'>
@@ -95,33 +83,22 @@ function Offers() {
 				<p className='pageHeader'>Offers</p>
 			</header>
 
-			{loading ? (
-				<Spinner />
-			) : listings && listings.length > 0 ? (
-				<>
-					<main>
-						<ul className='categoryListings'>
-							{listings.map((listing) => (
-								<ListingItem
-									listing={listing.data}
-									id={listing.id}
-									key={listing.id}
-								/>
-							))}
-						</ul>
-					</main>
-				</>
-			) : (
-				<p>There are no current offers</p>
-			)}
+			<main>
+				<ul className='categoryListings'>
+					<RenderIntersectionList
+						getInitialDate={fetchListings}
+						onRequestDataIntersection={onFetchMoreListings}
+						itemComponent={ListingItem}
+						resourceName='listing'
+						visibleOffset={-130}
+					/>
+				</ul>
+			</main>
 
 			<br />
 			<br />
-			{lastFetchedListing && (
-				<p className='loadMore' onClick={onFetchMoreListings}>
-					Load More
-				</p>
-			)}
+
+			{!lastFetchedListing && <p className='noMore'>No More</p>}
 		</div>
 	)
 }

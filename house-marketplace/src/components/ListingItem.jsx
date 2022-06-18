@@ -3,7 +3,7 @@ import { ReactComponent as DeleteIcon } from '../assets/svg/deleteIcon.svg'
 import { ReactComponent as EditIcon } from '../assets/svg/editIcon.svg'
 import bedIcon from '../assets/svg/bedIcon.svg'
 import bathtubIcon from '../assets/svg/bathtubIcon.svg'
-import LazyImg from './LazyImg'
+import spinner from '../assets/spinner2.gif'
 
 function ListingItem({ listing, id, onDelete, onEdit }) {
 	const toDollarString = (number) => {
@@ -26,10 +26,12 @@ function ListingItem({ listing, id, onDelete, onEdit }) {
 			)}
 			<li className='categoryListing'>
 				<Link to={`/category/${listing.type}/${id}`} className='categoryListingLink'>
-					<LazyImg
+					<img
 						src={listing.imageUrls[0]}
 						alt={listing.name}
-						className={'categoryListingImg spinner'}
+						className='categoryListingImg spinner'
+						style={{ backgroundImage: `url(${spinner})` }}
+						loading='lazy'
 					/>
 
 					<div className='categoryListingDetails'>
