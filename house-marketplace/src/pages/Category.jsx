@@ -87,7 +87,7 @@ function Category() {
 
 	useEffect(() => {
 		setForceUpdate((prevState) => prevState + 1)
-	}, [params.categoryName, setForceUpdate])
+	}, [params.categoryName])
 
 	return (
 		<>
@@ -100,15 +100,17 @@ function Category() {
 				</header>
 
 				<main>
-					<ul className='categoryListings' key={forceUpdate}>
-						<RenderIntersectionList
-							getInitialDate={fetchListings}
-							onRequestDataIntersection={onFetchMoreListings}
-							itemComponent={ListingItem}
-							resourceName='listing'
-							visibleOffset={-130}
-						/>
-					</ul>
+					{forceUpdate && (
+						<ul className='categoryListings' key={forceUpdate}>
+							<RenderIntersectionList
+								getInitialDate={fetchListings}
+								onRequestDataIntersection={onFetchMoreListings}
+								itemComponent={ListingItem}
+								resourceName='listing'
+								visibleOffset={-130}
+							/>
+						</ul>
+					)}
 				</main>
 
 				<br />

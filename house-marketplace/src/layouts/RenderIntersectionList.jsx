@@ -6,7 +6,9 @@ function RenderIntersectionList({
 	defaultHeight = 300,
 	visibleOffset = -150,
 	root = null,
-	getInitialDate = () => {},
+	autoload = true,
+	hiddenOverflow = false,
+	getInitialDate,
 	onRequestDataIntersection,
 	itemComponent: ItemComponent,
 	resourceName,
@@ -19,32 +21,32 @@ function RenderIntersectionList({
 	const intersectionRef = useRef()
 	const isMounted = useRef(true)
 
+	const setInitialDataList = async () => {
+		const data = await getInitialDate()
+		setShowList(data)
+		setIsInit(true)
+	}
+
+	const setMoreData = async () => {
+		const data = await onRequestDataIntersection()
+		data.length === 0 && setHasMore(false)
+
+		isMounted.current && setShowList((prevState) => [...prevState, ...data])
+	}
+
 	// set initial list if availible
 	useEffect(() => {
-		const setInitialDataList = async () => {
-			const data = await getInitialDate()
-			setShowList(data)
-			setIsInit(true)
-		}
-
-		setInitialDataList()
+		getInitialDate ? setInitialDataList() : setIsInit(true)
 
 		return () => (isMounted.current = false)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isMounted])
+	}, [])
 
 	// Set more list with intersection observer in viewport
 	useEffect(() => {
-		if (intersectionRef.current && isInit) {
+		if (intersectionRef.current && isInit && autoload) {
 			const observer = new IntersectionObserver(
 				(entries) => {
-					const setMoreData = async () => {
-						const data = await onRequestDataIntersection()
-						data.length === 0 && setHasMore(false)
-
-						isMounted.current && setShowList((prevState) => [...prevState, ...data])
-					}
-
 					if (entries[0].isIntersecting)
 						if (typeof window !== 'undefined' && window.requestIdleCallback) {
 							window.requestIdleCallback(
@@ -71,23 +73,26 @@ function RenderIntersectionList({
 			observer.observe(intersectionRef.current)
 			placeholderHeight.current = intersectionRef.current.offsetHeight
 		}
-	}, [intersectionRef, isInit, showList, onRequestDataIntersection, root, visibleOffset])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [intersectionRef, isInit, showList])
+
+	// setting loading placeholder styles
+	const styles = { height: placeholderHeight.current, cursor: 'pointer' }
+	if (!autoload && children) delete styles.height
 
 	return (
 		<>
 			{showList.length > 0 &&
 				showList.map((listItem, index) => (
-					<RenderIfvisible key={index}>
+					<RenderIfvisible key={index} hiddenOverflow={hiddenOverflow}>
 						<ItemComponent {...{ [resourceName]: listItem.data }} id={listItem.id} />
 					</RenderIfvisible>
 				))}
 
 			{/* child for loading placeholder */}
 			{hasMore && (
-				<div ref={intersectionRef} style={{ height: placeholderHeight.current }}>
-					{React.Children.map(children, (child) => {
-						if (React.isValidElement(child)) return React.cloneElement(child)
-					})}
+				<div ref={intersectionRef} style={styles} onClick={setMoreData}>
+					{children}
 				</div>
 			)}
 		</>
@@ -99,6 +104,8 @@ RenderIntersectionList.propTypes = {
 	resourceName: PropTypes.string.isRequired,
 	getInitialDate: PropTypes.func,
 	onRequestMoreData: PropTypes.func,
+	autoload: PropTypes.bool,
+	hiddenOverflow: PropTypes.bool,
 }
 
 export default RenderIntersectionList

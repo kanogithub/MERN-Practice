@@ -501,6 +501,7 @@ button {
 	align-items: center;
 	margin-bottom: 1rem;
 	position: relative;
+	animation: fadeIn 0.5s;
 }
 @media (min-width: 1024px) {
 	.categoryListing {
@@ -510,6 +511,14 @@ button {
 	.categoryListing:hover .categoryListingImg {
 		transform: translateY(-2%);
 		box-shadow: 2px 2px 6px #2c2c2c;
+	}
+}
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
 	}
 }
 
@@ -609,6 +618,7 @@ button {
 }
 
 .noMore {
+	user-select: none;
 	width: 8rem;
 	margin: 0 auto;
 	text-align: center;
@@ -1247,6 +1257,7 @@ button {
 }
 
 .message-item {
+	cursor: pointer;
 	padding: 1rem;
 	color: #2c2c2c;
 	background-color: #f2f2f2;
@@ -1264,12 +1275,19 @@ button {
 }
 
 .message-item:hover {
-	background-color: transparent;
+	background-color: #00cc660c;
 }
 
 .message-item-user {
 	display: flex;
 	justify-content: space-between;
+}
+
+.message-item-user .user-name {
+	font-weight: 600;
+	padding: 0.25rem 0.5rem;
+	color: #dfdfdf;
+	background-color: var(--color-secondary);
 }
 
 .message-time {
@@ -1398,4 +1416,34 @@ button {
 	.message-box-close {
 		display: none;
 	}
+}
+
+.msgListings {
+	padding-inline-start: 0;
+	box-shadow: 1px 1px 5px #2c2c2c4c;
+}
+
+.msgListings.send .message-item {
+	border-left-color: var(--color-secondary);
+}
+
+.msgCate {
+	width: fit-content;
+	height: 2rem;
+	line-height: 2rem;
+	margin-bottom: 3rem;
+	background-color: #dfdfdf;
+	border-radius: 15rem;
+}
+
+.msgCateSelector {
+	cursor: pointer;
+	display: inline-block;
+	height: 2rem;
+	padding: 0 1rem;
+	border-radius: 15rem;
+}
+
+.msgCateActive {
+	background-color: var(--color-primary);
 }

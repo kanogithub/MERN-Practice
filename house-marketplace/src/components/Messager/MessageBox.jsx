@@ -48,7 +48,7 @@ function MessageBox({ shoudOpen, onRequestClose, onRequestContact, userId }) {
 								/>
 						  ))
 						: 'Not message so far.'}
-					<Link to='message' className='moreMessage-link'>
+					<Link to='message' className='moreMessage-link' onClick={onRequestClose}>
 						More Messages...
 					</Link>
 					<div className='message-box-close' onClick={onRequestClose}>

@@ -2,7 +2,13 @@ import { useState, useRef, useEffect } from 'react'
 
 const isServer = typeof window === 'undefined'
 
-function RenderIfvisible({ defaultHeight = 300, visibleOffset = 1000, root = null, children }) {
+function RenderIfvisible({
+	defaultHeight = 300,
+	visibleOffset = 1000,
+	root = null,
+	hiddenOverflow = false,
+	children,
+}) {
 	const [isVisible, setIsVisible] = useState(isServer)
 	const placeholderHeight = useRef(defaultHeight)
 	const intersectionRef = useRef()
@@ -23,6 +29,10 @@ function RenderIfvisible({ defaultHeight = 300, visibleOffset = 1000, root = nul
 					} else {
 						isMounted.current && setIsVisible(entries[0].isIntersecting)
 					}
+
+					//
+					if (!hiddenOverflow && entries[0].isIntersecting)
+						intersectionRef.current && observer.unobserve(intersectionRef.current)
 				},
 				{
 					root,
@@ -39,15 +49,14 @@ function RenderIfvisible({ defaultHeight = 300, visibleOffset = 1000, root = nul
 				isMounted.current = false
 			}
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [intersectionRef])
+	}, [intersectionRef, root, visibleOffset, hiddenOverflow])
 
 	// Set height after render
 	useEffect(() => {
 		if (intersectionRef.current && isVisible) {
 			placeholderHeight.current = intersectionRef.current.offsetHeight
 		}
-	}, [isVisible, intersectionRef])
+	}, [intersectionRef, isVisible])
 
 	return (
 		<div ref={intersectionRef}>

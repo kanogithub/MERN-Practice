@@ -10,8 +10,8 @@ function MessageItem(props) {
 		onRequestContact,
 	} = props
 
-	const date = new Date(timestamp.seconds * 1000).toLocaleTimeString()
-	const time = new Date(timestamp.seconds * 1000).toLocaleDateString()
+	const date = timestamp ? new Date(timestamp.seconds * 1000).toLocaleTimeString() : null
+	const time = timestamp ? new Date(timestamp.seconds * 1000).toLocaleDateString() : null
 
 	return (
 		<div
