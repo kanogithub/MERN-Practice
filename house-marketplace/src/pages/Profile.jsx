@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getAuth, updateProfile } from 'firebase/auth'
+import { getAuth, updateProfile, sendSignInLinkToEmail } from 'firebase/auth'
 import {
 	doc,
 	updateDoc,
@@ -16,6 +16,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import ListingItem from '../components/ListingItem'
 import { ReactComponent as ArrowRight } from '../assets/svg/keyboardArrowRightIcon.svg'
 import { ReactComponent as HomeIcon } from '../assets/svg/homeIcon.svg'
+import { ReactComponent as CheckSquare } from '../assets/svg/checkSquare.svg'
 
 function Profile() {
 	const auth = getAuth()
@@ -26,6 +27,7 @@ function Profile() {
 		email: auth.currentUser.email,
 	})
 
+	const emailVerified = auth.currentUser.emailVerified
 	const { name, email } = formData
 
 	const navigate = useNavigate()
@@ -75,6 +77,33 @@ function Profile() {
 
 	const onEdit = (listingId) => navigate(`/edit-listing/${listingId}`)
 
+	const actionCodeSettings = {
+		// URL you want to redirect back to. The domain (www.example.com) for this
+		// URL must be in the authorized domains list in the Firebase Console.
+		url: 'https://house-market-teal.vercel.app/profile',
+		// This must be true.
+		handleCodeInApp: true,
+		iOS: {
+			bundleId: 'com.example.ios',
+		},
+		android: {
+			packageName: 'com.example.android',
+			installApp: true,
+			minimumVersion: '12',
+		},
+		dynamicLinkDomain: 'https://house-market-teal.vercel.app/',
+	}
+
+	const onVerifyEmail = () => {
+		sendSignInLinkToEmail(auth, email, actionCodeSettings)
+			.then(() => {
+				toast.success('Verification Email is sent, please confirm.')
+			})
+			.catch((error) => {
+				console.error(error.message)
+			})
+	}
+
 	useEffect(() => {
 		const fetchListings = async () => {
 			const listingRef = collection(db, 'listings')
@@ -122,14 +151,24 @@ function Profile() {
 							disabled={!changeDetails}
 							onChange={onChange}
 						/>
-						<input
-							type='email'
-							id='email'
-							value={email}
-							className={!changeDetails ? 'profileEmail' : 'profileEmailActive'}
-							disabled={!changeDetails}
-							onChange={onChange}
-						/>
+						<div className='profileEmail-section'>
+							<input
+								type='email'
+								id='email'
+								value={email}
+								className={!changeDetails ? 'profileEmail' : 'profileEmailActive'}
+								disabled={!changeDetails}
+								onChange={onChange}
+							/>
+							<span
+								className={`email-verification ${
+									emailVerified ? 'verified' : 'verify'
+								}`}
+								onClick={!emailVerified && onVerifyEmail}>
+								{emailVerified && <CheckSquare width='20px' height='20px' />}
+								{emailVerified ? 'Verified' : 'Verify Email'}
+							</span>
+						</div>
 					</form>
 				</div>
 

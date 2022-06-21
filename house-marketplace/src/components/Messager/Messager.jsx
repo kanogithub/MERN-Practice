@@ -76,7 +76,7 @@ function Messager({ userId }) {
 	}, [])
 
 	return (
-		<div className='menu-messager' onClick={onOpen}>
+		<div className='menu-messager' onClick={onOpen} data-tips='Messages'>
 			{message > 0 && <span className='menu-messager-number'>{message}</span>}
 			<Mail width='24px' height='24px' fill={shoudOpen ? '#3AAA99' : '#f2f4f8'} />
 			<MessageBox
