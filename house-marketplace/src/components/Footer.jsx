@@ -7,7 +7,7 @@ function Footer() {
 		<div className='footer'>
 			<div className='container'>
 				<div className='footer-widgets'>
-					<div>Fake House 0.5.0</div>
+					<div>Fake House 0.5.2</div>
 					<div>
 						<ul className='footer-quiklink'>
 							<li onClick={() => navigate('/category/rent')}>

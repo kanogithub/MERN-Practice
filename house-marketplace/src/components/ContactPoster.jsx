@@ -4,6 +4,7 @@ import { getAuth } from 'firebase/auth'
 import { doc, getDoc, addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import { db } from '../firebase.config'
 import { toast } from 'react-toastify'
+import { ReactComponent as Mail } from '../assets/svg/mail.svg'
 
 function ContactPoster(props) {
 	const { userRef: landlordId, name: listingName, listingId } = props
@@ -82,7 +83,16 @@ function ContactPoster(props) {
 			{landlord !== null && (
 				<main>
 					<div className='contactLandlord'>
-						<p className='landlordName'>Contact {landlord?.name}</p>
+						<p className='landlordName'>
+							Contact {landlord?.name}{' '}
+							{landlord?.byEmail && (
+								<a
+									href={`mailto:${landlord.email}?Subject=${listingName}&body=${message}`}
+									className='contactPoster-mail'>
+									<Mail width='24px' height='24px' />
+								</a>
+							)}
+						</p>
 					</div>
 
 					<form className='messageForm' onSubmit={onSubmit}>

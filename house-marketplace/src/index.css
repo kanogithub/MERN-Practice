@@ -750,6 +750,14 @@ button {
 	align-items: center;
 }
 
+.contactPoster-mail {
+	display: inline;
+	margin-left: 1rem;
+}
+.contactPoster-mail > svg {
+	margin-bottom: -5px;
+}
+
 .landlordName {
 	font-weight: 600;
 	font-size: 1.2rem;
@@ -849,7 +857,11 @@ button {
 	border-radius: 15px;
 	white-space: nowrap;
 }
-
+@media (max-width: 710px) {
+	.email-verification {
+		transform: scale(0.8);
+	}
+}
 .email-verification > svg {
 	margin-bottom: -4px;
 	margin-right: 0.25rem;
@@ -894,6 +906,75 @@ button {
 
 .profileAddressActive {
 	background-color: rgba(44, 44, 44, 0.1);
+}
+
+.profileDetailSettings {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 1.5rem;
+}
+.profileDetailSettings > * {
+	flex: auto;
+}
+@media (min-width: 1024px) {
+	.profileDetailSettings {
+		flex-direction: row;
+	}
+}
+
+.profileContact {
+	all: unset;
+	margin: 0.3rem 0;
+	font-weight: 600;
+	width: 100%;
+}
+.profileContact-item {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	margin-top: 0.4rem;
+}
+.profileContact-item > * {
+	display: inline-block;
+}
+.switch-title {
+	font-weight: 700;
+}
+.switch-container {
+	user-select: none;
+	width: 4.75rem;
+	height: 1.5rem;
+	line-height: 1.5rem;
+	background-color: #dfdfdf;
+	border-radius: 15rem;
+}
+.switch-container > * {
+	cursor: pointer;
+	display: inline-block;
+	height: 1.5rem;
+	padding: 0 0.75rem;
+	border-radius: 15rem;
+}
+.switch.on {
+	background-color: #00cc66;
+}
+.switch.off {
+	float: right;
+	background-color: red;
+}
+@media (max-width: 710px) {
+	.profileContact-item {
+		gap: 0.25rem;
+	}
+	.switch-container {
+		transform: scale(0.8);
+	}
+}
+
+.profileContact-item.disabled {
+	filter: grayscale(1);
+	opacity: 0.7;
 }
 
 .createListing {
@@ -1277,6 +1358,7 @@ button {
 
 [data-tips]::after {
 	opacity: 0;
+	z-index: -1;
 	position: absolute;
 	top: 120%;
 	right: 50%;
@@ -1287,11 +1369,27 @@ button {
 	color: #2c2c2c;
 	background-color: #ccc;
 	border-radius: 3px;
-	transition: 0.3s;
 }
 
 [data-tips]:hover::after {
-	opacity: 0.95;
+	z-index: 1;
+	animation: dataTipsAnimation 2s;
+	animation-fill-mode: forwards;
+}
+
+@keyframes dataTipsAnimation {
+	0% {
+		opacity: 0;
+	}
+	30% {
+		opacity: 0.95;
+	}
+	70% {
+		opacity: 0.95;
+	}
+	100% {
+		opacity: 0;
+	}
 }
 
 @media (min-width: 1024px) {

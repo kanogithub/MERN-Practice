@@ -4,6 +4,7 @@ import {
 	doc,
 	updateDoc,
 	collection,
+	getDoc,
 	getDocs,
 	query,
 	where,
@@ -16,7 +17,8 @@ import { useNavigate, Link } from 'react-router-dom'
 import ListingItem from '../components/ListingItem'
 import { ReactComponent as ArrowRight } from '../assets/svg/keyboardArrowRightIcon.svg'
 import { ReactComponent as HomeIcon } from '../assets/svg/homeIcon.svg'
-import { ReactComponent as CheckSquare } from '../assets/svg/checkSquare.svg'
+import ProfileDetailsSet from '../components/ProfileDetailsSet'
+import ProfileContactSet from '../components/ProfileContactSet'
 
 function Profile() {
 	const auth = getAuth()
@@ -27,7 +29,6 @@ function Profile() {
 		email: auth.currentUser.email,
 	})
 
-	const emailVerified = auth.currentUser.emailVerified
 	const { name, email } = formData
 
 	const navigate = useNavigate()
@@ -60,8 +61,9 @@ function Profile() {
 		setChangeDetails(true)
 	}
 
-	const onChange = (e) =>
+	const handleChange = (e) => {
 		setFormData((preValue) => ({ ...preValue, [e.target.id]: e.target.value }))
+	}
 
 	const onDelete = async (listingId) => {
 		if (window.confirm('Are you sure you want to delete?')) {
@@ -123,6 +125,11 @@ function Profile() {
 		}
 
 		fetchListings()
+		;(async function getUserData() {
+			const querySnap = await getDoc(doc(db, 'users', auth.currentUser.uid))
+			const { byEmail } = querySnap.data()
+			setFormData((preV) => ({ ...preV, byEmail }))
+		})()
 	}, [auth.currentUser.uid])
 
 	return (
@@ -141,35 +148,15 @@ function Profile() {
 					</p>
 				</div>
 
-				<div className='profileCard'>
-					<form>
-						<input
-							type='text'
-							id='name'
-							value={name}
-							className={!changeDetails ? 'profileName' : 'profileNameActive'}
-							disabled={!changeDetails}
-							onChange={onChange}
-						/>
-						<div className='profileEmail-section'>
-							<input
-								type='email'
-								id='email'
-								value={email}
-								className={!changeDetails ? 'profileEmail' : 'profileEmailActive'}
-								disabled={!changeDetails}
-								onChange={onChange}
-							/>
-							<span
-								className={`email-verification ${
-									emailVerified ? 'verified' : 'verify'
-								}`}
-								onClick={!emailVerified && onVerifyEmail}>
-								{emailVerified && <CheckSquare width='20px' height='20px' />}
-								{emailVerified ? 'Verified' : 'Verify Email'}
-							</span>
-						</div>
-					</form>
+				<div className='profileDetailSettings'>
+					<ProfileDetailsSet
+						auth={auth}
+						formData={formData}
+						changeDetails={changeDetails}
+						onChange={handleChange}
+						onVerifyEmail={onVerifyEmail}
+					/>
+					<ProfileContactSet {...formData} />
 				</div>
 
 				<Link to='/create-listing' className='createListing'>
@@ -177,7 +164,6 @@ function Profile() {
 					<p>Sell or rent your home</p>
 					<ArrowRight className='arrowRight' alt='arrorRight' />
 				</Link>
-
 				{listings?.length > 0 && (
 					<>
 						<p className='listingText'>Your Listings</p>
