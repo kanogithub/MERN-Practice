@@ -91,7 +91,7 @@ function Profile() {
 			installApp: true,
 			minimumVersion: '12',
 		},
-		dynamicLinkDomain: 'https://house-market-teal.vercel.app/',
+		dynamicLinkDomain: 'house-market-teal.vercel.app',
 	}
 
 	const onVerifyEmail = () => {
