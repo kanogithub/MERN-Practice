@@ -5,6 +5,7 @@ import { db } from '../firebase.config'
 
 function ProfileContactSet({ byEmail }) {
 	const [onEmail, setOnEmail] = useState(false)
+	const [loading, setLoading] = useState(true)
 	const auth = getAuth()
 
 	const handleClick = async () => {
@@ -22,6 +23,7 @@ function ProfileContactSet({ byEmail }) {
 
 	useEffect(() => {
 		setOnEmail(byEmail)
+		setLoading(false)
 	}, [byEmail])
 
 	return (
@@ -33,14 +35,16 @@ function ProfileContactSet({ byEmail }) {
 				}`}>
 				<span className='switch-title'>Email</span>
 				<div className='switch-container'>
-					<span
-						className={`switch ${onEmail ? 'on' : 'off'}`}
-						onClick={auth.currentUser.emailVerified ? handleClick : undefined}
-						{...(!auth.currentUser.emailVerified && {
-							'data-tips': 'Please Verify Email',
-						})}>
-						{onEmail ? 'On' : 'Off'}
-					</span>
+					{!loading && (
+						<span
+							className={`switch ${onEmail ? 'on' : 'off'}`}
+							onClick={auth.currentUser.emailVerified ? handleClick : undefined}
+							{...(!auth.currentUser.emailVerified && {
+								'data-tips': 'Please Verify Email',
+							})}>
+							{onEmail ? 'On' : 'Off'}
+						</span>
+					)}
 				</div>
 			</div>
 		</div>

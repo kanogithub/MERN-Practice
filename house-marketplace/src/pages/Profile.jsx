@@ -30,7 +30,6 @@ function Profile() {
 	})
 
 	const { name, email } = formData
-
 	const navigate = useNavigate()
 
 	const onSubmit = async () => {

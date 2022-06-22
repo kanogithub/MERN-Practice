@@ -376,6 +376,7 @@ button {
 
 .swiper {
 	position: relative;
+	animation: fadeIn 0.5s;
 }
 .swiper-container {
 	width: 100%;
@@ -461,6 +462,7 @@ button {
 .exploreCategories {
 	display: flex;
 	justify-content: space-between;
+	animation: fadeIn 0.5s;
 }
 .exploreCategories a {
 	width: 48%;
@@ -913,6 +915,7 @@ button {
 	flex-direction: column;
 	justify-content: space-between;
 	gap: 1.5rem;
+	animation: fadeIn 0.5s;
 }
 .profileDetailSettings > * {
 	flex: auto;
@@ -989,6 +992,7 @@ button {
 	justify-content: space-between;
 	align-items: center;
 	transition: 0.2s;
+	animation: fadeIn 0.5s;
 }
 
 .createListing:hover {
