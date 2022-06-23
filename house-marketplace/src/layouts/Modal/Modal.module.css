@@ -1,0 +1,50 @@
+.modalOverlay {
+	position: fixed;
+	display: flex;
+	justify-content: center;
+	inset: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: #2c2c2c4c;
+	z-index: 999;
+	opacity: 0;
+	transition: 0.65s;
+}
+.overlayOpen {
+	opacity: 1;
+}
+
+.modalBody {
+	position: absolute;
+	margin-top: 10%;
+	z-index: 9999;
+	opacity: 0;
+	transform: translateY(-100%);
+}
+.bodyOpen {
+	animation: modalShow 0.65s forwards;
+}
+.bodyClose {
+	animation: modalClose 0.65s forwards;
+}
+
+@keyframes modalShow {
+	from {
+		opacity: 0;
+		transform: translateY(-100%);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+@keyframes modalClose {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-100%);
+	}
+}

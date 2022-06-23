@@ -19,6 +19,8 @@ import { ReactComponent as ArrowRight } from '../assets/svg/keyboardArrowRightIc
 import { ReactComponent as HomeIcon } from '../assets/svg/homeIcon.svg'
 import ProfileDetailsSet from '../components/ProfileDetailsSet'
 import ProfileContactSet from '../components/ProfileContactSet'
+import Modal from '../layouts/Modal/Modal'
+import PhoneVerifier from '../components/PhoneVerifier'
 
 function Profile() {
 	const auth = getAuth()
@@ -28,8 +30,9 @@ function Profile() {
 		name: auth.currentUser.displayName,
 		email: auth.currentUser.email,
 	})
+	const [phoneModalshow, setPhoneModalshow] = useState(false)
 
-	const { name, email } = formData
+	const { name, email, phoneNumber } = formData
 	const navigate = useNavigate()
 
 	const onSubmit = async () => {
@@ -105,8 +108,16 @@ function Profile() {
 			})
 	}
 
+	const onSuccessVerifyPhone = async (phoneNumber) => {
+		// update for firestore
+		await updateDoc(doc(db, 'users', auth.currentUser.uid), {
+			phoneNumber,
+		})
+		setFormData((preValue) => ({ ...preValue, phoneNumber }))
+	}
+
 	useEffect(() => {
-		const fetchListings = async () => {
+		;(async function fetchListings() {
 			const listingRef = collection(db, 'listings')
 			const _query = query(
 				listingRef,
@@ -121,66 +132,73 @@ function Profile() {
 			})
 
 			setListings(listings)
-		}
-
-		fetchListings()
+		})()
 		;(async function getUserData() {
 			const querySnap = await getDoc(doc(db, 'users', auth.currentUser.uid))
-			const { byEmail } = querySnap.data()
-			setFormData((preV) => ({ ...preV, byEmail }))
+			const { phoneNumber, byEmail, byPhone } = querySnap.data()
+			setFormData((preV) => ({ ...preV, phoneNumber, byEmail, byPhone }))
 		})()
 	}, [auth.currentUser.uid])
 
 	return (
-		<div className='profile'>
-			<header className='profileHeader'>
-				<p className='pageHeader'>My Profile</p>
-			</header>
+		<>
+			<Modal shouldOpen={phoneModalshow} onRequestClose={() => setPhoneModalshow(false)}>
+				<PhoneVerifier
+					phoneNumber={phoneNumber}
+					onSuccessVerifyPhone={onSuccessVerifyPhone}
+				/>
+			</Modal>
+			<div className='profile'>
+				<header className='profileHeader'>
+					<p className='pageHeader'>My Profile</p>
+				</header>
 
-			<main>
-				<div className='profileDetailsHeader'>
-					<p className='profileDetailsText'>Personal Details</p>
-					<p
-						className='changePersonalDetails'
-						onClick={changeDetails ? onSubmit : handleChangeDetails}>
-						{changeDetails ? 'done' : 'change'}
-					</p>
-				</div>
+				<main>
+					<div className='profileDetailsHeader'>
+						<p className='profileDetailsText'>Personal Details</p>
+						<p
+							className='changePersonalDetails'
+							onClick={changeDetails ? onSubmit : handleChangeDetails}>
+							{changeDetails ? 'done' : 'change'}
+						</p>
+					</div>
 
-				<div className='profileDetailSettings'>
-					<ProfileDetailsSet
-						auth={auth}
-						formData={formData}
-						changeDetails={changeDetails}
-						onChange={handleChange}
-						onVerifyEmail={onVerifyEmail}
-					/>
-					<ProfileContactSet {...formData} />
-				</div>
+					<div className='profileDetailSettings'>
+						<ProfileDetailsSet
+							auth={auth}
+							formData={formData}
+							changeDetails={changeDetails}
+							onChange={handleChange}
+							onVerifyEmail={onVerifyEmail}
+							onVerifyPhone={() => setPhoneModalshow(true)}
+						/>
+						<ProfileContactSet {...formData} />
+					</div>
 
-				<Link to='/create-listing' className='createListing'>
-					<HomeIcon className='homeIcon' alt='homeIcon' />
-					<p>Sell or rent your home</p>
-					<ArrowRight className='arrowRight' alt='arrorRight' />
-				</Link>
-				{listings?.length > 0 && (
-					<>
-						<p className='listingText'>Your Listings</p>
-						<ul className='listingsList'>
-							{listings.map((listing) => (
-								<ListingItem
-									key={listing.id}
-									listing={listing.data}
-									id={listing.id}
-									onDelete={() => onDelete(listing.id)}
-									onEdit={() => onEdit(listing.id)}
-								/>
-							))}
-						</ul>
-					</>
-				)}
-			</main>
-		</div>
+					<Link to='/create-listing' className='createListing'>
+						<HomeIcon className='homeIcon' alt='homeIcon' />
+						<p>Sell or rent your home</p>
+						<ArrowRight className='arrowRight' alt='arrorRight' />
+					</Link>
+					{listings?.length > 0 && (
+						<>
+							<p className='listingText'>Your Listings</p>
+							<ul className='listingsList'>
+								{listings.map((listing) => (
+									<ListingItem
+										key={listing.id}
+										listing={listing.data}
+										id={listing.id}
+										onDelete={() => onDelete(listing.id)}
+										onEdit={() => onEdit(listing.id)}
+									/>
+								))}
+							</ul>
+						</>
+					)}
+				</main>
+			</div>
+		</>
 	)
 }
 

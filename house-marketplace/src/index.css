@@ -849,8 +849,9 @@ button {
 	flex-direction: column;
 }
 
-.profileEmail-section {
+.profile-section {
 	display: flex;
+	margin: 0.3rem 0;
 }
 
 .email-verification {
@@ -1596,4 +1597,51 @@ button {
 
 .msgCateActive {
 	background-color: var(--color-primary);
+}
+
+#recaptcha-container {
+	margin-bottom: 0.75rem;
+}
+
+.phoneVerificationBox {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	background-color: #f2f4f8;
+	border-radius: 10px;
+	padding: 1.25rem;
+	margin: 1rem;
+}
+
+.phoneVerificationBox span {
+	font-size: 24px;
+	font-weight: 700;
+}
+
+.phoneVerificationBox input {
+	font-size: 16px;
+	padding: 0.25rem 0.75rem;
+}
+
+.phoneVerificationBox input:where([type='tel'], [type='number']) {
+	padding-left: 0.25rem;
+	width: 60%;
+}
+
+.phoneVerificationBox input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	-moz-appearance: textfield;
+	margin: 0;
+}
+
+.phoneVerificationBox input[type='button'] {
+	cursor: pointer;
+	border: none;
+	background: var(--color-primary);
+	font-size: 16px;
+	font-weight: 700;
+	margin-left: 1rem;
+	padding: 0.3rem 0.8rem;
+	border-radius: 1rem;
+	color: #f2f4f8;
 }
