@@ -4,6 +4,7 @@ import {
 	doc,
 	updateDoc,
 	collection,
+	setDoc,
 	getDoc,
 	getDocs,
 	query,
@@ -31,7 +32,7 @@ function Profile() {
 		email: auth.currentUser.email,
 	})
 	const [phoneModalshow, setPhoneModalshow] = useState(false)
-
+	console.log(auth.currentUser)
 	const { name, email, phoneNumber } = formData
 	const navigate = useNavigate()
 
@@ -108,13 +109,29 @@ function Profile() {
 			})
 	}
 
-	const onSuccessVerifyPhone = async (phoneNumber) => {
-		// update for firestore
-		await updateDoc(doc(db, 'users', auth.currentUser.uid), {
-			phoneNumber,
-		})
-		setFormData((preValue) => ({ ...preValue, phoneNumber }))
-	}
+	const onSuccessVerifyPhone = (() => {
+		const preUserId = auth.currentUser.uid
+
+		return async (phoneNumber) => {
+			// update for firestore
+			try {
+				await setDoc(
+					doc(db, 'users', preUserId),
+					{
+						phoneNumber,
+					},
+					{ merge: true }
+				)
+
+				toast.warning('Data updated, please login in again')
+				auth.signOut()
+				navigate('/sign-in')
+			} catch (err) {
+				toast.error('Failed to update')
+				console.error(err.message)
+			}
+		}
+	})()
 
 	useEffect(() => {
 		;(async function fetchListings() {

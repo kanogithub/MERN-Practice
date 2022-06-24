@@ -5,6 +5,7 @@ import { doc, getDoc, addDoc, collection, serverTimestamp } from 'firebase/fires
 import { db } from '../firebase.config'
 import { toast } from 'react-toastify'
 import { ReactComponent as Mail } from '../assets/svg/mail.svg'
+import { ReactComponent as Phone } from '../assets/svg/phone.svg'
 
 function ContactPoster(props) {
 	const { userRef: landlordId, name: listingName, listingId } = props
@@ -83,16 +84,19 @@ function ContactPoster(props) {
 			{landlord !== null && (
 				<main>
 					<div className='contactLandlord'>
-						<p className='landlordName'>
-							Contact {landlord?.name}{' '}
-							{landlord?.byEmail && (
-								<a
-									href={`mailto:${landlord.email}?Subject=${listingName}&body=${message}`}
-									className='contactPoster-mail'>
-									<Mail width='24px' height='24px' />
-								</a>
-							)}
-						</p>
+						<p className='landlordName'>Contact {landlord?.name}</p>
+						{landlord?.byEmail && (
+							<a
+								href={`mailto:${landlord.email}?Subject=${listingName}&body=${message}`}
+								className='contactPoster-item'>
+								<Mail width='24px' height='24px' />
+							</a>
+						)}
+						{landlord?.byPhone && (
+							<a href={`tel:${landlord.phoneNumber}`} className='contactPoster-item'>
+								<Phone width='24px' height='24px' />
+							</a>
+						)}
 					</div>
 
 					<form className='messageForm' onSubmit={onSubmit}>

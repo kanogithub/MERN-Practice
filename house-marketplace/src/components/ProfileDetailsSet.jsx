@@ -11,7 +11,7 @@ function ProfileDetailsSet({
 	const { name, email, phoneNumber } = formData
 
 	const emailVerified = auth.currentUser.emailVerified
-	const phoneVerified = null
+	const phoneVerified = phoneNumber || null
 
 	return (
 		<div className='profileCard'>
@@ -19,7 +19,7 @@ function ProfileDetailsSet({
 				<input
 					type='text'
 					id='name'
-					value={name}
+					value={name || ''}
 					className={!changeDetails ? 'profileName' : 'profileNameActive'}
 					disabled={!changeDetails}
 					onChange={onChange}
@@ -28,7 +28,7 @@ function ProfileDetailsSet({
 					<input
 						type='email'
 						id='email'
-						value={email}
+						value={email || ''}
 						className={!changeDetails ? 'profileEmail' : 'profileEmailActive'}
 						disabled={!changeDetails}
 						onChange={onChange}
@@ -45,7 +45,7 @@ function ProfileDetailsSet({
 						type='tel'
 						id='phone'
 						className='profileEmail'
-						disabled='true'
+						disabled={true}
 						placeholder={phoneNumber || '+61 000 000 000'}
 					/>
 					<span

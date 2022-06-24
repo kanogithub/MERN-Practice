@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
+import { getAuth, RecaptchaVerifier, signInWithCredential, PhoneAuthProvider } from 'firebase/auth'
 import { toast } from 'react-toastify'
 
 function PhoneVerifier({ _phoneNumber, onSuccessVerifyPhone, closeModal }) {
@@ -7,7 +7,13 @@ function PhoneVerifier({ _phoneNumber, onSuccessVerifyPhone, closeModal }) {
 	const [verifyCode, setVerifyCode] = useState('')
 	const phoneNumber = useRef(_phoneNumber)
 	const auth = getAuth()
+	const phoneAuthProvider = new PhoneAuthProvider(auth)
 	auth.languageCode = 'en'
+
+	const applyShaked = (elem) => {
+		elem.classList.toggle('shaked')
+		setTimeout(() => elem.classList.toggle('shaked'), 600)
+	}
 
 	const onSendVerify = async (e) => {
 		e.preventDefault()
@@ -19,14 +25,15 @@ function PhoneVerifier({ _phoneNumber, onSuccessVerifyPhone, closeModal }) {
 		try {
 			if (pattern.test(phoneNumber.current.value)) {
 				setSentVerify(true)
-				const result = await signInWithPhoneNumber(
-					auth,
+
+				const verificationId = await phoneAuthProvider.verifyPhoneNumber(
 					phoneNumber.current.value.replace(/^0/, '+61'),
 					window.recaptchaVerifier
 				)
 
-				window.confirmationResult = result
+				window.verificationId = verificationId
 			} else {
+				applyShaked(phoneNumber.current)
 				toast.error('Please Enter Valid Number')
 			}
 		} catch (err) {
@@ -39,11 +46,13 @@ function PhoneVerifier({ _phoneNumber, onSuccessVerifyPhone, closeModal }) {
 		if (verifyCode === '' || verifyCode === null) return
 
 		try {
-			await window.confirmationResult.confirm(verifyCode)
+			const authCredential = PhoneAuthProvider.credential(window.verificationId, verifyCode)
+			await signInWithCredential(auth, authCredential)
+
 			onSuccessVerifyPhone(phoneNumber.current.value.replace(/^0/, '+61'))
-			toast.success('Phone Number Update')
 			closeModal()
 		} catch (err) {
+			toast.error(err)
 			console.error(err.message)
 		}
 	}
@@ -63,6 +72,7 @@ function PhoneVerifier({ _phoneNumber, onSuccessVerifyPhone, closeModal }) {
 						type='tel'
 						placeholder='+61 000 000 000'
 						disabled={sentVerify}
+						style={{ transition: '0.2s' }}
 					/>
 					<input
 						type='button'
@@ -71,7 +81,10 @@ function PhoneVerifier({ _phoneNumber, onSuccessVerifyPhone, closeModal }) {
 					/>
 				</form>
 			</div>
-			<div id='recaptcha-container'></div>
+			<div
+				id='recaptcha-container'
+				className={`${!sentVerify ? 'blocked' : ''}`}
+				onClick={!sentVerify ? onSendVerify : undefined}></div>
 			<span>Enter Received Code</span>
 			<div>
 				<form onSubmit={sentVerify ? onVerifyResult : undefined}>
