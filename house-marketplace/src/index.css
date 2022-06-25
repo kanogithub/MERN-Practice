@@ -985,7 +985,7 @@ button {
 }
 .switch.off {
 	float: right;
-	background-color: red;
+	background-color: #2c2c2c8c;
 }
 @media (max-width: 710px) {
 	.profileContact-item {
@@ -1391,6 +1391,7 @@ button {
 	content: attr(data-tips);
 	padding: 0.5rem;
 	font-weight: 500;
+	white-space: nowrap;
 	color: #2c2c2c;
 	background-color: #ccc;
 	border-radius: 3px;
