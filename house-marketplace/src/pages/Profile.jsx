@@ -32,9 +32,17 @@ function Profile() {
 		email: auth.currentUser.email,
 	})
 	const [phoneModalshow, setPhoneModalshow] = useState(false)
-	console.log(auth.currentUser)
-	const { name, email, phoneNumber } = formData
+
 	const navigate = useNavigate()
+	const { name, email, phoneNumber } = formData
+
+	const handleChangeDetails = () => {
+		setChangeDetails(true)
+	}
+
+	const handleChange = (e) => {
+		setFormData((preValue) => ({ ...preValue, [e.target.id]: e.target.value }))
+	}
 
 	const onSubmit = async () => {
 		try {
@@ -58,14 +66,6 @@ function Profile() {
 		}
 
 		setChangeDetails(false)
-	}
-
-	const handleChangeDetails = () => {
-		setChangeDetails(true)
-	}
-
-	const handleChange = (e) => {
-		setFormData((preValue) => ({ ...preValue, [e.target.id]: e.target.value }))
 	}
 
 	const onDelete = async (listingId) => {
@@ -105,6 +105,7 @@ function Profile() {
 				toast.success('Verification Email is sent, please confirm.')
 			})
 			.catch((error) => {
+				toast.error('Free Vercel domain can not use DNS Records.')
 				console.error(error.message)
 			})
 	}
@@ -134,7 +135,7 @@ function Profile() {
 	})()
 
 	useEffect(() => {
-		;(async function fetchListings() {
+		const fetchListings = async () => {
 			const listingRef = collection(db, 'listings')
 			const _query = query(
 				listingRef,
@@ -149,12 +150,16 @@ function Profile() {
 			})
 
 			setListings(listings)
-		})()
-		;(async function getUserData() {
+		}
+
+		const getUserData = async () => {
 			const querySnap = await getDoc(doc(db, 'users', auth.currentUser.uid))
 			const { phoneNumber, byEmail, byPhone } = querySnap.data()
 			setFormData((preV) => ({ ...preV, phoneNumber, byEmail, byPhone }))
-		})()
+		}
+
+		fetchListings()
+		getUserData()
 	}, [auth.currentUser.uid])
 
 	return (
