@@ -28,7 +28,7 @@ function Modal({ shouldOpen = false, onRequestClose, children }) {
 			<div ref={modalOverlayRef} className={`${styles.modalOverlay}`} onClick={onCloseModal}>
 				<div
 					ref={modalBodyRef}
-					className={`${styles.modalBody} ${
+					className={`${styles.modalContent} ${
 						toClose ? styles.bodyClose : styles.bodyOpen
 					}`}
 					onClick={(e) => e.stopPropagation()}>

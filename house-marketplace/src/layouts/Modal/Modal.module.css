@@ -12,9 +12,10 @@
 }
 .overlayOpen {
 	opacity: 1;
+	backdrop-filter: blur(1.5px);
 }
 
-.modalBody {
+.modalContent {
 	position: absolute;
 	margin-top: 10%;
 	z-index: 9999;
