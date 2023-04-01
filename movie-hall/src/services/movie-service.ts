@@ -1,17 +1,17 @@
 import apiClient from './api-client'
 
 // type and interface
-type genres = 'action' | 'adventure' | 'animation' | 'biography' | 'comedy' | 'crime'
+export type genres = 'action' | 'adventure' | 'animation' | 'biography' | 'comedy' | 'crime'
     | 'documentary' | 'drama' | 'family' | 'fantasy' | 'film-noir' | 'history' | 'horror'
     | 'musical' | 'mystery' | 'romance' | 'thriller' | 'war' | 'western'
 
-interface Image {
+export interface Image {
     width: number
     height: number
     url: string
 }
 
-interface Media {
+export interface Media {
     id: string
     runningTimeInMinutes: number
     title: string
@@ -20,7 +20,7 @@ interface Media {
     image: Image
 }
 
-interface Rating {
+export interface Rating {
     id: string
     title: string
     rating: number
@@ -103,6 +103,25 @@ class MovieService {
 
         const request = apiClient.get<Rating>(
             `${this._endPoint}/get-ratings`,
+            config
+        )
+
+        return {
+            request,
+            cancel: () => {
+                controller.abort()
+            },
+        }
+    }
+
+    GetTopRatedMovies() {
+        const controller = new AbortController()
+        const config = {
+            signal: controller.signal,
+        }
+
+        const request = apiClient.get<string[]>(
+            `${this._endPoint}/get-top-rated-movies`,
             config
         )
 

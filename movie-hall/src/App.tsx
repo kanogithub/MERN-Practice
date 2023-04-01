@@ -1,17 +1,15 @@
 import { useState, useEffect } from 'react'
 import { Box, useColorMode } from '@chakra-ui/react'
 import { Button, ButtonGroup } from '@chakra-ui/react'
-import MovieService from './services/movie-service'
+import useMovieData from './hooks/useMovieData'
 
 function App() {
 	const [data, setData] = useState<any>(null)
 	const { toggleColorMode, colorMode } = useColorMode()
 
-	const test = new MovieService()
+	const test = useMovieData('/title/tt0111161/')
 
-	useEffect(() => {
-		test.GetMostPupularMovies().request.then((res) => console.log(res.data))
-	}, [])
+	console.log(test)
 
 	return <Button colorScheme='blue'>Click</Button>
 }
