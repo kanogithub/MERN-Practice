@@ -1,17 +1,21 @@
 import { useState, useEffect } from 'react'
-import { Box, useColorMode } from '@chakra-ui/react'
+import { Box, FormControl, useColorMode } from '@chakra-ui/react'
 import { Button, ButtonGroup } from '@chakra-ui/react'
 import useMovieData from './hooks/useMovieData'
+import useRating from './hooks/useRating'
 
 function App() {
-	const [data, setData] = useState<any>(null)
-	const { toggleColorMode, colorMode } = useColorMode()
-
 	const test = useMovieData('/title/tt0111161/')
+	const test2 = useRating('/title/tt0111161/')
 
 	console.log(test)
+	console.log(test2)
 
-	return <Button colorScheme='blue'>Click</Button>
+	return (
+		<Button onClick={(e) => e} colorScheme='blue'>
+			Click
+		</Button>
+	)
 }
 
 export default App
