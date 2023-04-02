@@ -12,9 +12,11 @@ function App() {
 	console.log(test2)
 
 	return (
-		<Button onClick={(e) => e} colorScheme='blue'>
-			Click
-		</Button>
+		<FormControl>
+			<Button onClick={(e) => e} colorScheme='blue'>
+				Click
+			</Button>
+		</FormControl>
 	)
 }
 

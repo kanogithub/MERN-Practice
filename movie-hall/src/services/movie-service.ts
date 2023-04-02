@@ -12,7 +12,6 @@ export interface Image {
 }
 
 export interface Media {
-    id: string
     runningTimeInMinutes: number
     title: string
     titleType: string
@@ -21,8 +20,6 @@ export interface Media {
 }
 
 export interface Rating {
-    id: string
-    title: string
     rating: number
 }
 

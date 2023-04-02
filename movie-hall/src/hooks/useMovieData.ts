@@ -17,7 +17,7 @@ const useMovieData = (movieTitle: string) => {
                 setMovieData(res.data)
             })
             .catch(err => {
-                if (err instanceof CanceledError) console.log('Request Canceled')
+                if (err instanceof CanceledError) console.log('Movie Data Request Canceled')
                 else setError(err.message)
             })
             .finally(() => {
