@@ -1,9 +1,27 @@
 import apiClient from './api-client'
 
 // type and interface
-export type genres = 'action' | 'adventure' | 'animation' | 'biography' | 'comedy' | 'crime'
-    | 'documentary' | 'drama' | 'family' | 'fantasy' | 'film-noir' | 'history' | 'horror'
-    | 'musical' | 'mystery' | 'romance' | 'thriller' | 'war' | 'western'
+export enum Genres {
+    'Action' = 'action',
+    'Adventure' = 'adventure',
+    'Animation' = 'animation',
+    'Biography' = 'biography',
+    'Comedy' = 'comedy',
+    'Crime' = 'crime',
+    'Documentary' = 'documentary',
+    'Drama' = 'drama',
+    'Family' = 'family',
+    'Fantasy' = 'fantasy',
+    'Film-noir' = 'film-noir',
+    'History' = 'history',
+    'Horror' = 'horror',
+    'Musical' = 'musical',
+    'Mystery' = 'mystery',
+    'Romance' = 'romance',
+    'Thriller' = 'thriller',
+    'War' = 'war',
+    'Western' = 'western',
+}
 
 export interface Image {
     width: number
@@ -21,6 +39,16 @@ export interface Media {
 
 export interface Rating {
     rating: number
+    topRank: number
+}
+
+export interface MovieDetail {
+    title: Media
+    ratings: Rating
+    genres: Genres[]
+    releaseDate: string
+    plotOutline: { text: string }
+    plotSummary: { text: string }
 }
 
 // Class
@@ -30,12 +58,12 @@ class MovieService {
     GetDetails(id: string) {
         const controller = new AbortController()
         const config = {
-            params: { tconst: id },
+            params: { tconst: id, currentCountry: 'AU' },
             signal: controller.signal,
         }
 
-        const request = apiClient.get<Media>(
-            `${this._endPoint}/get-details`,
+        const request = apiClient.get<MovieDetail>(
+            `${this._endPoint}/get-overview-details`,
             config
         )
 
@@ -71,7 +99,7 @@ class MovieService {
         }
     }
 
-    GetMostPupularMoviesByGenre(genre: genres) {
+    GetMostPupularMoviesByGenre(genre: Genres) {
         const controller = new AbortController()
         const config = {
             params: { genre, limit: '25' },

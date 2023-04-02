@@ -1,11 +1,11 @@
 import { CanceledError } from 'axios'
 import { useState, useEffect } from 'react'
-import MovieService, { Media } from '../services/movie-service'
+import MovieService, { MovieDetail } from '../services/movie-service'
 
 const useMovieData = (movieTitle: string) => {
     const [isLoading, setLoading] = useState(true)
     const [error, setError] = useState('')
-    const [movieData, setMovieData] = useState<Media>()
+    const [movieData, setMovieData] = useState<MovieDetail>()
 
     const _movieService = new MovieService()
     const _movieId = movieTitle.replace('title', '').replaceAll('/', '')
