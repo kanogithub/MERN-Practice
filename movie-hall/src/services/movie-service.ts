@@ -42,6 +42,16 @@ export interface Rating {
     topRank: number
 }
 
+export interface UserReview {
+    reviews: {
+        author: { displayName: string }
+        authorRating: number
+        reviewText: string
+        reviewTitle: string
+        submissionDate: string
+    }[]
+}
+
 export interface MovieDetail {
     title: Media
     ratings: Rating
@@ -119,15 +129,15 @@ class MovieService {
         }
     }
 
-    GetRatings(id: string) {
+    GetUserReview(id: string) {
         const controller = new AbortController()
         const config = {
             params: { tconst: id },
             signal: controller.signal,
         }
 
-        const request = apiClient.get<Rating>(
-            `${this._endPoint}/get-ratings`,
+        const request = apiClient.get<UserReview>(
+            `${this._endPoint}/get-user-reviews`,
             config
         )
 
