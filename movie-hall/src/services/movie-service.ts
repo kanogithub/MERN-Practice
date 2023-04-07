@@ -24,12 +24,14 @@ export enum Genres {
 }
 
 export interface Image {
+    id: string
     width: number
     height: number
     url: string
 }
 
 export interface Media {
+    id: string
     runningTimeInMinutes: number
     title: string
     titleType: string
@@ -53,6 +55,7 @@ export interface UserReview {
 }
 
 export interface MovieDetail {
+    id: string
     title: Media
     ratings: Rating
     genres: Genres[]
@@ -65,24 +68,18 @@ export interface MovieDetail {
 class MovieService {
     readonly _endPoint: string = '/title'
 
-    GetDetails(id: string) {
-        const controller = new AbortController()
+    GetDetails(id: string, controller: AbortController) {
         const config = {
             params: { tconst: id, currentCountry: 'AU' },
             signal: controller.signal,
         }
 
-        const request = apiClient.get<MovieDetail>(
+        const response = apiClient.get<MovieDetail>(
             `${this._endPoint}/get-overview-details`,
             config
         )
 
-        return {
-            request,
-            cancel: () => {
-                controller.abort()
-            },
-        }
+        return response
     }
 
     GetMostPopularMovies() {

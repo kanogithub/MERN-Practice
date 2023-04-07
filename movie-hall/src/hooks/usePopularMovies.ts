@@ -2,7 +2,7 @@ import { CanceledError } from 'axios'
 import { useState, useEffect } from 'react'
 import MovieService from '../services/movie-service'
 
-const usePopularMovies = (movieTitle: string) => {
+const usePopularMovies = () => {
     const [error, setError] = useState('')
     const [movies, setMovies] = useState<string[]>([])
 
