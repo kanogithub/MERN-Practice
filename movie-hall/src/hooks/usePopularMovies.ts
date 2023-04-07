@@ -2,21 +2,20 @@ import { CanceledError } from 'axios'
 import { useState, useEffect } from 'react'
 import MovieService from '../services/movie-service'
 
-const useRating = (movieTitle: string) => {
+const usePopularMovies = (movieTitle: string) => {
     const [error, setError] = useState('')
-    const [rating, setRating] = useState(0)
+    const [movies, setMovies] = useState<string[]>([])
 
     const _movieService = new MovieService()
-    const _movieId = movieTitle.replace('title', '').replaceAll('/', '')
 
     useEffect(() => {
-        const { request, cancel } = _movieService.GetRatings(_movieId)
+        const { request, cancel } = _movieService.GetMostPopularMovies()
         request
             .then(res => {
-                setRating(res.data.rating)
+                setMovies(res.data)
             })
             .catch(err => {
-                if (err instanceof CanceledError) console.log('Rating Request Canceled')
+                if (err instanceof CanceledError) console.log('Get Popular List Request Canceled')
                 else setError(err.message)
             })
 
@@ -25,7 +24,7 @@ const useRating = (movieTitle: string) => {
         }
     }, [])
 
-    return { error, rating }
+    return { error, movies }
 }
 
-export default useRating
+export default usePopularMovies

@@ -75,7 +75,7 @@ class MovieService {
         }
     }
 
-    GetMostPupularMovies() {
+    GetMostPopularMovies() {
         const controller = new AbortController()
         const config = {
             params: {
