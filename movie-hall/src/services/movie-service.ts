@@ -1,4 +1,5 @@
 import apiClient from './api-client'
+import { CanceledError, AxiosResponse } from 'axios'
 
 // type and interface
 export enum Genres {
@@ -67,19 +68,43 @@ export interface MovieDetail {
 // Class
 class MovieService {
     readonly _endPoint: string = '/title'
+    readonly _timesToRetry: number = 3
 
-    GetDetails(id: string, controller: AbortController) {
+    wait(ms: number) { return new Promise(resolve => { setTimeout(resolve, ms) }) }
+
+    GetDetails(id: string) {
+        const controller = new AbortController()
         const config = {
             params: { tconst: id, currentCountry: 'AU' },
             signal: controller.signal,
         }
 
-        const response = apiClient.get<MovieDetail>(
-            `${this._endPoint}/get-overview-details`,
-            config
-        )
+        // Implement Retry Pattern
+        let currentTry = 0
+        const response = new Promise<AxiosResponse<MovieDetail>>(async (resolve, reject) => {
+            while (true) {
+                try {
+                    const res = await apiClient.get<MovieDetail>(
+                        `${this._endPoint}/get-overview-details`,
+                        config
+                    )
 
-        return response
+                    resolve(res)
+                    break
+                }
+                catch (err: any) {
+                    currentTry++
+                    if (err instanceof CanceledError || currentTry >= this._timesToRetry) {
+                        reject(err)
+                        break
+                    }
+
+                    await this.wait(1000)
+                }
+            }
+        })
+
+        return { response, cancel: () => controller.abort() }
     }
 
     GetMostPopularMovies() {

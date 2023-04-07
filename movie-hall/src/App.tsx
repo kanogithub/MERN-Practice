@@ -5,7 +5,11 @@ import usePopularMovies from './hooks/usePopularMovies'
 import MovieCard from './components/MovieCard'
 
 function App() {
-	const { error: movieError, movies } = usePopularMovies()
+	// const { error: movieError, movies } = usePopularMovies()
+
+	// Mock Data
+	const movieError = null
+	const movies = ['tt0944947', 'tt0944948', 'tt0944949', 'tt0944950', 'tt0944951']
 
 	return movieError ? (
 		<div>{movieError}</div>

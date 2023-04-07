@@ -19,9 +19,7 @@ const usePopularMovies = () => {
                 else setError(err.message)
             })
 
-        return () => {
-            cancel()
-        }
+        return () => cancel()
     }, [])
 
     return { error, movies }
