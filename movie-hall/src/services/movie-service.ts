@@ -69,6 +69,7 @@ export interface MovieDetail {
 class MovieService {
     readonly _endPoint: string = '/title'
     readonly _timesToRetry: number = 3
+    readonly _retryInterval: number = 2000
 
     wait(ms: number) { return new Promise(resolve => { setTimeout(resolve, ms) }) }
 
@@ -89,17 +90,14 @@ class MovieService {
                         config
                     )
 
-                    resolve(res)
-                    break
+                    return resolve(res)
                 }
                 catch (err: any) {
                     currentTry++
-                    if (err instanceof CanceledError || currentTry >= this._timesToRetry) {
-                        reject(err)
-                        break
-                    }
+                    if (err instanceof CanceledError || currentTry >= this._timesToRetry)
+                        return reject(err)
 
-                    await this.wait(1000)
+                    await this.wait(this._retryInterval)
                 }
             }
         })

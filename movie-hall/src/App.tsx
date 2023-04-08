@@ -15,7 +15,7 @@ function App() {
 		<div>{movieError}</div>
 	) : (
 		movies.map((movie, index) => {
-			if (index < 7) return <MovieCard movieTitle={movie} key={movie}></MovieCard>
+			if (index < 5) return <MovieCard movieTitle={movie} key={movie}></MovieCard>
 		})
 	)
 }
