@@ -24,9 +24,12 @@ interface GameResponseProps {
 const useGames = () => {
     const [games, setGames] = useState<Game[]>([])
     const [error, setError] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         const controller = new AbortController()
+
+        setIsLoading(true)
 
         apiClient
             .get<GameResponseProps>('/games', { signal: controller.signal })
@@ -37,11 +40,12 @@ const useGames = () => {
                 if (err instanceof CanceledError) return
                 setError(err.message)
             })
+            .finally(() => setIsLoading(false))
 
         return () => controller.abort()
     }, [])
 
-    return { games, error }
+    return { games, error, isLoading }
 }
 
 export default useGames
