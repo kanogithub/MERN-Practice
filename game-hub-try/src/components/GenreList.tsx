@@ -4,10 +4,11 @@ import getCorppedImageUrl from '../utilities/image-url'
 import useGenres, { Genre } from '../hooks/useGenres'
 
 interface Props {
-	onSelectGenre: (genre: Genre) => void
+	selectedGenre: Genre | null
+	onSelectGenre: (genre: Genre | null) => void
 }
 
-const GenreList = ({ onSelectGenre }: Props) => {
+const GenreList = ({ selectedGenre, onSelectGenre }: Props) => {
 	const { data, error, isLoading } = useGenres()
 	const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
@@ -31,8 +32,11 @@ const GenreList = ({ onSelectGenre }: Props) => {
 								/>
 								<Text
 									fontSize='lg'
+									fontWeight={genre.id === selectedGenre?.id ? 'bold' : 'normal'}
 									_hover={{ cursor: 'pointer', textDecoration: 'underline' }}
-									onClick={() => onSelectGenre(genre)}>
+									onClick={() =>
+										onSelectGenre(genre.id === selectedGenre?.id ? null : genre)
+									}>
 									{genre.name}
 								</Text>
 							</HStack>
