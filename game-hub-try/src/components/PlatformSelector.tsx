@@ -8,14 +8,27 @@ const PlatformSelector = () => {
 	if (error) null
 	return (
 		<Menu>
-			<MenuButton as={Button} rightIcon={<BsChevronDown />}>
-				Platforms
-			</MenuButton>
-			<MenuList>
-				{data.map((platform) => (
-					<MenuItem key={platform.id}>{platform.name}</MenuItem>
-				))}
-			</MenuList>
+			{({ isOpen }) => (
+				<>
+					<MenuButton
+						as={Button}
+						rightIcon={
+							<BsChevronDown
+								style={{
+									transitionDuration: '0.3s',
+									transform: `rotate(${isOpen ? '180' : '0'}deg)`,
+								}}
+							/>
+						}>
+						Platforms
+					</MenuButton>
+					<MenuList>
+						{data.map((platform) => (
+							<MenuItem key={platform.id}>{platform.name}</MenuItem>
+						))}
+					</MenuList>
+				</>
+			)}
 		</Menu>
 	)
 }
