@@ -9,22 +9,17 @@ interface Props {
 
 const PlatformSelector = ({ selectedPlatform, onPlatformSelect }: Props) => {
 	const { data, error } = usePlatforms()
+	const iconStyle = (open: boolean) => ({
+		transitionDuration: '0.3s',
+		transform: `rotate(${open ? '180' : '0'}deg)`,
+	})
 
 	if (error) return null
 	return (
 		<Menu>
 			{({ isOpen }) => (
 				<>
-					<MenuButton
-						as={Button}
-						rightIcon={
-							<BsChevronDown
-								style={{
-									transitionDuration: '0.3s',
-									transform: `rotate(${isOpen ? '180' : '0'}deg)`,
-								}}
-							/>
-						}>
+					<MenuButton as={Button} rightIcon={<BsChevronDown style={iconStyle(isOpen)} />}>
 						{selectedPlatform?.name ?? 'All Platforms'}
 					</MenuButton>
 					<MenuList>

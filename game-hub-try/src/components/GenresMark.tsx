@@ -10,16 +10,7 @@ const GenresMark = ({ show, genres }: Props) => {
 	if (genres.length <= 0) return null
 
 	return (
-		<Stack
-			direction='row'
-			position='absolute'
-			bgColor='black'
-			width='100%'
-			justifyContent='end'
-			opacity={0.6}
-			top={show ? '0' : '-10'}
-			padding={2}
-			style={{ transitionDuration: '0.3s' }}>
+		<Stack className='genre-mark' direction='row' top={show ? '0' : '-10'}>
 			{genres.map((genre) => (
 				<Badge
 					colorScheme='messenger'
