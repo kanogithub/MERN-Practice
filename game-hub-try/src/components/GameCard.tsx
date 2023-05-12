@@ -3,15 +3,20 @@ import { Game } from '../hooks/useGames'
 import PlatformList from './PlatformList'
 import CriticScore from './CriticScore'
 import getCorppedImageUrl from '../utilities/image-url'
+import GenresMark from './GenresMark'
+import { useState } from 'react'
 
 interface Props {
 	game: Game
 }
 
 const GameCard = ({ game }: Props) => {
+	const [hoverOnCard, setHoverOnCard] = useState(false)
+
 	return (
-		<Card>
+		<Card onMouseOver={() => setHoverOnCard(true)} onMouseLeave={() => setHoverOnCard(false)}>
 			<Image src={getCorppedImageUrl(game.background_image)} />
+			<GenresMark show={hoverOnCard} genres={game.genres} />
 			<CardBody>
 				<Heading fontSize='2xl'>{game.name}</Heading>
 				<HStack justifyContent='space-between'>
