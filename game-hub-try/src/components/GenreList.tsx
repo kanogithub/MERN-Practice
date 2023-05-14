@@ -33,6 +33,7 @@ const GenreList = ({ selectedGenre, onSelectGenre }: Props) => {
 								<Text
 									fontSize='lg'
 									fontWeight={genre.id === selectedGenre?.id ? 'bold' : 'normal'}
+									color={genre.id === selectedGenre?.id ? '#4863A0' : ''}
 									_hover={{ cursor: 'pointer', textDecoration: 'underline' }}
 									onClick={() =>
 										onSelectGenre(genre.id === selectedGenre?.id ? null : genre)

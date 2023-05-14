@@ -13,6 +13,7 @@ const GenresMark = ({ show, genres }: Props) => {
 		<Stack className='genre-mark' direction='row' top={show ? '0' : '-10'}>
 			{genres.map((genre) => (
 				<Badge
+					key={genre.id}
 					colorScheme='messenger'
 					style={{ userSelect: 'none', msUserSelect: 'none', MozUserSelect: 'none' }}>
 					{genre.name}
