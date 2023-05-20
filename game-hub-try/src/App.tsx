@@ -5,7 +5,7 @@ import GameGrid from './components/GameGrid'
 import NavBar from './components/NavBar'
 import GenreList from './components/GenreList'
 import PlatformSelector from './components/PlatformSelector'
-import SortSelector from './components/SortSelector'
+import SortSelector, { SortItem } from './components/SortSelector'
 import { Genre } from './hooks/useGenres'
 import { Platform } from './hooks/usePlatforms'
 
@@ -13,6 +13,7 @@ import { Platform } from './hooks/usePlatforms'
 export interface GameQuery {
 	genre: Genre | null
 	platform: Platform | null
+	ordering: SortItem
 }
 
 function App(): JSX.Element {
@@ -45,7 +46,12 @@ function App(): JSX.Element {
 						selectedPlatform={gameQuery.platform}
 						onPlatformSelect={(platform) => setGameQuery({ ...gameQuery, platform })}
 					/>
-					<SortSelector />
+					<SortSelector
+						selectedSort={gameQuery.ordering}
+						onSortSelect={(sortItem: SortItem) =>
+							setGameQuery({ ...gameQuery, ordering: sortItem })
+						}
+					/>
 				</HStack>
 
 				<GameGrid gameQuery={gameQuery} />
