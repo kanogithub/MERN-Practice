@@ -13,7 +13,7 @@ import { Platform } from './hooks/usePlatforms'
 export interface GameQuery {
 	genre: Genre | null
 	platform: Platform | null
-	ordering: SortItem
+	ordering: SortItem | null
 }
 
 function App(): JSX.Element {
@@ -48,7 +48,7 @@ function App(): JSX.Element {
 					/>
 					<SortSelector
 						selectedSort={gameQuery.ordering}
-						onSortSelect={(sortItem: SortItem) =>
+						onSortSelect={(sortItem) =>
 							setGameQuery({ ...gameQuery, ordering: sortItem })
 						}
 					/>

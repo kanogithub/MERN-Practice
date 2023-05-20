@@ -2,11 +2,11 @@ import { Button, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react'
 import { BsChevronDown } from 'react-icons/bs'
 
 interface Props {
-	selectedSort: SortItem
-	onSortSelect: (sortItem: SortItem) => void
+	selectedSort: SortItem | null
+	onSortSelect: (sortItem: SortItem | null) => void
 }
 
-export type SortItem = 'name' | '-released' | '-added' | '-rating' | '-metacritic' | null
+export type SortItem = 'name' | '-released' | '-added' | '-rating' | '-metacritic'
 
 const SortSelector = ({ selectedSort, onSortSelect }: Props) => {
 	const iconStyle = (open: boolean) => ({
@@ -14,7 +14,7 @@ const SortSelector = ({ selectedSort, onSortSelect }: Props) => {
 		transform: `rotate(${open ? '180' : '0'}deg)`,
 	})
 
-	const sortOrders: { value: SortItem; label: string }[] = [
+	const sortOrders: { value: SortItem | null; label: string }[] = [
 		{ value: null, label: 'Relevance' },
 		{ value: '-added', label: 'Date added' },
 		{ value: 'name', label: 'Name' },
