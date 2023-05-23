@@ -5,7 +5,6 @@ import CriticScore from './CriticScore'
 import getCorppedImageUrl from '../utilities/image-url'
 import GenresMark from './GenresMark'
 import { useState } from 'react'
-
 interface Props {
 	game: Game
 }
