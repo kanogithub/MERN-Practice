@@ -2,12 +2,13 @@ import './App.css'
 import { useState } from 'react'
 import { Flex, Grid, GridItem, Show } from '@chakra-ui/react'
 import GameGrid from './components/GameGrid'
-import NavBar from './components/NavBar'
+import NavBar from './Features/NavBar/NavBar'
 import GenreList from './components/GenreList'
 import PlatformSelector from './components/PlatformSelector'
 import SortSelector, { SortItem } from './components/SortSelector'
 import { Genre } from './hooks/useGenres'
 import { Platform } from './hooks/usePlatforms'
+import GameHeading from './components/GameHeading'
 
 // Query Object Pattern - Get query statement in an object
 export interface GameQuery {
@@ -42,6 +43,7 @@ function App(): JSX.Element {
 				</GridItem>
 			</Show>
 			<GridItem area='main'>
+				<GameHeading gameQuery={gameQuery} />
 				<Flex paddingInline={3} gap={3}>
 					<PlatformSelector
 						selectedPlatform={gameQuery.platform}
