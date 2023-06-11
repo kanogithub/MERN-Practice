@@ -1,5 +1,5 @@
 import { Badge, Stack } from '@chakra-ui/react'
-import { Genre } from '../hooks/useGenres'
+import { Genre } from '../../hooks/useGenres'
 
 interface Props {
 	show: boolean
