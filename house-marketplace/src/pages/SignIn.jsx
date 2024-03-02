@@ -30,7 +30,7 @@ function SignIn() {
 
 			if (userCredential.user) {
 				const path = searchParams.get('listing') ? searchParams.get('listing') : '/'
-				navigate(path)
+				navigate(path, { replace: true })
 			}
 		} catch (error) {
 			if (error.code === 'auth/user-not-found') toast.error('Bad User Credential')

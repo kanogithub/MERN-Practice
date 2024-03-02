@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Split from './layouts/Split'
@@ -30,7 +30,6 @@ function App() {
 				<Menu />
 				<Split>
 					<SideBar />
-
 					<Routes>
 						<Route path='/' element={<Explore />} />
 						<Route path='/category/:categoryName' element={<Category />} />
@@ -50,6 +49,7 @@ function App() {
 						<Route path='/message' element={<PrivateRoute />}>
 							<Route path='/message' element={<Message />} />
 						</Route>
+						<Route path='*' element={<Navigate to='/' />} />
 					</Routes>
 				</Split>
 				<Navbar />

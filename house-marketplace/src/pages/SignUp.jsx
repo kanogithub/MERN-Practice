@@ -41,7 +41,7 @@ function SignUp() {
 
 			await setDoc(doc(db, 'users', user.uid), formDataCopy)
 
-			navigate('/')
+			navigate('/', { replace: true })
 		} catch (error) {
 			if (error.code === 'auth/email-already-in-use') toast.error('Email is already exsting')
 			// toast('Something Wrong on server')

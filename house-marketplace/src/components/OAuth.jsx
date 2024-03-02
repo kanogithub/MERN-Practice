@@ -39,7 +39,7 @@ function OAuth() {
 			}
 
 			const path = searchParams.get('listing') ? searchParams.get('listing') : '/'
-			navigate(path)
+			navigate(path, { replace: true })
 		} catch (error) {
 			console.log(error)
 			toast.error('Could not authorize with Google')
